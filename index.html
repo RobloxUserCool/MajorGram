@@ -60,12 +60,24 @@ nav{position:absolute;left:14px;right:14px;bottom:calc(14px + env(safe-area-inse
 .ni.on{background:#2d4863;color:#5eb5f7}
 .mnu{position:absolute;right:12px;top:calc(62px + env(safe-area-inset-top));background:#2b3748;border-radius:14px;padding:6px 0;z-index:5;box-shadow:0 6px 20px #000a}
 .mnu[hidden]{display:none}.mnu div{padding:14px 20px}
-.msgs{flex:1;overflow:auto;padding:10px 12px;display:flex;flex-direction:column;gap:6px;background:#0e1621}
-.m{max-width:78%;padding:8px 12px;border-radius:16px 16px 16px 4px;background:#182533;white-space:pre-wrap;word-break:break-word;align-self:flex-start}
-.m.me{background:#2b5278;border-radius:16px 16px 4px 16px;align-self:flex-end}
+/* ===== ЧАТ ===== */
+.ch{display:flex;align-items:center;gap:8px;padding:10px;background:#0e1726}
+.rb{width:50px;height:50px;border-radius:50%;padding:0;background:#243245;font-size:22px;flex:none;display:flex;align-items:center;justify-content:center}
+.pill{flex:1;min-width:0;height:50px;border-radius:25px;background:#243245;display:flex;align-items:center;gap:10px;padding:0 16px 0 4px}
+.pill b{display:block;font-size:18px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pill small{display:block;color:#8493a6;font-size:12px;margin-top:-1px}
+.sin{height:50px;border-radius:25px}
+.msgs{flex:1;overflow:auto;padding:10px 12px;display:flex;flex-direction:column;gap:5px;background-color:#0e1726;background-image:radial-gradient(#ffffff10 1.5px,transparent 1.7px),radial-gradient(#ffffff08 1px,transparent 1.3px);background-size:34px 34px;background-position:0 0,17px 17px}
+.m{max-width:80%;padding:7px 12px 6px;border-radius:18px 18px 18px 5px;background:#1d2a3b;white-space:pre-wrap;word-break:break-word;align-self:flex-start;line-height:1.35}
+.m.me{background:linear-gradient(180deg,#9b3fb8,#3b7be0);background-attachment:fixed;border-radius:18px 18px 5px 18px;align-self:flex-end}
 .m b{display:block;font-size:13px;color:#6ab3f3}
-form{display:flex;gap:8px;padding:8px 10px;background:#17212b}
-form button{width:48px;height:48px;border-radius:50%;padding:0;font-size:20px;flex:none}
+.tm{float:right;font-size:12px;opacity:.7;margin:9px 0 0 10px}
+.mark{background:#ffd23f66;border-radius:3px}
+.bar{display:flex;align-items:center;gap:8px;padding:8px 10px;background:#0e1726}
+.inp{flex:1;display:flex;align-items:center;gap:8px;background:#1d2a3b;border-radius:26px;padding:0 14px;height:52px}
+.inp input{background:none;padding:0;height:100%;border-radius:0}
+.inp span{font-size:24px;opacity:.75}
+.sb{width:52px;height:52px;border-radius:50%;padding:0;font-size:22px;flex:none;display:flex;align-items:center;justify-content:center}
 </style></head><body><div id="app"></div>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
@@ -134,9 +146,178 @@ const av=(t,s=52)=>{let h=0;for(const c of t)h=(h*31+c.charCodeAt(0))>>>0;
   return `<div class=av style="width:${s}px;height:${s}px;background:${COLS[h%7]};font-size:${s*.42}px">${esc(l.toUpperCase())}</div>`};
 const fmt=ts=>{if(!ts)return'';const d=ts.toDate(),n=new Date();
   return d.toDateString()===n.toDateString()?d.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}):d.toLocaleDateString([],{day:'2-digit',month:'2-digit'})};
+const tmf=ts=>ts?ts.toDate().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}):'';
 const IC={
   chat:'<svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></svg>',
   con:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="10" r="3"/><path d="M6.5 18c2-3.5 9-3.5 11 0"/></svg>',
+  set:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/></svg>',
+  pro:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="9" cy="10" r=".8"/><circle cx="15" cy="10" r=".8"/><path d="M8 14c1 2 7 2 8 0"/></svg>',
+  pen:'<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l4-1 11-11-3-3L5 16z"/></svg>'};
+const rowHtml=c=>`<div class=row data-id="${c.id}">${av(title(c))}<div class=rt><div class=l1><b>${esc(title(c))}</b><small>${fmt(c.lastAt)}</small></div><div class=l2>${TYPES[c.type]}</div></div></div>`;
+const bindRows=()=>document.querySelectorAll('.row[data-id]').forEach(r=>r.onclick=()=>openChat(r.dataset.id));
+const soon=()=>alert('Скоро');
+
+// ===== ЗВЁЗДЫ =====
+async function getStars(){try{const d=await db.doc('stars/'+me.uid).get();return d.exists?(d.data().balance||0):0}catch(e){return 0}}
+
+// ===== ПРОФИЛЬ: СОХРАНЕНИЕ =====
+async function saveMe(o){await db.doc('users/'+me.uid).update(o);Object.assign(me,o);draw()}
+async function edit(k,t){const v=prompt(t,me[k]||'');if(v===null)return;await saveMe({[k]:v.trim().slice(0,70)})}
+async function editName(){const v=prompt('Имя',me.name||me.username);if(v===null)return;await saveMe({name:v.trim().slice(0,30)})}
+function pickPhoto(){
+  const i=document.createElement('input');i.type='file';i.accept='image/*';
+  i.onchange=()=>{const f=i.files[0];if(!f)return;const im=new Image();
+    im.onload=async()=>{
+      const c=document.createElement('canvas');c.width=c.height=160;
+      const s=Math.min(im.width,im.height);
+      c.getContext('2d').drawImage(im,(im.width-s)/2,(im.height-s)/2,s,s,0,0,160,160);
+      await saveMe({photo:c.toDataURL('image/jpeg',.7)})};
+    im.src=URL.createObjectURL(f)};
+  i.click()}
+
+// ===== ГЛАВНЫЙ ЭКРАН =====
+function home(){
+  unsub();unsubList();
+  const st=tab==='settings';
+  const head=st?'<div class=top><h1 style="font-size:26px">Настройки</h1></div>'
+    :tab==='profile'?'<div class=top><h1 style="font-size:26px">Профиль</h1></div>'
+    :'<div class=top><div class=logo>M</div><h1>MajorGram</h1><button class=ib id=mn>⋮</button></div><div class=mnu id=mnu hidden><div id=m1>Новая группа или канал</div><div id=m2>Найти пользователя</div><div id=m3>Выйти</div></div>';
+  app.innerHTML=`${head}<div class=body id=bd></div>${tab==='chats'?`<button class=fab id=fb>${IC.pen}</button>`:''}
+  <nav>${[['chats','Чаты',IC.chat],['contacts','Контакты',IC.con],['settings','Настройки',IC.set],['profile','Профиль',IC.pro]].map(([k,n,i])=>`<div class="ni${tab===k?' on':''}" data-t="${k}">${i}<span>${n}</span></div>`).join('')}</nav>`;
+  if(tab==='chats'||tab==='contacts'){
+    if($('mn')){
+      $('mn').onclick=()=>$('mnu').hidden=!$('mnu').hidden;
+      $('m1').onclick=()=>{$('mnu').hidden=true;newChat()};
+      $('m2').onclick=()=>{$('mnu').hidden=true;search()};
+      $('m3').onclick=()=>auth.signOut()}}
+  if(tab==='chats')$('fb').onclick=search;
+  document.querySelectorAll('.ni').forEach(n=>n.onclick=()=>{tab=n.dataset.t;home()});
+  unsubList=db.collection('chats').where('members','array-contains',me.uid).onSnapshot(s=>{
+    CH=s.docs.map(d=>({id:d.id,...d.data()})).sort((x,y)=>(y.lastAt?.seconds||0)-(x.lastAt?.seconds||0));
+    $('cl')?list():draw()});
+  draw()}
+function list(){
+  const l=$('cl');if(!l)return;
+  $('c1').textContent=CH.length;$('c2').textContent=CH.filter(c=>c.type==='channel').length;
+  const a=CH.filter(c=>(flt==='all'||c.type==='channel')&&title(c).toLowerCase().includes(q.toLowerCase()));
+  l.innerHTML=a.map(rowHtml).join('')||'<div class=empty>Пока пусто. Нажми ✎ и найди человека по юзернейму</div>';
+  bindRows()}
+function draw(){
+  const b=$('bd');if(!b)return;
+  if(tab==='chats'){
+    b.innerHTML=`<input id=sq class=sq placeholder="Поиск чатов" value="${esc(q)}"><div class=tabs><div class="tb${flt==='all'?' on':''}" data-f=all>Все чаты <i id=c1>0</i></div><div class="tb${flt==='channel'?' on':''}" data-f=channel>Каналы <i id=c2>0</i></div></div><div id=cl></div>`;
+    $('sq').oninput=e=>{q=e.target.value;list()};
+    document.querySelectorAll('.tb').forEach(t=>t.onclick=()=>{flt=t.dataset.f;draw()});
+    list()}
+  else if(tab==='contacts'){
+    const a=CH.filter(c=>c.type==='direct');
+    b.innerHTML=`<button class="wide" id=fd>Найти по юзернейму</button>`+(a.map(rowHtml).join('')||'<div class=empty>Контактов пока нет</div>');
+    $('fd').onclick=search;bindRows()}
+  else if(tab==='settings'){
+    const it=(a,c,i,t,r='')=>`<div class=it data-a=${a}><div class=ico style="background:${c}">${i}</div><div class=itt>${t}</div>${r}</div>`;
+    b.innerHTML=`<div class=grp>${it('lang','#a355e8','🌐','Язык<small class=sub>Русский</small>')}</div>
+    <div class=grp>${it('prem','#7b6cf0','★','MajorGram Premium')}${it('stars','#f5a623','★','Звёзды MajorGram',`<span class=val id=sbal>${STARS}</span>`)}${it('biz','#e5484d','🏪','MajorGram для бизнеса')}${it('gift','#f2711c','🎁','Отправить подарок')}</div>
+    <div class=grp><div class=gt>Помощь</div>${it('ask','#f5a623','💬','Задать вопрос')}${it('faq','#2ea6ff','?','Вопросы о MajorGram')}${it('feat','#a355e8','💡','Возможности MajorGram')}${it('priv','#34c37a','🛡','Политика конфиденциальности')}</div>
+    <div class=grp>${it('out','#2b3748','⎋','Выйти из аккаунта')}</div>
+    <p class=ver>MajorGram v0.1</p>`;
+    b.querySelectorAll('.it').forEach(e=>e.onclick=()=>{const a=e.dataset.a;a==='stars'?starsView():a==='out'?auth.signOut():soon()});
+    getStars().then(n=>{STARS=n;const e=$('sbal');if(e)e.textContent=n})}
+  else{
+    b.innerHTML=`<div class=pring>${me.photo?`<img src="${me.photo}" style="width:100%;height:100%;object-fit:cover">`:av('@'+me.username,116)}</div>
+    <div class=pn>${esc(me.name||'@'+me.username)}</div><div class=ps>в сети</div>
+    <div class=pb><div id=pf><span>📷</span>Выбрать фото</div><div id=pe><span>✏️</span>Изменить</div><div id=pg><span>⚙️</span>Настройки</div></div>
+    <div class="grp info"><div><b>${esc(auth.currentUser.email||'')}</b><small>Почта</small></div>
+    <div><b>@${esc(me.username)}</b><small>Имя пользователя</small></div>
+    <div id=pi2><b>${esc(me.about||'Не указано')}</b><small>О себе</small></div>
+    <div id=pi3><b>${esc(me.bday||'Не указано')}</b><small>День рождения</small></div>
+    <div id=pi4><b>Не указан</b><small>Телефон</small></div></div>`;
+    $('pf').onclick=pickPhoto;$('pe').onclick=editName;
+    $('pg').onclick=()=>{tab='settings';home()};
+    $('pi2').onclick=()=>edit('about','О себе');
+    $('pi3').onclick=()=>edit('bday','День рождения (например 31.12.2000)');
+    $('pi4').onclick=soon}}
+
+// ===== ЭКРАН «ЗВЁЗДЫ MAJORGRAM» =====
+function starsView(){
+  app.innerHTML=`<div class=top><button class=ib id=bk>←</button></div><div class=body style="text-align:center;padding-bottom:30px">
+  <svg width=130 height=130 viewBox="0 0 24 24"><defs><linearGradient id=g1 x1=0 y1=0 x2=1 y2=1><stop offset=0 stop-color="#fff35c"/><stop offset=1 stop-color="#f5a623"/></linearGradient></defs><path fill="url(#g1)" stroke="#ffd23f" stroke-linejoin="round" stroke-width="1" d="M12 2.5l2.9 6.3 6.8.7-5.1 4.6 1.5 6.8L12 17.4l-6.1 3.5 1.5-6.8L2.3 9.5l6.8-.7z"/></svg>
+  <h1 style="margin:10px 0 8px;font-size:26px">Звёзды MajorGram</h1>
+  <p class=sub2>Звёзды MajorGram нужны для оплаты контента и услуг. <a id=more>Подробнее о звёздах ›</a></p>
+  <div class=grp style="padding:22px 16px;margin:22px 0 14px"><div class=bal><span>⭐</span><b id=sv>${STARS}</b></div><div class=sub>Ваш баланс</div>
+  <div class=btns><button id=tp>＋ Пополнить</button><button id=stt>📊 Статистика</button></div><a id=gf class=lnk>🎁 Подарить звёзды друзьям</a></div>
+  <div class="grp it" id=earn style="text-align:left"><div class=ico style="background:#34c37a">★</div><div class=itt>Заработать звёзды <span class=new>NEW</span><small class=sub>Скоро</small></div></div>
+  <div class=tabs2><span class=on>Все операции</span><span>Зачисления</span><span>Списания</span></div>
+  <div class=empty>Операций пока нет</div></div>`;
+  $('bk').onclick=()=>{tab='settings';home()};$('tp').onclick=topup;
+  ['more','stt','gf','earn'].forEach(i=>$(i).onclick=soon);
+  getStars().then(n=>{STARS=n;if($('sv'))$('sv').textContent=n})}
+function topup(){
+  // СЮДА ПОЗЖЕ ДОБАВИМ ПЕРЕХОД В ТЕЛЕГРАМ-БОТА ДЛЯ ПОКУПКИ ЗВЁЗД
+  app.innerHTML=`<div class=top><button class=ib id=bk>←</button><h2>Пополнить</h2></div><div class=body></div>`;
+  $('bk').onclick=starsView}
+
+async function search(){
+  const n=(prompt('Юзернейм (без @)')||'').trim().toLowerCase().replace('@','');if(!n)return;
+  const r=await db.doc('usernames/'+n).get();if(!r.exists)return alert('Не найден');
+  const uid=r.data().uid;if(uid===me.uid)return alert('Это ты');
+  const id=[me.uid,uid].sort().join('_');
+  await db.doc('chats/'+id).set({type:'direct',members:[me.uid,uid],names:{[me.uid]:me.username,[uid]:n}},{merge:true});
+  openChat(id)}
+async function newChat(){
+  const t=prompt('1 — группа, 2 — канал');if(t!=='1'&&t!=='2')return;
+  const name=prompt('Название');if(!name)return;
+  const us=(prompt('Юзернеймы участников через запятую')||'').split(',').map(s=>s.trim().replace('@','').toLowerCase()).filter(Boolean);
+  const ids=[me.uid];
+  for(const n of us){const r=await db.doc('usernames/'+n).get();if(r.exists&&!ids.includes(r.data().uid))ids.push(r.data().uid)}
+  const ref=await db.collection('chats').add({type:t==='1'?'group':'channel',name,members:ids,owner:me.uid,lastAt:FV.serverTimestamp()});
+  openChat(ref.id)}
+
+// ===== ЧАТ =====
+const hl=(t,f)=>{if(!f)return esc(t);const i=t.toLowerCase().indexOf(f);if(i<0)return esc(t);
+  return esc(t.slice(0,i))+'<span class=mark>'+esc(t.slice(i,i+f.length))+'</span>'+esc(t.slice(i+f.length))};
+async function openChat(id){
+  const c=(await db.doc('chats/'+id).get()).data();let key;
+  if(c.type==='direct'){const o=c.members.find(x=>x!==me.uid);
+    key=await shared(JSON.parse((await db.doc('users/'+o).get()).data().pub))}
+  const can=c.type!=='channel'||c.owner===me.uid;
+  let M=[],sq='';
+  app.innerHTML=`<div class=ch id=hd></div><div class=msgs id=ms></div>${can?'<div class=bar><div class=inp><span id=em2>😊</span><input id=tx placeholder="Сообщение" autocomplete=off><span id=at>📎</span></div><button class=sb id=sb>🎤</button></div>':''}`;
+  const render=()=>{const ms=$('ms');if(!ms)return;const f=sq.toLowerCase();
+    ms.innerHTML=M.filter(m=>!f||m.t.toLowerCase().includes(f)).map(m=>`<div class="m${m.me?' me':''}">${!m.me&&c.type!=='direct'?'<b>@'+esc(m.n)+'</b>':''}${hl(m.t,f)}<span class=tm>${m.tm}${m.me?' ✓✓':''}</span></div>`).join('')||`<div class=empty>${f?'Ничего не найдено':'Сообщений пока нет'}</div>`;
+    if(!f)ms.scrollTop=ms.scrollHeight};
+  const head=()=>{
+    $('hd').innerHTML=`<button class=rb id=bk>←</button><div class=pill>${av(title(c),42)}<div style="min-width:0"><b>${esc(title(c))}</b><small>${TYPES[c.type]}</small></div></div><button class=rb id=sr2>🔍</button><button class=rb id=mn2>⋮</button>`;
+    $('bk').onclick=home;$('mn2').onclick=soon;
+    $('sr2').onclick=()=>{
+      $('hd').innerHTML=`<button class=rb id=bk2>←</button><input id=sin class=sin placeholder="Поиск по чату">`;
+      $('bk2').onclick=()=>{sq='';head();render()};
+      $('sin').oninput=e=>{sq=e.target.value.trim();render()};
+      $('sin').focus()}};
+  head();
+  unsub();
+  unsub=db.collection('chats/'+id+'/msgs').orderBy('at').limitToLast(100).onSnapshot(async s=>{
+    M=await Promise.all(s.docs.map(async d=>{
+      const m=d.data();let t=m.text;
+      if(m.ct){try{t=new TextDecoder().decode(await crypto.subtle.decrypt({name:'AES-GCM',iv:ub(m.iv)},key,ub(m.ct)))}catch(e){t='🔒 не удалось расшифровать'}}
+      return{t:t||'',me:m.from===me.uid,n:m.fromName||'',tm:tmf(m.at)}}));
+    render()});
+  if(can){
+    const tx=$('tx'),sb=$('sb');
+    tx.oninput=()=>sb.textContent=tx.value.trim()?'➤':'🎤';
+    $('em2').onclick=soon;$('at').onclick=soon;
+    sb.onpointerdown=e=>e.preventDefault();
+    const send=async()=>{
+      const t=tx.value.trim();if(!t)return soon();
+      tx.value='';sb.textContent='🎤';
+      const p={from:me.uid,fromName:me.username,at:FV.serverTimestamp()};
+      if(c.type==='direct'){const iv=crypto.getRandomValues(new Uint8Array(12));
+        p.iv=b64(iv);p.ct=b64(await crypto.subtle.encrypt({name:'AES-GCM',iv},key,new TextEncoder().encode(t)))}
+      else p.text=t;
+      await db.collection('chats/'+id+'/msgs').add(p);
+      db.doc('chats/'+id).update({lastAt:FV.serverTimestamp()})};
+    sb.onclick=send;
+    tx.onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();send()}}}}
+</script></body></html>vg>',
   set:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/></svg>',
   pro:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="9" cy="10" r=".8"/><circle cx="15" cy="10" r=".8"/><path d="M8 14c1 2 7 2 8 0"/></svg>',
   pen:'<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l4-1 11-11-3-3L5 16z"/></svg>'};
