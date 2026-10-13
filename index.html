@@ -31,7 +31,6 @@ input{width:100%;padding:15px 18px;border-radius:26px;border:0;background:#2b374
 .l1 small{color:#8493a6;font-size:14px;margin-left:8px}
 .l2{color:#8493a6;font-size:17px;margin-top:2px}
 .empty{color:#8493a6;text-align:center;padding:40px 20px}
-.prof{display:flex;flex-direction:column;align-items:center;gap:8px;padding:30px 0}.prof small{color:#8493a6}
 .wide{width:100%;margin:10px 0}
 .grp{background:#222f3f;border-radius:20px;margin:0 0 14px;overflow:hidden}
 .it{display:flex;gap:16px;align-items:center;padding:13px 16px}
@@ -46,6 +45,13 @@ input{width:100%;padding:15px 18px;border-radius:26px;border:0;background:#2b374
 .new{font-size:12px;background:#2ea6ff;border-radius:6px;padding:2px 6px;margin-left:6px}
 .tabs2{display:flex;gap:22px;color:#8493a6;font-weight:600;padding:8px 4px;overflow:auto;white-space:nowrap;text-align:left}.tabs2 .on{color:#5eb5f7}
 .sub2{color:#cfd7e3;padding:0 10px;line-height:1.4}.sub2 a{color:#5eb5f7}
+.pring{width:124px;height:124px;border-radius:50%;border:4px solid #1fc8d8;margin:6px auto 0;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.pn{font-size:26px;font-weight:700;text-align:center;margin:12px 0 2px}
+.ps{text-align:center;color:#8493a6;margin-bottom:16px}
+.pb{display:flex;gap:10px;margin-bottom:16px}
+.pb div{flex:1;background:#243040;border-radius:18px;padding:14px 4px;text-align:center;font-weight:600;font-size:14px}
+.pb span{display:block;font-size:24px;margin-bottom:2px}
+.info div{padding:12px 18px}.info b{display:block;font-weight:400;font-size:18px;word-break:break-word}.info small{color:#8493a6}
 .fab{position:absolute;right:20px;bottom:calc(92px + env(safe-area-inset-bottom));width:62px;height:62px;border-radius:50%;padding:0;box-shadow:0 4px 14px #0008;display:flex;align-items:center;justify-content:center}
 .fab svg{width:28px;height:28px}
 nav{position:absolute;left:14px;right:14px;bottom:calc(14px + env(safe-area-inset-bottom));display:flex;background:#243245ee;border-radius:36px;padding:6px;backdrop-filter:blur(8px)}
@@ -139,22 +145,38 @@ const bindRows=()=>document.querySelectorAll('.row[data-id]').forEach(r=>r.oncli
 const soon=()=>alert('Скоро');
 
 // ===== ЗВЁЗДЫ =====
-// Баланс лежит в stars/{uid}.balance. Из приложения его менять нельзя (см. правила Firestore).
 async function getStars(){try{const d=await db.doc('stars/'+me.uid).get();return d.exists?(d.data().balance||0):0}catch(e){return 0}}
+
+// ===== ПРОФИЛЬ: СОХРАНЕНИЕ =====
+async function saveMe(o){await db.doc('users/'+me.uid).update(o);Object.assign(me,o);draw()}
+async function edit(k,t){const v=prompt(t,me[k]||'');if(v===null)return;await saveMe({[k]:v.trim().slice(0,70)})}
+async function editName(){const v=prompt('Имя',me.name||me.username);if(v===null)return;await saveMe({name:v.trim().slice(0,30)})}
+function pickPhoto(){
+  const i=document.createElement('input');i.type='file';i.accept='image/*';
+  i.onchange=()=>{const f=i.files[0];if(!f)return;const im=new Image();
+    im.onload=async()=>{
+      const c=document.createElement('canvas');c.width=c.height=160;
+      const s=Math.min(im.width,im.height);
+      c.getContext('2d').drawImage(im,(im.width-s)/2,(im.height-s)/2,s,s,0,0,160,160);
+      await saveMe({photo:c.toDataURL('image/jpeg',.7)})};
+    im.src=URL.createObjectURL(f)};
+  i.click()}
 
 // ===== ГЛАВНЫЙ ЭКРАН =====
 function home(){
   unsub();unsubList();
   const st=tab==='settings';
   const head=st?'<div class=top><h1 style="font-size:26px">Настройки</h1></div>'
+    :tab==='profile'?'<div class=top><h1 style="font-size:26px">Профиль</h1></div>'
     :'<div class=top><div class=logo>M</div><h1>MajorGram</h1><button class=ib id=mn>⋮</button></div><div class=mnu id=mnu hidden><div id=m1>Новая группа или канал</div><div id=m2>Найти пользователя</div><div id=m3>Выйти</div></div>';
   app.innerHTML=`${head}<div class=body id=bd></div>${tab==='chats'?`<button class=fab id=fb>${IC.pen}</button>`:''}
   <nav>${[['chats','Чаты',IC.chat],['contacts','Контакты',IC.con],['settings','Настройки',IC.set],['profile','Профиль',IC.pro]].map(([k,n,i])=>`<div class="ni${tab===k?' on':''}" data-t="${k}">${i}<span>${n}</span></div>`).join('')}</nav>`;
-  if(!st){
-    $('mn').onclick=()=>$('mnu').hidden=!$('mnu').hidden;
-    $('m1').onclick=()=>{$('mnu').hidden=true;newChat()};
-    $('m2').onclick=()=>{$('mnu').hidden=true;search()};
-    $('m3').onclick=()=>auth.signOut()}
+  if(tab==='chats'||tab==='contacts'){
+    if($('mn')){
+      $('mn').onclick=()=>$('mnu').hidden=!$('mnu').hidden;
+      $('m1').onclick=()=>{$('mnu').hidden=true;newChat()};
+      $('m2').onclick=()=>{$('mnu').hidden=true;search()};
+      $('m3').onclick=()=>auth.signOut()}}
   if(tab==='chats')$('fb').onclick=search;
   document.querySelectorAll('.ni').forEach(n=>n.onclick=()=>{tab=n.dataset.t;home()});
   unsubList=db.collection('chats').where('members','array-contains',me.uid).onSnapshot(s=>{
@@ -188,7 +210,19 @@ function draw(){
     b.querySelectorAll('.it').forEach(e=>e.onclick=()=>{const a=e.dataset.a;a==='stars'?starsView():a==='out'?auth.signOut():soon()});
     getStars().then(n=>{STARS=n;const e=$('sbal');if(e)e.textContent=n})}
   else{
-    b.innerHTML=`<div class=prof>${av('@'+me.username,96)}<h2>@${esc(me.username)}</h2><small>${esc(auth.currentUser.email||'')}</small></div>`}}
+    b.innerHTML=`<div class=pring>${me.photo?`<img src="${me.photo}" style="width:100%;height:100%;object-fit:cover">`:av('@'+me.username,116)}</div>
+    <div class=pn>${esc(me.name||'@'+me.username)}</div><div class=ps>в сети</div>
+    <div class=pb><div id=pf><span>📷</span>Выбрать фото</div><div id=pe><span>✏️</span>Изменить</div><div id=pg><span>⚙️</span>Настройки</div></div>
+    <div class="grp info"><div><b>${esc(auth.currentUser.email||'')}</b><small>Почта</small></div>
+    <div><b>@${esc(me.username)}</b><small>Имя пользователя</small></div>
+    <div id=pi2><b>${esc(me.about||'Не указано')}</b><small>О себе</small></div>
+    <div id=pi3><b>${esc(me.bday||'Не указано')}</b><small>День рождения</small></div>
+    <div id=pi4><b>Не указан</b><small>Телефон</small></div></div>`;
+    $('pf').onclick=pickPhoto;$('pe').onclick=editName;
+    $('pg').onclick=()=>{tab='settings';home()};
+    $('pi2').onclick=()=>edit('about','О себе');
+    $('pi3').onclick=()=>edit('bday','День рождения (например 31.12.2000)');
+    $('pi4').onclick=soon}}
 
 // ===== ЭКРАН «ЗВЁЗДЫ MAJORGRAM» =====
 function starsView(){
@@ -201,7 +235,7 @@ function starsView(){
   <div class="grp it" id=earn style="text-align:left"><div class=ico style="background:#34c37a">★</div><div class=itt>Заработать звёзды <span class=new>NEW</span><small class=sub>Скоро</small></div></div>
   <div class=tabs2><span class=on>Все операции</span><span>Зачисления</span><span>Списания</span></div>
   <div class=empty>Операций пока нет</div></div>`;
-  $('bk').onclick=home;$('tp').onclick=topup;
+  $('bk').onclick=()=>{tab='settings';home()};$('tp').onclick=topup;
   ['more','stt','gf','earn'].forEach(i=>$(i).onclick=soon);
   getStars().then(n=>{STARS=n;if($('sv'))$('sv').textContent=n})}
 function topup(){
