@@ -1,23 +1,53 @@
 <!DOCTYPE html>
 <html lang="ru"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#0b1020"><title>MajorGram</title>
+<meta name="theme-color" content="#1c2634"><title>MajorGram</title>
 <link rel="manifest" href="manifest.json">
 <script>if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js')</script>
 <style>
-*{box-sizing:border-box}body{margin:0;background:#0b1020;color:#e8ebf5;font:16px system-ui,sans-serif}
-#app{height:100dvh;display:flex;flex-direction:column;padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)}
-header{display:flex;align-items:center;gap:8px;padding:12px 14px;background:#141b33;font-weight:700}
-header span{flex:1}button{border:0;border-radius:10px;padding:10px 14px;background:#7c5cff;color:#fff;font:inherit}
-button.alt{background:#232c4d}header button{padding:6px 10px}
-input{width:100%;padding:12px;border-radius:10px;border:1px solid #232c4d;background:#141b33;color:#fff;font:inherit}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:#1c2634;color:#fff;font:16px system-ui,sans-serif}
+#app{height:100dvh;display:flex;flex-direction:column;position:relative;overflow:hidden;padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)}
+button{border:0;border-radius:24px;padding:14px 18px;background:#2ea6ff;color:#fff;font:inherit;font-weight:600}
+button.alt{background:#2b3748}
+input{width:100%;padding:15px 18px;border-radius:26px;border:0;background:#2b3748;color:#fff;font:inherit;outline:0}
 .auth{margin:auto;width:min(340px,90%);display:flex;flex-direction:column;gap:10px}.auth h1{text-align:center}
 #er{color:#ff7a8a;min-height:1em;font-size:14px}
-.list{flex:1;overflow:auto}.row{padding:14px;border-bottom:1px solid #1b2442}.row small{color:#8a93b8;display:block}
-.msgs{flex:1;overflow:auto;padding:10px;display:flex;flex-direction:column;gap:6px}
-.m{max-width:78%;padding:8px 12px;border-radius:14px;background:#1b2442;white-space:pre-wrap;word-break:break-word;align-self:flex-start}
-.m.me{background:#7c5cff;align-self:flex-end}.m b{display:block;font-size:12px;color:#b9a9ff}
-form{display:flex;gap:8px;padding:8px}
+.top{display:flex;align-items:center;gap:12px;padding:14px 16px}
+.top h1,.top h2{flex:1;margin:0;font-size:28px}.top h2{font-size:20px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.logo{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#2ea6ff,#8a5cff);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:22px;border:3px solid #34c37a}
+.ib{background:none;color:#fff;font-size:26px;padding:4px 10px}
+.body{flex:1;overflow:auto;padding:0 12px 130px}
+.sq{margin:4px 0 14px}
+.tabs{display:flex;background:#243040;border-radius:30px;padding:5px;margin-bottom:8px}
+.tb{flex:1;text-align:center;padding:12px 6px;border-radius:25px;color:#9aa7b8;font-weight:600}
+.tb.on{background:#2b4764;color:#5eb5f7}
+.tb i{font-style:normal;font-size:14px;background:#3a4658;color:#fff;border-radius:12px;padding:1px 8px;margin-left:4px}
+.tb.on i{background:#4aa8ee;color:#10243a}
+.row{display:flex;gap:14px;padding:10px 8px;align-items:center}
+.av{border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:600;color:#fff;flex:none}
+.rt{flex:1;min-width:0}.l1{display:flex;justify-content:space-between;align-items:baseline}
+.l1 b{font-size:18px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.l1 small{color:#8493a6;font-size:14px;margin-left:8px}
+.l2{color:#8493a6;font-size:17px;margin-top:2px}
+.empty{color:#8493a6;text-align:center;padding:40px 20px}
+.set{padding:18px 8px;font-size:18px;border-bottom:1px solid #263243}
+.prof{display:flex;flex-direction:column;align-items:center;gap:8px;padding:30px 0}.prof small{color:#8493a6}
+.wide{width:100%;margin:10px 0}
+.fab{position:absolute;right:20px;bottom:calc(92px + env(safe-area-inset-bottom));width:62px;height:62px;border-radius:50%;padding:0;box-shadow:0 4px 14px #0008;display:flex;align-items:center;justify-content:center}
+.fab svg{width:28px;height:28px}
+nav{position:absolute;left:14px;right:14px;bottom:calc(14px + env(safe-area-inset-bottom));display:flex;background:#243245ee;border-radius:36px;padding:6px;backdrop-filter:blur(8px)}
+.ni{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 0;border-radius:30px;font-size:13px;font-weight:600}
+.ni svg{width:28px;height:28px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.ni.on{background:#2d4863;color:#5eb5f7}
+.mnu{position:absolute;right:12px;top:calc(62px + env(safe-area-inset-top));background:#2b3748;border-radius:14px;padding:6px 0;z-index:5;box-shadow:0 6px 20px #000a}
+.mnu[hidden]{display:none}.mnu div{padding:14px 20px}
+.msgs{flex:1;overflow:auto;padding:10px 12px;display:flex;flex-direction:column;gap:6px;background:#0e1621}
+.m{max-width:78%;padding:8px 12px;border-radius:16px 16px 16px 4px;background:#182533;white-space:pre-wrap;word-break:break-word;align-self:flex-start}
+.m.me{background:#2b5278;border-radius:16px 16px 4px 16px;align-self:flex-end}
+.m b{display:block;font-size:13px;color:#6ab3f3}
+form{display:flex;gap:8px;padding:8px 10px;background:#17212b}
+form button{width:48px;height:48px;border-radius:50%;padding:0;font-size:20px;flex:none}
 </style></head><body><div id="app"></div>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
@@ -33,7 +63,7 @@ firebase.initializeApp({
 const auth=firebase.auth(),db=firebase.firestore(),FV=firebase.firestore.FieldValue;
 const app=document.getElementById('app'),$=i=>document.getElementById(i);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-let me,K,unsub=()=>{},unsubList=()=>{},busy=0;
+let me,K,unsub=()=>{},unsubList=()=>{},busy=0,tab='chats',flt='all',q='',CH=[];
 
 // ===== ШИФРОВАНИЕ (личные чаты) =====
 const b64=b=>btoa(String.fromCharCode(...new Uint8Array(b))),ub=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
@@ -77,17 +107,63 @@ async function begin(u){
   if(d.data().pub!==JSON.stringify(K.pub))await db.doc('users/'+u.uid).update({pub:JSON.stringify(K.pub)});
   home()}
 
-// ===== СПИСОК ЧАТОВ =====
+// ===== ВИД =====
 const TYPES={direct:'личный чат',group:'группа',channel:'канал'};
 const title=c=>c.type==='direct'?'@'+c.names[Object.keys(c.names).find(k=>k!==me.uid)]:c.name;
+const COLS=['#e17076','#faa774','#a695e7','#7bc862','#6ec9cb','#65aadd','#ee7aae'];
+const av=(t,s=52)=>{let h=0;for(const c of t)h=(h*31+c.charCodeAt(0))>>>0;
+  const l=[...t.replace(/^@/,'')][0]||'?';
+  return `<div class=av style="width:${s}px;height:${s}px;background:${COLS[h%7]};font-size:${s*.42}px">${esc(l.toUpperCase())}</div>`};
+const fmt=ts=>{if(!ts)return'';const d=ts.toDate(),n=new Date();
+  return d.toDateString()===n.toDateString()?d.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}):d.toLocaleDateString([],{day:'2-digit',month:'2-digit'})};
+const IC={
+  chat:'<svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></svg>',
+  con:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="10" r="3"/><path d="M6.5 18c2-3.5 9-3.5 11 0"/></svg>',
+  set:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/></svg>',
+  pro:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="9" cy="10" r=".8"/><circle cx="15" cy="10" r=".8"/><path d="M8 14c1 2 7 2 8 0"/></svg>',
+  pen:'<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l4-1 11-11-3-3L5 16z"/></svg>'};
+const rowHtml=c=>`<div class=row data-id="${c.id}">${av(title(c))}<div class=rt><div class=l1><b>${esc(title(c))}</b><small>${fmt(c.lastAt)}</small></div><div class=l2>${TYPES[c.type]}</div></div></div>`;
+const bindRows=()=>document.querySelectorAll('.row[data-id]').forEach(r=>r.onclick=()=>openChat(r.dataset.id));
+
+// ===== ГЛАВНЫЙ ЭКРАН =====
 function home(){
   unsub();unsubList();
-  app.innerHTML=`<header><span>MajorGram</span><button id=sr>🔍</button><button id=nw>＋</button><button id=lo class=alt>⎋</button></header><div class=list id=ls></div>`;
-  $('lo').onclick=()=>auth.signOut();$('sr').onclick=search;$('nw').onclick=newChat;
+  app.innerHTML=`<div class=top><div class=logo>M</div><h1>MajorGram</h1><button class=ib id=mn>⋮</button></div>
+  <div class=mnu id=mnu hidden><div id=m1>Новая группа или канал</div><div id=m2>Найти пользователя</div><div id=m3>Выйти</div></div>
+  <div class=body id=bd></div><button class=fab id=fb>${IC.pen}</button>
+  <nav>${[['chats','Чаты',IC.chat],['contacts','Контакты',IC.con],['settings','Настройки',IC.set],['profile','Профиль',IC.pro]].map(([k,n,i])=>`<div class="ni${tab===k?' on':''}" data-t="${k}">${i}<span>${n}</span></div>`).join('')}</nav>`;
+  $('mn').onclick=()=>$('mnu').hidden=!$('mnu').hidden;
+  $('m1').onclick=()=>{$('mnu').hidden=true;newChat()};
+  $('m2').onclick=()=>{$('mnu').hidden=true;search()};
+  $('m3').onclick=()=>auth.signOut();
+  $('fb').onclick=search;
+  document.querySelectorAll('.ni').forEach(n=>n.onclick=()=>{tab=n.dataset.t;home()});
   unsubList=db.collection('chats').where('members','array-contains',me.uid).onSnapshot(s=>{
-    const a=s.docs.map(d=>({id:d.id,...d.data()})).sort((x,y)=>(y.lastAt?.seconds||0)-(x.lastAt?.seconds||0));
-    $('ls').innerHTML=a.map(c=>`<div class=row data-id="${c.id}">${esc(title(c))}<small>${TYPES[c.type]}</small></div>`).join('')||'<div class=row><small>Пока пусто. Найди человека через 🔍</small></div>';
-    document.querySelectorAll('.row[data-id]').forEach(r=>r.onclick=()=>openChat(r.dataset.id))})}
+    CH=s.docs.map(d=>({id:d.id,...d.data()})).sort((x,y)=>(y.lastAt?.seconds||0)-(x.lastAt?.seconds||0));
+    $('cl')?list():draw()});
+  draw()}
+function list(){
+  const l=$('cl');if(!l)return;
+  $('c1').textContent=CH.length;$('c2').textContent=CH.filter(c=>c.type==='channel').length;
+  const a=CH.filter(c=>(flt==='all'||c.type==='channel')&&title(c).toLowerCase().includes(q.toLowerCase()));
+  l.innerHTML=a.map(rowHtml).join('')||'<div class=empty>Пока пусто. Нажми ✎ и найди человека по юзернейму</div>';
+  bindRows()}
+function draw(){
+  const b=$('bd');if(!b)return;
+  if(tab==='chats'){
+    b.innerHTML=`<input id=sq class=sq placeholder="Поиск чатов" value="${esc(q)}"><div class=tabs><div class="tb${flt==='all'?' on':''}" data-f=all>Все чаты <i id=c1>0</i></div><div class="tb${flt==='channel'?' on':''}" data-f=channel>Каналы <i id=c2>0</i></div></div><div id=cl></div>`;
+    $('sq').oninput=e=>{q=e.target.value;list()};
+    document.querySelectorAll('.tb').forEach(t=>t.onclick=()=>{flt=t.dataset.f;draw()});
+    list()}
+  else if(tab==='contacts'){
+    const a=CH.filter(c=>c.type==='direct');
+    b.innerHTML=`<button class="wide" id=fd>Найти по юзернейму</button>`+(a.map(rowHtml).join('')||'<div class=empty>Контактов пока нет</div>');
+    $('fd').onclick=search;bindRows()}
+  else if(tab==='settings'){
+    b.innerHTML=`<div class=set id=s1>Новая группа или канал</div><div class=set id=s2>Выйти из аккаунта</div>`;
+    $('s1').onclick=newChat;$('s2').onclick=()=>auth.signOut()}
+  else{
+    b.innerHTML=`<div class=prof>${av('@'+me.username,96)}<h2>@${esc(me.username)}</h2><small>${esc(auth.currentUser.email||'')}</small></div>`}}
 async function search(){
   const n=(prompt('Юзернейм (без @)')||'').trim().toLowerCase().replace('@','');if(!n)return;
   const r=await db.doc('usernames/'+n).get();if(!r.exists)return alert('Не найден');
@@ -110,7 +186,7 @@ async function openChat(id){
   if(c.type==='direct'){const o=c.members.find(x=>x!==me.uid);
     key=await shared(JSON.parse((await db.doc('users/'+o).get()).data().pub))}
   const can=c.type!=='channel'||c.owner===me.uid;
-  app.innerHTML=`<header><button id=bk class=alt>←</button><span>${esc(title(c))}</span></header><div class=msgs id=ms></div>${can?'<form id=fm><input id=tx placeholder="Сообщение" autocomplete=off><button>➤</button></form>':''}`;
+  app.innerHTML=`<div class=top><button class=ib id=bk>←</button>${av(title(c),40)}<h2>${esc(title(c))}</h2></div><div class=msgs id=ms></div>${can?'<form id=fm><input id=tx placeholder="Сообщение" autocomplete=off><button>➤</button></form>':''}`;
   $('bk').onclick=home;
   unsub();
   unsub=db.collection('chats/'+id+'/msgs').orderBy('at').limitToLast(100).onSnapshot(async s=>{
