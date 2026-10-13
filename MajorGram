@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b1020"><title>MajorGram</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#0b1020;color:#e8ebf5;font:16px system-ui,sans-serif}
+#app{height:100dvh;display:flex;flex-direction:column;padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)}
+header{display:flex;align-items:center;gap:8px;padding:12px 14px;background:#141b33;font-weight:700}
+header span{flex:1}button{border:0;border-radius:10px;padding:10px 14px;background:#7c5cff;color:#fff;font:inherit}
+button.alt{background:#232c4d}header button{padding:6px 10px}
+input{width:100%;padding:12px;border-radius:10px;border:1px solid #232c4d;background:#141b33;color:#fff;font:inherit}
+.auth{margin:auto;width:min(340px,90%);display:flex;flex-direction:column;gap:10px}.auth h1{text-align:center}
+#er{color:#ff7a8a;min-height:1em;font-size:14px}
+.list{flex:1;overflow:auto}.row{padding:14px;border-bottom:1px solid #1b2442}.row small{color:#8a93b8;display:block}
+.msgs{flex:1;overflow:auto;padding:10px;display:flex;flex-direction:column;gap:6px}
+.m{max-width:78%;padding:8px 12px;border-radius:14px;background:#1b2442;white-space:pre-wrap;word-break:break-word;align-self:flex-start}
+.m.me{background:#7c5cff;align-self:flex-end}.m b{display:block;font-size:12px;color:#b9a9ff}
+form{display:flex;gap:8px;padding:8px}
+</style></head><body><div id="app"></div>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script>
+firebase.initializeApp({
+  apiKey:"AIzaSyATikQr2x_dEq_rAga1m4--gVCCVQdR3-M",
+  authDomain:"majorgram-3cd73.firebaseapp.com",
+  projectId:"majorgram-3cd73",
+  appId:"1:1026895019291:web:e9e8b0e01c992a33b327be"
+});
+
+const auth=firebase.auth(),db=firebase.firestore(),FV=firebase.firestore.FieldValue;
+const app=document.getElementById('app'),$=i=>document.getElementById(i);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let me,K,unsub=()=>{},unsubList=()=>{},busy=0;
+
+// ===== ШИФРОВАНИЕ (личные чаты) =====
+const b64=b=>btoa(String.fromCharCode(...new Uint8Array(b))),ub=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
+const EC={name:'ECDH',namedCurve:'P-256'};
+async function keys(){const s=localStorage.getItem('mg_k');if(s)return JSON.parse(s);
+  const p=await crypto.subtle.generateKey(EC,true,['deriveKey']);
+  const o={priv:await crypto.subtle.exportKey('jwk',p.privateKey),pub:await crypto.subtle.exportKey('jwk',p.publicKey)};
+  localStorage.setItem('mg_k',JSON.stringify(o));return o}
+async function shared(pubJ){
+  const pr=await crypto.subtle.importKey('jwk',K.priv,EC,false,['deriveKey']);
+  const pu=await crypto.subtle.importKey('jwk',pubJ,EC,false,[]);
+  return crypto.subtle.deriveKey({name:'ECDH',public:pu},pr,{name:'AES-GCM',length:256},false,['encrypt','decrypt'])}
+
+// ===== ВХОД / РЕГИСТРАЦИЯ =====
+const run=async f=>{try{await f()}catch(e){$('er').textContent=e.message}};
+function authView(){
+  app.innerHTML=`<div class=auth><h1>MajorGram</h1><input id=em type=email placeholder="Почта"><input id=pw type=password placeholder="Пароль"><input id=un placeholder="@юзернейм (для регистрации)"><button id=li>Войти</button><button id=su class=alt>Регистрация</button><p id=er></p></div>`;
+  $('li').onclick=()=>run(()=>auth.signInWithEmailAndPassword($('em').value,$('pw').value));
+  $('su').onclick=()=>run(async()=>{
+    const n=$('un').value.replace('@','').trim().toLowerCase();
+    if(!/^[a-z0-9_]{3,20}$/.test(n))throw Error('Юзернейм: 3–20 символов, a-z, 0-9 и _');
+    busy=1;let c;
+    try{
+      c=await auth.createUserWithEmailAndPassword($('em').value,$('pw').value);
+      K=await keys();
+      await db.runTransaction(async t=>{
+        const r=db.doc('usernames/'+n);
+        if((await t.get(r)).exists)throw Error('Юзернейм занят');
+        t.set(r,{uid:c.user.uid});
+        t.set(db.doc('users/'+c.user.uid),{username:n,pub:JSON.stringify(K.pub)})});
+    }catch(e){if(c)await c.user.delete();busy=0;throw e}
+    busy=0;await begin(c.user)})}
+auth.onAuthStateChanged(async u=>{if(busy)return;unsub();unsubList();
+  if(!u){if(!$('li'))authView();return}
+  await begin(u)});
+async function begin(u){
+  K=await keys();
+  const d=await db.doc('users/'+u.uid).get();
+  if(!d.exists){await auth.signOut();return}
+  me={uid:u.uid,...d.data()};
+  if(d.data().pub!==JSON.stringify(K.pub))await db.doc('users/'+u.uid).update({pub:JSON.stringify(K.pub)});
+  home()}
+
+// ===== СПИСОК ЧАТОВ =====
+const TYPES={direct:'личный чат',group:'группа',channel:'канал'};
+const title=c=>c.type==='direct'?'@'+c.names[Object.keys(c.names).find(k=>k!==me.uid)]:c.name;
+function home(){
+  unsub();unsubList();
+  app.innerHTML=`<header><span>MajorGram</span><button id=sr>🔍</button><button id=nw>＋</button><button id=lo class=alt>⎋</button></header><div class=list id=ls></div>`;
+  $('lo').onclick=()=>auth.signOut();$('sr').onclick=search;$('nw').onclick=newChat;
+  unsubList=db.collection('chats').where('members','array-contains',me.uid).onSnapshot(s=>{
+    const a=s.docs.map(d=>({id:d.id,...d.data()})).sort((x,y)=>(y.lastAt?.seconds||0)-(x.lastAt?.seconds||0));
+    $('ls').innerHTML=a.map(c=>`<div class=row data-id="${c.id}">${esc(title(c))}<small>${TYPES[c.type]}</small></div>`).join('')||'<div class=row><small>Пока пусто. Найди человека через 🔍</small></div>';
+    document.querySelectorAll('.row[data-id]').forEach(r=>r.onclick=()=>openChat(r.dataset.id))})}
+async function search(){
+  const n=(prompt('Юзернейм (без @)')||'').trim().toLowerCase().replace('@','');if(!n)return;
+  const r=await db.doc('usernames/'+n).get();if(!r.exists)return alert('Не найден');
+  const uid=r.data().uid;if(uid===me.uid)return alert('Это ты');
+  const id=[me.uid,uid].sort().join('_');
+  await db.doc('chats/'+id).set({type:'direct',members:[me.uid,uid],names:{[me.uid]:me.username,[uid]:n}},{merge:true});
+  openChat(id)}
+async function newChat(){
+  const t=prompt('1 — группа, 2 — канал');if(t!=='1'&&t!=='2')return;
+  const name=prompt('Название');if(!name)return;
+  const us=(prompt('Юзернеймы участников через запятую')||'').split(',').map(s=>s.trim().replace('@','').toLowerCase()).filter(Boolean);
+  const ids=[me.uid];
+  for(const n of us){const r=await db.doc('usernames/'+n).get();if(r.exists&&!ids.includes(r.data().uid))ids.push(r.data().uid)}
+  const ref=await db.collection('chats').add({type:t==='1'?'group':'channel',name,members:ids,owner:me.uid,lastAt:FV.serverTimestamp()});
+  openChat(ref.id)}
+
+// ===== ЧАТ =====
+async function openChat(id){
+  const c=(await db.doc('chats/'+id).get()).data();let key;
+  if(c.type==='direct'){const o=c.members.find(x=>x!==me.uid);
+    key=await shared(JSON.parse((await db.doc('users/'+o).get()).data().pub))}
+  const can=c.type!=='channel'||c.owner===me.uid;
+  app.innerHTML=`<header><button id=bk class=alt>←</button><span>${esc(title(c))}</span></header><div class=msgs id=ms></div>${can?'<form id=fm><input id=tx placeholder="Сообщение" autocomplete=off><button>➤</button></form>':''}`;
+  $('bk').onclick=home;
+  unsub();
+  unsub=db.collection('chats/'+id+'/msgs').orderBy('at').limitToLast(100).onSnapshot(async s=>{
+    const h=await Promise.all(s.docs.map(async d=>{
+      const m=d.data();let t=m.text;
+      if(m.ct){try{t=new TextDecoder().decode(await crypto.subtle.decrypt({name:'AES-GCM',iv:ub(m.iv)},key,ub(m.ct)))}catch(e){t='🔒 не удалось расшифровать'}}
+      const mine=m.from===me.uid;
+      return `<div class="m${mine?' me':''}">${!mine&&c.type!=='direct'?'<b>@'+esc(m.fromName)+'</b>':''}${esc(t)}</div>`}));
+    const ms=$('ms');if(!ms)return;ms.innerHTML=h.join('');ms.scrollTop=ms.scrollHeight});
+  if(can)$('fm').onsubmit=async e=>{
+    e.preventDefault();const t=$('tx').value.trim();if(!t)return;$('tx').value='';
+    const p={from:me.uid,fromName:me.username,at:FV.serverTimestamp()};
+    if(c.type==='direct'){const iv=crypto.getRandomValues(new Uint8Array(12));
+      p.iv=b64(iv);p.ct=b64(await crypto.subtle.encrypt({name:'AES-GCM',iv},key,new TextEncoder().encode(t)))}
+    else p.text=t;
+    await db.collection('chats/'+id+'/msgs').add(p);
+    db.doc('chats/'+id).update({lastAt:FV.serverTimestamp()})}}
+</script></body></html>
