@@ -31,9 +31,21 @@ input{width:100%;padding:15px 18px;border-radius:26px;border:0;background:#2b374
 .l1 small{color:#8493a6;font-size:14px;margin-left:8px}
 .l2{color:#8493a6;font-size:17px;margin-top:2px}
 .empty{color:#8493a6;text-align:center;padding:40px 20px}
-.set{padding:18px 8px;font-size:18px;border-bottom:1px solid #263243}
 .prof{display:flex;flex-direction:column;align-items:center;gap:8px;padding:30px 0}.prof small{color:#8493a6}
 .wide{width:100%;margin:10px 0}
+.grp{background:#222f3f;border-radius:20px;margin:0 0 14px;overflow:hidden}
+.it{display:flex;gap:16px;align-items:center;padding:13px 16px}
+.ico{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:21px;flex:none;color:#fff}
+.itt{flex:1;font-size:18px}.itt small{display:block}
+.sub{color:#8493a6;font-size:15px}.val{color:#5eb5f7;font-size:20px}
+.gt{color:#5eb5f7;font-weight:600;padding:14px 16px 0}
+.ver{text-align:center;color:#6b7a8d;font-size:14px;margin:6px 0}
+.bal{display:flex;justify-content:center;align-items:center;gap:10px;font-size:44px}
+.btns{display:flex;gap:12px;margin:16px 0 14px}.btns button{flex:1}
+.lnk{color:#5eb5f7;display:block}
+.new{font-size:12px;background:#2ea6ff;border-radius:6px;padding:2px 6px;margin-left:6px}
+.tabs2{display:flex;gap:22px;color:#8493a6;font-weight:600;padding:8px 4px;overflow:auto;white-space:nowrap;text-align:left}.tabs2 .on{color:#5eb5f7}
+.sub2{color:#cfd7e3;padding:0 10px;line-height:1.4}.sub2 a{color:#5eb5f7}
 .fab{position:absolute;right:20px;bottom:calc(92px + env(safe-area-inset-bottom));width:62px;height:62px;border-radius:50%;padding:0;box-shadow:0 4px 14px #0008;display:flex;align-items:center;justify-content:center}
 .fab svg{width:28px;height:28px}
 nav{position:absolute;left:14px;right:14px;bottom:calc(14px + env(safe-area-inset-bottom));display:flex;background:#243245ee;border-radius:36px;padding:6px;backdrop-filter:blur(8px)}
@@ -63,7 +75,7 @@ firebase.initializeApp({
 const auth=firebase.auth(),db=firebase.firestore(),FV=firebase.firestore.FieldValue;
 const app=document.getElementById('app'),$=i=>document.getElementById(i);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-let me,K,unsub=()=>{},unsubList=()=>{},busy=0,tab='chats',flt='all',q='',CH=[];
+let me,K,unsub=()=>{},unsubList=()=>{},busy=0,tab='chats',flt='all',q='',CH=[],STARS=0;
 
 // ===== ШИФРОВАНИЕ (личные чаты) =====
 const b64=b=>btoa(String.fromCharCode(...new Uint8Array(b))),ub=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
@@ -124,19 +136,26 @@ const IC={
   pen:'<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l4-1 11-11-3-3L5 16z"/></svg>'};
 const rowHtml=c=>`<div class=row data-id="${c.id}">${av(title(c))}<div class=rt><div class=l1><b>${esc(title(c))}</b><small>${fmt(c.lastAt)}</small></div><div class=l2>${TYPES[c.type]}</div></div></div>`;
 const bindRows=()=>document.querySelectorAll('.row[data-id]').forEach(r=>r.onclick=()=>openChat(r.dataset.id));
+const soon=()=>alert('Скоро');
+
+// ===== ЗВЁЗДЫ =====
+// Баланс лежит в stars/{uid}.balance. Из приложения его менять нельзя (см. правила Firestore).
+async function getStars(){try{const d=await db.doc('stars/'+me.uid).get();return d.exists?(d.data().balance||0):0}catch(e){return 0}}
 
 // ===== ГЛАВНЫЙ ЭКРАН =====
 function home(){
   unsub();unsubList();
-  app.innerHTML=`<div class=top><div class=logo>M</div><h1>MajorGram</h1><button class=ib id=mn>⋮</button></div>
-  <div class=mnu id=mnu hidden><div id=m1>Новая группа или канал</div><div id=m2>Найти пользователя</div><div id=m3>Выйти</div></div>
-  <div class=body id=bd></div><button class=fab id=fb>${IC.pen}</button>
+  const st=tab==='settings';
+  const head=st?'<div class=top><h1 style="font-size:26px">Настройки</h1></div>'
+    :'<div class=top><div class=logo>M</div><h1>MajorGram</h1><button class=ib id=mn>⋮</button></div><div class=mnu id=mnu hidden><div id=m1>Новая группа или канал</div><div id=m2>Найти пользователя</div><div id=m3>Выйти</div></div>';
+  app.innerHTML=`${head}<div class=body id=bd></div>${tab==='chats'?`<button class=fab id=fb>${IC.pen}</button>`:''}
   <nav>${[['chats','Чаты',IC.chat],['contacts','Контакты',IC.con],['settings','Настройки',IC.set],['profile','Профиль',IC.pro]].map(([k,n,i])=>`<div class="ni${tab===k?' on':''}" data-t="${k}">${i}<span>${n}</span></div>`).join('')}</nav>`;
-  $('mn').onclick=()=>$('mnu').hidden=!$('mnu').hidden;
-  $('m1').onclick=()=>{$('mnu').hidden=true;newChat()};
-  $('m2').onclick=()=>{$('mnu').hidden=true;search()};
-  $('m3').onclick=()=>auth.signOut();
-  $('fb').onclick=search;
+  if(!st){
+    $('mn').onclick=()=>$('mnu').hidden=!$('mnu').hidden;
+    $('m1').onclick=()=>{$('mnu').hidden=true;newChat()};
+    $('m2').onclick=()=>{$('mnu').hidden=true;search()};
+    $('m3').onclick=()=>auth.signOut()}
+  if(tab==='chats')$('fb').onclick=search;
   document.querySelectorAll('.ni').forEach(n=>n.onclick=()=>{tab=n.dataset.t;home()});
   unsubList=db.collection('chats').where('members','array-contains',me.uid).onSnapshot(s=>{
     CH=s.docs.map(d=>({id:d.id,...d.data()})).sort((x,y)=>(y.lastAt?.seconds||0)-(x.lastAt?.seconds||0));
@@ -160,10 +179,36 @@ function draw(){
     b.innerHTML=`<button class="wide" id=fd>Найти по юзернейму</button>`+(a.map(rowHtml).join('')||'<div class=empty>Контактов пока нет</div>');
     $('fd').onclick=search;bindRows()}
   else if(tab==='settings'){
-    b.innerHTML=`<div class=set id=s1>Новая группа или канал</div><div class=set id=s2>Выйти из аккаунта</div>`;
-    $('s1').onclick=newChat;$('s2').onclick=()=>auth.signOut()}
+    const it=(a,c,i,t,r='')=>`<div class=it data-a=${a}><div class=ico style="background:${c}">${i}</div><div class=itt>${t}</div>${r}</div>`;
+    b.innerHTML=`<div class=grp>${it('lang','#a355e8','🌐','Язык<small class=sub>Русский</small>')}</div>
+    <div class=grp>${it('prem','#7b6cf0','★','MajorGram Premium')}${it('stars','#f5a623','★','Звёзды MajorGram',`<span class=val id=sbal>${STARS}</span>`)}${it('biz','#e5484d','🏪','MajorGram для бизнеса')}${it('gift','#f2711c','🎁','Отправить подарок')}</div>
+    <div class=grp><div class=gt>Помощь</div>${it('ask','#f5a623','💬','Задать вопрос')}${it('faq','#2ea6ff','?','Вопросы о MajorGram')}${it('feat','#a355e8','💡','Возможности MajorGram')}${it('priv','#34c37a','🛡','Политика конфиденциальности')}</div>
+    <div class=grp>${it('out','#2b3748','⎋','Выйти из аккаунта')}</div>
+    <p class=ver>MajorGram v0.1</p>`;
+    b.querySelectorAll('.it').forEach(e=>e.onclick=()=>{const a=e.dataset.a;a==='stars'?starsView():a==='out'?auth.signOut():soon()});
+    getStars().then(n=>{STARS=n;const e=$('sbal');if(e)e.textContent=n})}
   else{
     b.innerHTML=`<div class=prof>${av('@'+me.username,96)}<h2>@${esc(me.username)}</h2><small>${esc(auth.currentUser.email||'')}</small></div>`}}
+
+// ===== ЭКРАН «ЗВЁЗДЫ MAJORGRAM» =====
+function starsView(){
+  app.innerHTML=`<div class=top><button class=ib id=bk>←</button></div><div class=body style="text-align:center;padding-bottom:30px">
+  <svg width=130 height=130 viewBox="0 0 24 24"><defs><linearGradient id=g1 x1=0 y1=0 x2=1 y2=1><stop offset=0 stop-color="#fff35c"/><stop offset=1 stop-color="#f5a623"/></linearGradient></defs><path fill="url(#g1)" stroke="#ffd23f" stroke-linejoin="round" stroke-width="1" d="M12 2.5l2.9 6.3 6.8.7-5.1 4.6 1.5 6.8L12 17.4l-6.1 3.5 1.5-6.8L2.3 9.5l6.8-.7z"/></svg>
+  <h1 style="margin:10px 0 8px;font-size:26px">Звёзды MajorGram</h1>
+  <p class=sub2>Звёзды MajorGram нужны для оплаты контента и услуг. <a id=more>Подробнее о звёздах ›</a></p>
+  <div class=grp style="padding:22px 16px;margin:22px 0 14px"><div class=bal><span>⭐</span><b id=sv>${STARS}</b></div><div class=sub>Ваш баланс</div>
+  <div class=btns><button id=tp>＋ Пополнить</button><button id=stt>📊 Статистика</button></div><a id=gf class=lnk>🎁 Подарить звёзды друзьям</a></div>
+  <div class="grp it" id=earn style="text-align:left"><div class=ico style="background:#34c37a">★</div><div class=itt>Заработать звёзды <span class=new>NEW</span><small class=sub>Скоро</small></div></div>
+  <div class=tabs2><span class=on>Все операции</span><span>Зачисления</span><span>Списания</span></div>
+  <div class=empty>Операций пока нет</div></div>`;
+  $('bk').onclick=home;$('tp').onclick=topup;
+  ['more','stt','gf','earn'].forEach(i=>$(i).onclick=soon);
+  getStars().then(n=>{STARS=n;if($('sv'))$('sv').textContent=n})}
+function topup(){
+  // СЮДА ПОЗЖЕ ДОБАВИМ ПЕРЕХОД В ТЕЛЕГРАМ-БОТА ДЛЯ ПОКУПКИ ЗВЁЗД
+  app.innerHTML=`<div class=top><button class=ib id=bk>←</button><h2>Пополнить</h2></div><div class=body></div>`;
+  $('bk').onclick=starsView}
+
 async function search(){
   const n=(prompt('Юзернейм (без @)')||'').trim().toLowerCase().replace('@','');if(!n)return;
   const r=await db.doc('usernames/'+n).get();if(!r.exists)return alert('Не найден');
