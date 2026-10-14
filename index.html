@@ -11,8 +11,6 @@ body{margin:0;background:#1c2634;color:#fff;font:16px system-ui,sans-serif}
 button{border:0;border-radius:24px;padding:14px 18px;background:#2ea6ff;color:#fff;font:inherit;font-weight:600}
 button.alt{background:#2b3748}
 input{width:100%;padding:15px 18px;border-radius:26px;border:0;background:#2b3748;color:#fff;font:inherit;outline:0}
-.auth{margin:auto;width:min(340px,90%);display:flex;flex-direction:column;gap:10px}.auth h1{text-align:center}
-#er{color:#ff7a8a;min-height:1em;font-size:14px;margin:0}
 .top{display:flex;align-items:center;gap:12px;padding:14px 16px}
 .top h1,.top h2{flex:1;margin:0;font-size:28px}.top h2{font-size:20px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .logo{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#2ea6ff,#8a5cff);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:22px;border:3px solid #34c37a}
@@ -77,7 +75,21 @@ form button{width:48px;height:48px;border-radius:50%;padding:0;font-size:20px;fl
 .mgdots i:first-child{background:#8e5cf7}
 .mgen{margin-top:auto;color:#6cb4f0;font-size:20px;padding:14px}
 .mgstart{width:100%;padding:19px;font-size:19px;border-radius:30px;background:linear-gradient(90deg,#8e5cf7,#6a8bf5)}
-.mgl{color:#6cb4f0;text-align:center;padding:10px;font-size:16px}
+
+/* ===== НОМЕР ТЕЛЕФОНА ===== */
+.ph{height:100%;display:flex;flex-direction:column;padding:0 20px 14px}
+.phback{align-self:flex-start;background:none;font-size:28px;padding:10px 4px;color:#fff}
+.phh{font-size:26px;font-weight:700;text-align:center;margin-top:14vh}
+.phs{color:#8d99a6;text-align:center;font-size:17px;line-height:1.4;margin:14px auto 30px;max-width:320px}
+.phf{width:100%;border:1.5px solid #3b4859;border-radius:16px;padding:20px 18px;font-size:20px;color:#8d99a6;display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;position:relative}
+.phf.act{border:2px solid #5eb5f7;color:#fff;justify-content:flex-start;gap:14px}
+.phf small{position:absolute;top:-10px;left:14px;background:#1c2634;padding:0 6px;color:#5eb5f7;font-size:14px}
+.phf em{font-style:normal;color:#5eb5f7;margin-left:-8px;animation:bl 1s infinite}
+@keyframes bl{50%{opacity:0}}
+.phgo{align-self:flex-end;width:64px;height:64px;border-radius:50%;padding:0;background:#2e9bf0;font-size:30px;margin:4px 0 14px}
+.phpad{margin-top:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:7px;width:100%}
+.phpad button{border-radius:20px;background:#2c3745;font-size:30px;font-weight:400;text-align:left;padding:16px 0 16px 22px}
+.phpad small{font-size:15px;color:#8d99a6;margin-left:14px}
 </style></head><body><div id="app"></div>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
@@ -107,9 +119,7 @@ async function shared(pubJ){
   const pu=await crypto.subtle.importKey('jwk',pubJ,EC,false,[]);
   return crypto.subtle.deriveKey({name:'ECDH',public:pu},pr,{name:'AES-GCM',length:256},false,['encrypt','decrypt'])}
 
-// ===== ВХОД / РЕГИСТРАЦИЯ =====
-const run=async f=>{try{await f()}catch(e){$('er').textContent=e.message}};
-
+// ===== ВХОД =====
 // --- Приветственный экран ---
 function authView(){
   app.innerHTML=`<div class=mgw><div class=mglogo>M</div><div class=mgname>MajorGram</div>
@@ -117,48 +127,36 @@ function authView(){
   <div class=mgdots><i></i><i></i><i></i><i></i><i></i><i></i></div>
   <div class=mgen id=mgen>Continue in English</div>
   <button class=mgstart id=mgs>Начать общение</button></div>`;
-  $('mgs').onclick=()=>loginView('mail');
+  $('mgs').onclick=phoneView;
   $('mgen').onclick=()=>{
     $('mgt').innerHTML='The <b>fastest</b> messenger in the world.<br><b>Free and secure.</b>';
     $('mgs').textContent='Start messaging';$('mgen').style.display='none'}}
 
-// --- Главный вход MajorGram: Почта | Номер телефона ---
-function loginView(mode){
-  const mail=mode==='mail';
-  app.innerHTML=`<div class=auth><h1>MajorGram</h1>
-  <div class=tabs><div class="tb${mail?' on':''}" id=tm>Почта</div><div class="tb${mail?'':' on'}" id=tt>Номер телефона</div></div>
-  ${mail
-   ?`<input id=em type=email placeholder="Почта"><input id=pw type=password placeholder="Пароль"><input id=un placeholder="@юзернейм (для регистрации)"><button id=li>Войти</button><button id=su class=alt>Регистрация</button>`
-   :`<input id=ph type=tel inputmode=tel placeholder="+7 900 000 00 00"><button id=pg>Получить код</button>`}
-  <p id=er></p><div class=mgl id=bkk>← Назад</div></div>`;
-  $('tm').onclick=()=>loginView('mail');
-  $('tt').onclick=()=>loginView('tel');
-  $('bkk').onclick=authView;
-  if(mail){
-    $('li').onclick=()=>run(()=>auth.signInWithEmailAndPassword($('em').value,$('pw').value));
-    $('su').onclick=()=>run(async()=>{
-      const n=$('un').value.replace('@','').trim().toLowerCase();
-      if(!/^[a-z0-9_]{3,20}$/.test(n))throw Error('Юзернейм: 3–20 символов, a-z, 0-9 и _');
-      busy=1;let c;
-      try{
-        c=await auth.createUserWithEmailAndPassword($('em').value,$('pw').value);
-        K=await keys();
-        await db.runTransaction(async t=>{
-          const r=db.doc('usernames/'+n);
-          if((await t.get(r)).exists)throw Error('Юзернейм занят');
-          t.set(r,{uid:c.user.uid});
-          t.set(db.doc('users/'+c.user.uid),{username:n,pub:JSON.stringify(K.pub)})});
-      }catch(e){if(c)await c.user.delete();busy=0;throw e}
-      busy=0;await begin(c.user)})}
-  else{
-    // сюда позже подключим вход по номеру через бота
-    $('pg').onclick=()=>{
-      const d=$('ph').value.replace(/\D/g,'');
-      if(d.length<7){$('er').textContent='Введите номер полностью';return}
-      $('er').textContent='';soon()}}}
+// --- Экран «Номер телефона» ---
+function phoneView(){
+  let d='';
+  app.innerHTML=`<div class=ph>
+  <button class=phback id=phb>←</button>
+  <div class=phh>Номер телефона</div>
+  <div class=phs>Проверьте код страны и введите свой номер телефона.</div>
+  <div class=phf><span>Страна</span><span>›</span></div>
+  <div class="phf act"><small>Номер телефона</small><span id=phn>+</span><em>|</em></div>
+  <button class=phgo id=phg>➜</button>
+  <div class=phpad id=php></div></div>`;
+  $('phb').onclick=authView;
+  [['1',''],['2','ABC'],['3','DEF'],['4','GHI'],['5','JKL'],['6','MNO'],['7','PQRS'],['8','TUV'],['9','WXYZ'],['',''],['0','+'],['⌫','']].forEach(k=>{
+    const b=document.createElement('button');
+    b.innerHTML=k[0]+(k[1]?'<small>'+k[1]+'</small>':'');
+    if(!k[0])b.style.visibility='hidden';
+    b.onclick=()=>{
+      if(k[0]==='⌫')d=d.slice(0,-1);else if(d.length<15)d+=k[0];
+      $('phn').textContent='+'+d};
+    $('php').appendChild(b)});
+  // сюда позже подключим отправку кода через бота
+  $('phg').onclick=()=>d.length<7?alert('Введите номер полностью'):soon()}
 
 auth.onAuthStateChanged(async u=>{if(busy)return;unsub();unsubList();
-  if(!u){if(!$('tm')&&!$('mgs'))authView();return}
+  if(!u){if(!$('mgs')&&!$('php'))authView();return}
   await begin(u)});
 async function begin(u){
   K=await keys();
