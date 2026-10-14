@@ -66,6 +66,27 @@ nav{position:absolute;left:14px;right:14px;bottom:calc(14px + env(safe-area-inse
 .m b{display:block;font-size:13px;color:#6ab3f3}
 form{display:flex;gap:8px;padding:8px 10px;background:#17212b}
 form button{width:48px;height:48px;border-radius:50%;padding:0;font-size:20px;flex:none}
+
+/* ===== ПРИВЕТСТВИЕ И ВХОД ПО НОМЕРУ ===== */
+.mgw{height:100%;display:flex;flex-direction:column;align-items:center;padding:24px 20px}
+.mglogo{margin-top:16vh;width:150px;height:150px;border-radius:34px;background:linear-gradient(135deg,#8e5cf7,#5b2fd6);display:flex;align-items:center;justify-content:center;font-size:92px;font-weight:800;box-shadow:0 10px 40px #5b2fd666}
+.mgname{font-size:32px;font-weight:700;margin-top:34px}
+.mgtag{text-align:center;font-size:18px;line-height:1.4;margin-top:14px;max-width:320px}
+.mgdots{display:flex;gap:10px;margin-top:30px}
+.mgdots i{width:8px;height:8px;border-radius:50%;background:#7b8794}
+.mgdots i:first-child{background:#8e5cf7}
+.mgen{margin-top:auto;color:#6cb4f0;font-size:20px;padding:14px}
+.mgstart{width:100%;padding:19px;font-size:19px;border-radius:30px;background:linear-gradient(90deg,#8e5cf7,#6a8bf5)}
+.mgh{font-size:24px;font-weight:700;margin-top:6vh;text-align:center}
+.mgsub{color:#8d99a6;text-align:center;margin:12px 0 26px;max-width:300px}
+.mgf{width:100%;border:1.5px solid #3b4859;border-radius:14px;padding:18px 16px;font-size:19px;color:#8d99a6;display:flex;justify-content:space-between;margin-bottom:20px;position:relative}
+.mgf.act{border-color:#8e5cf7;color:#fff}
+.mgf small{position:absolute;top:-9px;left:12px;background:#1c2634;padding:0 6px;color:#8e5cf7;font-size:13px}
+.mggo{align-self:flex-end;width:56px;height:56px;border-radius:50%;padding:0;background:#8e5cf7;font-size:26px}
+.mgpad{margin-top:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:7px;width:100%}
+.mgpad button{border-radius:16px;background:#2c3745;font-size:28px;font-weight:400;text-align:left;padding:14px 0 14px 20px}
+.mgpad small{font-size:14px;color:#8d99a6;margin-left:12px}
+.mgl{color:#6cb4f0;text-align:center;padding:10px;font-size:16px}
 </style></head><body><div id="app"></div>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
@@ -97,7 +118,52 @@ async function shared(pubJ){
 
 // ===== ВХОД / РЕГИСТРАЦИЯ =====
 const run=async f=>{try{await f()}catch(e){$('er').textContent=e.message}};
+
+// --- Приветственный экран ---
 function authView(){
+  app.innerHTML=`<div class=mgw><div class=mglogo>M</div><div class=mgname>MajorGram</div>
+  <div class=mgtag id=mgt>Самый <b>быстрый</b> мессенджер в мире.<br><b>Бесплатный и безопасный.</b></div>
+  <div class=mgdots><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <div class=mgen id=mgen>Continue in English</div>
+  <button class=mgstart id=mgs>Начать общение</button></div>`;
+  $('mgs').onclick=showEmail;
+  $('mgen').onclick=()=>{
+    $('mgt').innerHTML='The <b>fastest</b> messenger in the world.<br><b>Free and secure.</b>';
+    $('mgs').textContent='Start messaging';$('mgen').style.display='none'}}
+
+// --- Вход по почте + ссылки на номер и назад ---
+function showEmail(){
+  emailView();
+  const a=document.querySelector('.auth');
+  const p=document.createElement('div');p.className='mgl';p.textContent='Войти по номеру';p.onclick=phoneView;
+  const b=document.createElement('div');b.className='mgl';b.textContent='← Назад';b.onclick=authView;
+  a.append(p,b)}
+
+// --- Экран «Номер телефона» ---
+function phoneView(){
+  let d='';
+  app.innerHTML=`<div class=top><button class=ib id=bk>←</button></div>
+  <div class=mgw style="margin-top:-20px">
+  <div class=mgh>Номер телефона</div>
+  <div class=mgsub>Проверьте код страны и введите свой номер телефона.</div>
+  <div class=mgf><span>Страна</span><span>›</span></div>
+  <div class="mgf act"><small>Номер телефона</small><span id=mgn>+</span></div>
+  <button class=mggo id=mgg>➜</button>
+  <div class=mgpad id=mgp></div></div>`;
+  $('bk').onclick=showEmail;
+  [['1',''],['2','ABC'],['3','DEF'],['4','GHI'],['5','JKL'],['6','MNO'],['7','PQRS'],['8','TUV'],['9','WXYZ'],['',''],['0','+'],['⌫','']].forEach(k=>{
+    const b=document.createElement('button');
+    b.innerHTML=k[0]+(k[1]?'<small>'+k[1]+'</small>':'');
+    if(!k[0])b.style.visibility='hidden';
+    b.onclick=()=>{
+      if(k[0]==='⌫')d=d.slice(0,-1);else if(d.length<15)d+=k[0];
+      $('mgn').textContent='+'+d};
+    $('mgp').appendChild(b)});
+  // сюда позже подключим вход по номеру через бота
+  $('mgg').onclick=()=>d.length<7?alert('Введите номер полностью'):soon()}
+
+// --- Форма почты (старый вход) ---
+function emailView(){
   app.innerHTML=`<div class=auth><h1>MajorGram</h1><input id=em type=email placeholder="Почта"><input id=pw type=password placeholder="Пароль"><input id=un placeholder="@юзернейм (для регистрации)"><button id=li>Войти</button><button id=su class=alt>Регистрация</button><p id=er></p></div>`;
   $('li').onclick=()=>run(()=>auth.signInWithEmailAndPassword($('em').value,$('pw').value));
   $('su').onclick=()=>run(async()=>{
@@ -114,8 +180,9 @@ function authView(){
         t.set(db.doc('users/'+c.user.uid),{username:n,pub:JSON.stringify(K.pub)})});
     }catch(e){if(c)await c.user.delete();busy=0;throw e}
     busy=0;await begin(c.user)})}
+
 auth.onAuthStateChanged(async u=>{if(busy)return;unsub();unsubList();
-  if(!u){if(!$('li'))authView();return}
+  if(!u){if(!$('li')&&!$('mgs')&&!$('mgp'))authView();return}
   await begin(u)});
 async function begin(u){
   K=await keys();
