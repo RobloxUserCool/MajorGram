@@ -8,64 +8,110 @@
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 body{margin:0;background:#1c2634;color:#fff;font:16px system-ui,sans-serif}
 #app{height:100dvh;display:flex;flex-direction:column;position:relative;overflow:hidden;padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)}
-button{border:0;border-radius:24px;padding:14px 18px;background:#2ea6ff;color:#fff;font:inherit;font-weight:600}
+button{border:0;border-radius:20px;padding:11px 16px;background:#2ea6ff;color:#fff;font:inherit;font-size:15px;font-weight:600}
 button.alt{background:#2b3748}
 input{width:100%;padding:15px 18px;border-radius:26px;border:0;background:#2b3748;color:#fff;font:inherit;outline:0}
 .auth{margin:auto;width:min(340px,90%);display:flex;flex-direction:column;gap:10px}.auth h1{text-align:center}
 #er{color:#ff7a8a;min-height:1em;font-size:14px}
-.top{display:flex;align-items:center;gap:12px;padding:14px 16px}
-.top h1,.top h2{flex:1;margin:0;font-size:28px}.top h2{font-size:20px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.logo{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#2ea6ff,#8a5cff);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:22px;border:3px solid #34c37a}
-.ib{background:none;color:#fff;font-size:26px;padding:4px 10px}
-.body{flex:1;overflow:auto;padding:0 12px 130px}
-.sq{margin:4px 0 14px}
-.tabs{display:flex;background:#243040;border-radius:30px;padding:5px;margin-bottom:8px}
-.tb{flex:1;text-align:center;padding:12px 6px;border-radius:25px;color:#9aa7b8;font-weight:600}
+
+/* ===== ШАПКА ===== */
+.top{display:flex;align-items:center;gap:10px;padding:8px 16px 6px 14px}
+.top h1,.top h2{flex:1;margin:0;font-size:22px}
+.top h2{font-size:18px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.logo{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#2ea6ff,#8a5cff);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:17px;border:2px solid #34c37a;flex:none}
+.ib{background:none;color:#fff;font-size:24px;padding:4px 10px}
+.body{flex:1;overflow:auto;padding:0 11px 100px}
+
+/* ===== ПОИСК НА ГЛАВНОЙ И В КОНТАКТАХ ===== */
+.sq,.sbar input{background:#2b3748 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238493a6' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='M20 20l-4-4'/%3E%3C/svg%3E") no-repeat 17px center/18px}
+.sq{height:40px;line-height:40px;padding:0 18px 0 48px;margin:2px 0 9px;border-radius:20px;color:#8493a6;font-size:15px}
+
+/* ===== ВКЛАДКИ ===== */
+.tabs{display:flex;background:#243040;border-radius:20px;padding:4px;margin-bottom:6px}
+.tb{flex:1;text-align:center;padding:5px 6px;border-radius:16px;color:#9aa7b8;font-weight:600;font-size:15px}
 .tb.on{background:#2b4764;color:#5eb5f7}
-.tb i{font-style:normal;font-size:14px;background:#3a4658;color:#fff;border-radius:12px;padding:1px 8px;margin-left:4px}
+.tb i{display:inline-block;font-style:normal;font-size:12px;line-height:16px;background:#3a4658;color:#fff;border-radius:10px;padding:0 6px;margin-left:5px}
 .tb.on i{background:#4aa8ee;color:#10243a}
-.row{display:flex;gap:14px;padding:10px 8px;align-items:center}
+
+/* ===== СТРОКИ ЧАТОВ ===== */
+.row{display:flex;gap:13px;padding:9px 4px 9px 0;align-items:center}
 .av{border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:600;color:#fff;flex:none}
 .rt{flex:1;min-width:0}.l1{display:flex;justify-content:space-between;align-items:baseline}
-.l1 b{font-size:18px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.l1 small{color:#8493a6;font-size:14px;margin-left:8px}
-.l2{color:#8493a6;font-size:17px;margin-top:2px}
-.empty{color:#8493a6;text-align:center;padding:40px 20px}
+.l1 b{font-size:17px;font-weight:600;line-height:22px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.l1 small{color:#8493a6;font-size:13px;margin-left:8px}
+.l2{color:#8493a6;font-size:15px;line-height:20px;margin-top:2px}
+.empty{color:#8493a6;text-align:center;font-size:15px;padding:32px 20px}
 .wide{width:100%;margin:10px 0}
-.grp{background:#222f3f;border-radius:20px;margin:0 0 14px;overflow:hidden}
-.it{display:flex;gap:16px;align-items:center;padding:13px 16px}
-.ico{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:21px;flex:none;color:#fff}
-.itt{flex:1;font-size:18px}.itt small{display:block}
-.sub{color:#8493a6;font-size:15px}.val{color:#5eb5f7;font-size:20px}
-.gt{color:#5eb5f7;font-weight:600;padding:14px 16px 0}
-.ver{text-align:center;color:#6b7a8d;font-size:14px;margin:6px 0}
-.bal{display:flex;justify-content:center;align-items:center;gap:10px;font-size:44px}
-.btns{display:flex;gap:12px;margin:16px 0 14px}.btns button{flex:1}
-.lnk{color:#5eb5f7;display:block}
-.new{font-size:12px;background:#2ea6ff;border-radius:6px;padding:2px 6px;margin-left:6px}
-.tabs2{display:flex;gap:22px;color:#8493a6;font-weight:600;padding:8px 4px;overflow:auto;white-space:nowrap;text-align:left}.tabs2 .on{color:#5eb5f7}
-.sub2{color:#cfd7e3;padding:0 10px;line-height:1.4}.sub2 a{color:#5eb5f7}
-.pring{width:124px;height:124px;border-radius:50%;border:4px solid #1fc8d8;margin:6px auto 0;overflow:hidden;display:flex;align-items:center;justify-content:center}
-.pn{font-size:26px;font-weight:700;text-align:center;margin:12px 0 2px}
-.ps{text-align:center;color:#8493a6;margin-bottom:16px}
-.pb{display:flex;gap:10px;margin-bottom:16px}
-.pb div{flex:1;background:#243040;border-radius:18px;padding:14px 4px;text-align:center;font-weight:600;font-size:14px}
-.pb span{display:block;font-size:24px;margin-bottom:2px}
-.info div{padding:12px 18px}.info b{display:block;font-weight:400;font-size:18px;word-break:break-word}.info small{color:#8493a6}
-.fab{position:absolute;right:20px;bottom:calc(92px + env(safe-area-inset-bottom));width:62px;height:62px;border-radius:50%;padding:0;box-shadow:0 4px 14px #0008;display:flex;align-items:center;justify-content:center}
-.fab svg{width:28px;height:28px}
-nav{position:absolute;left:14px;right:14px;bottom:calc(14px + env(safe-area-inset-bottom));display:flex;background:#243245ee;border-radius:36px;padding:6px;backdrop-filter:blur(8px)}
-.ni{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 0;border-radius:30px;font-size:13px;font-weight:600}
-.ni svg{width:28px;height:28px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+/* ===== НАСТРОЙКИ ===== */
+.grp{background:#222f3f;border-radius:16px;margin:0 0 12px;overflow:hidden}
+.it{display:flex;gap:14px;align-items:center;padding:9px 14px}
+.ico{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px;flex:none;color:#fff}
+.itt{flex:1;font-size:16px}.itt small{display:block}
+.sub{color:#8493a6;font-size:13px}.val{color:#5eb5f7;font-size:16px}
+.gt{color:#5eb5f7;font-size:14px;font-weight:600;padding:12px 14px 0}
+.ver{text-align:center;color:#6b7a8d;font-size:12px;margin:6px 0}
+
+/* ===== ЗВЁЗДЫ ===== */
+.bal{display:flex;justify-content:center;align-items:center;gap:8px;font-size:34px}
+.btns{display:flex;gap:10px;margin:14px 0 12px}.btns button{flex:1}
+.lnk{color:#5eb5f7;display:block;font-size:15px}
+.new{font-size:11px;background:#2ea6ff;border-radius:6px;padding:2px 6px;margin-left:6px}
+.tabs2{display:flex;gap:20px;color:#8493a6;font-size:15px;font-weight:600;padding:8px 4px;overflow:auto;white-space:nowrap;text-align:left}.tabs2 .on{color:#5eb5f7}
+.sub2{color:#cfd7e3;font-size:15px;padding:0 10px;line-height:1.4}.sub2 a{color:#5eb5f7}
+
+/* ===== ПРОФИЛЬ ===== */
+.pring{width:96px;height:96px;border-radius:50%;border:3px solid #1fc8d8;margin:4px auto 0;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.pn{font-size:21px;font-weight:700;text-align:center;margin:10px 0 2px}
+.ps{text-align:center;color:#8493a6;font-size:14px;margin-bottom:12px}
+.pb{display:flex;gap:8px;margin-bottom:12px}
+.pb div{flex:1;background:#243040;border-radius:14px;padding:10px 4px;text-align:center;font-weight:600;font-size:12px}
+.pb span{display:block;font-size:20px;margin-bottom:2px}
+.info div{padding:9px 14px}.info b{display:block;font-weight:400;font-size:16px;word-break:break-word}.info small{color:#8493a6;font-size:13px}
+
+/* ===== КНОПКИ И НИЖНЯЯ ПАНЕЛЬ ===== */
+.fab{position:absolute;right:20px;bottom:calc(77px + env(safe-area-inset-bottom));width:48px;height:48px;border-radius:50%;padding:0;box-shadow:0 4px 14px #0008;display:flex;align-items:center;justify-content:center}
+.fab svg{width:22px;height:22px}
+.fab2{position:absolute;right:26px;bottom:calc(135px + env(safe-area-inset-bottom));width:36px;height:36px;border-radius:50%;padding:0;background:#2b3748;display:flex;align-items:center;justify-content:center}
+.fab2 svg{width:20px;height:20px}
+nav{position:absolute;left:16px;right:16px;bottom:calc(8px + env(safe-area-inset-bottom));display:flex;background:#243245ee;border-radius:30px;padding:4px;backdrop-filter:blur(8px)}
+.ni{flex:1 1 auto;display:flex;flex-direction:column;align-items:center;gap:1px;padding:5px 8px;border-radius:24px;font-size:12px;line-height:14px;font-weight:600}
+.ni svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .ni.on{background:#2d4863;color:#5eb5f7}
-.mnu{position:absolute;right:12px;top:calc(62px + env(safe-area-inset-top));background:#2b3748;border-radius:14px;padding:6px 0;z-index:5;box-shadow:0 6px 20px #000a}
-.mnu[hidden]{display:none}.mnu div{padding:14px 20px}
-.msgs{flex:1;overflow:auto;padding:10px 12px;display:flex;flex-direction:column;gap:6px;background:#0e1621}
-.m{max-width:78%;padding:8px 12px;border-radius:16px 16px 16px 4px;background:#182533;white-space:pre-wrap;word-break:break-word;align-self:flex-start}
+.mnu{position:absolute;right:12px;top:calc(52px + env(safe-area-inset-top));background:#2b3748;border-radius:14px;padding:4px 0;z-index:5;box-shadow:0 6px 20px #000a}
+.mnu[hidden]{display:none}.mnu div{padding:12px 18px;font-size:15px}
+
+/* ===== ЭКРАН ПОИСКА ===== */
+.sh{padding:8px 11px}
+.sbar{position:relative;height:40px}
+.sbar input{height:40px;padding:0 44px 0 48px;border-radius:20px;font-size:15px}
+.sbar input::placeholder{color:#8493a6}
+.sx{position:absolute;right:4px;top:0;width:40px;height:40px;padding:0;background:none;color:#8493a6;display:flex;align-items:center;justify-content:center}
+.sx svg{width:20px;height:20px}
+.stabs{display:flex;overflow-x:auto;white-space:nowrap;background:#243040;border-radius:20px;padding:4px;margin:0 11px 4px;scrollbar-width:none}
+.stabs::-webkit-scrollbar{display:none}
+.stb{flex:none;padding:5px 16px;border-radius:16px;color:#9aa7b8;font-size:15px;font-weight:600}
+.stb.on{background:#2b4764;color:#5eb5f7}
+.sbody{flex:1;overflow:auto;padding-bottom:20px}
+.peers{display:flex;overflow-x:auto;padding:12px 0 10px;scrollbar-width:none}
+.peers::-webkit-scrollbar{display:none}
+.pe{flex:none;width:80px;text-align:center;font-size:12px}
+.pe .av{margin:0 auto 5px}
+.pe span{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:0 4px}
+.band{display:flex;justify-content:space-between;align-items:center;background:#17212e;height:31px;padding:0 18px 0 16px;color:#8493a6;font-size:15px;font-weight:600}
+.sr{display:flex;align-items:center;gap:13px;padding-left:11px}
+.srt{flex:1;min-width:0;height:60px;display:flex;flex-direction:column;justify-content:center;border-bottom:1px solid #2a3748;padding-right:11px}
+.srt b{font-size:16px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.srt small{color:#8493a6;font-size:14px;margin-top:1px}
+
+/* ===== ЧАТ ===== */
+.msgs{flex:1;overflow:auto;padding:8px 10px;display:flex;flex-direction:column;gap:5px;background:#0e1621}
+.m{max-width:78%;padding:6px 11px;font-size:15px;border-radius:16px 16px 16px 4px;background:#182533;white-space:pre-wrap;word-break:break-word;align-self:flex-start}
 .m.me{background:#2b5278;border-radius:16px 16px 4px 16px;align-self:flex-end}
-.m b{display:block;font-size:13px;color:#6ab3f3}
-form{display:flex;gap:8px;padding:8px 10px;background:#17212b}
-form button{width:48px;height:48px;border-radius:50%;padding:0;font-size:20px;flex:none}
+.m b{display:block;font-size:12px;color:#6ab3f3}
+form{display:flex;gap:8px;padding:6px 8px;background:#17212b}
+form input{height:40px;padding:0 16px;font-size:15px;border-radius:20px}
+form button{width:40px;height:40px;border-radius:50%;padding:0;font-size:17px;flex:none}
 
 /* ===== ПРИВЕТСТВИЕ И ВХОД ПО НОМЕРУ ===== */
 .mgw{height:100%;display:flex;flex-direction:column;align-items:center;padding:24px 20px}
@@ -87,36 +133,6 @@ form button{width:48px;height:48px;border-radius:50%;padding:0;font-size:20px;fl
 .mgpad button{border-radius:16px;background:#2c3745;font-size:28px;font-weight:400;text-align:left;padding:14px 0 14px 20px}
 .mgpad small{font-size:14px;color:#8d99a6;margin-left:12px}
 .mgl{color:#6cb4f0;text-align:center;padding:10px;font-size:16px}
-
-/* ===== РАЗМЕРЫ КАК В TELEGRAM ===== */
-.body{padding:0 11px 130px}
-.hm{padding:8px 16px 6px 14px;gap:10px}
-.hm h1{font-size:22px}
-.hm .logo{width:36px;height:36px;font-size:17px;border-width:2px}
-.hm .ib{font-size:24px;padding:4px 10px}
-.mnu{top:calc(52px + env(safe-area-inset-top))}
-
-input.sq{height:40px;padding:0 18px 0 48px;margin:2px 0 9px;font-size:15px;
-  background:#2b3748 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238493a6' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='M20 20l-4-4'/%3E%3C/svg%3E") no-repeat 17px center/18px}
-.sq::placeholder{color:#8493a6}
-
-.tabs{padding:4px;margin-bottom:6px}
-.tb{padding:5px 6px;font-size:15px}
-.tb i{display:inline-block;font-size:12px;line-height:16px;padding:0 6px;margin-left:5px}
-
-.row{gap:13px;padding:9px 4px 9px 0}
-.l1 b{font-size:17px;font-weight:600;line-height:22px}
-.l1 small{font-size:13px}
-.l2{font-size:15px;line-height:20px;margin-top:2px}
-
-nav{left:16px;right:16px;bottom:calc(8px + env(safe-area-inset-bottom));padding:4px;border-radius:30px}
-.ni{flex:1 1 auto;gap:1px;padding:5px 8px;border-radius:24px;font-size:12px;line-height:14px}
-.ni svg{width:22px;height:22px}
-
-.fab{width:48px;height:48px;right:20px;bottom:calc(77px + env(safe-area-inset-bottom))}
-.fab svg{width:22px;height:22px}
-.fab2{position:absolute;right:26px;bottom:calc(135px + env(safe-area-inset-bottom));width:36px;height:36px;border-radius:50%;padding:0;background:#2b3748;display:flex;align-items:center;justify-content:center}
-.fab2 svg{width:20px;height:20px}
 </style></head><body><div id="app"></div>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
@@ -132,7 +148,7 @@ firebase.initializeApp({
 const auth=firebase.auth(),db=firebase.firestore(),FV=firebase.firestore.FieldValue;
 const app=document.getElementById('app'),$=i=>document.getElementById(i);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-let me,K,unsub=()=>{},unsubList=()=>{},busy=0,tab='chats',flt='all',q='',CH=[],STARS=0;
+let me,K,unsub=()=>{},unsubList=()=>{},busy=0,tab='chats',flt='all',CH=[],STARS=0,sTab='chats',sQ='',sSeq=0;
 
 // ===== ШИФРОВАНИЕ (личные чаты) =====
 const b64=b=>btoa(String.fromCharCode(...new Uint8Array(b))),ub=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
@@ -145,6 +161,11 @@ async function shared(pubJ){
   const pr=await crypto.subtle.importKey('jwk',K.priv,EC,false,['deriveKey']);
   const pu=await crypto.subtle.importKey('jwk',pubJ,EC,false,[]);
   return crypto.subtle.deriveKey({name:'ECDH',public:pu},pr,{name:'AES-GCM',length:256},false,['encrypt','decrypt'])}
+
+// ===== НЕДАВНИЕ (поиск) =====
+const RC=()=>{try{return JSON.parse(localStorage.getItem('mg_rc')||'[]')}catch(e){return[]}};
+const addRC=id=>{try{localStorage.setItem('mg_rc',JSON.stringify([id,...RC().filter(x=>x!==id)].slice(0,15)))}catch(e){}};
+const clrRC=()=>{try{localStorage.removeItem('mg_rc')}catch(e){}};
 
 // ===== ВХОД / РЕГИСТРАЦИЯ =====
 const run=async f=>{try{await f()}catch(e){$('er').textContent=e.message}};
@@ -237,7 +258,8 @@ const IC={
   set:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/></svg>',
   pro:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="9" cy="10" r=".8"/><circle cx="15" cy="10" r=".8"/><path d="M8 14c1 2 7 2 8 0"/></svg>',
   pen:'<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l4-1 11-11-3-3L5 16z"/></svg>',
-  cam:'<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l2-2.5h6L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>'};
+  cam:'<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l2-2.5h6L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>',
+  x:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>'};
 const rowHtml=c=>`<div class=row data-id="${c.id}">${av(title(c))}<div class=rt><div class=l1><b>${esc(title(c))}</b><small>${fmt(c.lastAt)}</small></div><div class=l2>${TYPES[c.type]}</div></div></div>`;
 const bindRows=()=>document.querySelectorAll('.row[data-id]').forEach(r=>r.onclick=()=>openChat(r.dataset.id));
 const soon=()=>alert('Скоро');
@@ -263,19 +285,19 @@ function pickPhoto(){
 // ===== ГЛАВНЫЙ ЭКРАН =====
 function home(){
   unsub();unsubList();
-  const st=tab==='settings';
-  const head=st?'<div class=top><h1 style="font-size:26px">Настройки</h1></div>'
-    :tab==='profile'?'<div class=top><h1 style="font-size:26px">Профиль</h1></div>'
-    :'<div class="top hm"><div class=logo>M</div><h1>MajorGram</h1><button class=ib id=mn>⋮</button></div><div class=mnu id=mnu hidden><div id=m1>Новая группа или канал</div><div id=m2>Найти пользователя</div><div id=m3>Выйти</div></div>';
+  const H=t=>`<div class=top><h1>${t}</h1></div>`;
+  const head=tab==='settings'?H('Настройки')
+    :tab==='profile'?H('Профиль')
+    :tab==='contacts'?H('Контакты')
+    :'<div class=top><div class=logo>M</div><h1>MajorGram</h1><button class=ib id=mn>⋮</button></div><div class=mnu id=mnu hidden><div id=m1>Новая группа или канал</div><div id=m2>Найти пользователя</div><div id=m3>Выйти</div></div>';
   app.innerHTML=`${head}<div class=body id=bd></div>${tab==='chats'?`<button class=fab2 id=fb2>${IC.cam}</button><button class=fab id=fb>${IC.pen}</button>`:''}
   <nav>${[['chats','Чаты',IC.chat],['contacts','Контакты',IC.con],['settings','Настройки',IC.set],['profile','Профиль',IC.pro]].map(([k,n,i])=>`<div class="ni${tab===k?' on':''}" data-t="${k}">${i}<span>${n}</span></div>`).join('')}</nav>`;
-  if(tab==='chats'||tab==='contacts'){
-    if($('mn')){
-      $('mn').onclick=()=>$('mnu').hidden=!$('mnu').hidden;
-      $('m1').onclick=()=>{$('mnu').hidden=true;newChat()};
-      $('m2').onclick=()=>{$('mnu').hidden=true;search()};
-      $('m3').onclick=()=>auth.signOut()}}
-  if(tab==='chats'){$('fb').onclick=search;$('fb2').onclick=soon}
+  if($('mn')){
+    $('mn').onclick=()=>$('mnu').hidden=!$('mnu').hidden;
+    $('m1').onclick=()=>{$('mnu').hidden=true;newChat()};
+    $('m2').onclick=()=>{$('mnu').hidden=true;searchView()};
+    $('m3').onclick=()=>auth.signOut()}
+  if(tab==='chats'){$('fb').onclick=searchView;$('fb2').onclick=soon}
   document.querySelectorAll('.ni').forEach(n=>n.onclick=()=>{tab=n.dataset.t;home()});
   unsubList=db.collection('chats').where('members','array-contains',me.uid).onSnapshot(s=>{
     CH=s.docs.map(d=>({id:d.id,...d.data()})).sort((x,y)=>(y.lastAt?.seconds||0)-(x.lastAt?.seconds||0));
@@ -284,20 +306,20 @@ function home(){
 function list(){
   const l=$('cl');if(!l)return;
   $('c1').textContent=CH.length;$('c2').textContent=CH.filter(c=>c.type==='channel').length;
-  const a=CH.filter(c=>(flt==='all'||c.type==='channel')&&title(c).toLowerCase().includes(q.toLowerCase()));
+  const a=CH.filter(c=>flt==='all'||c.type==='channel');
   l.innerHTML=a.map(rowHtml).join('')||'<div class=empty>Пока пусто. Нажми ✎ и найди человека по юзернейму</div>';
   bindRows()}
 function draw(){
   const b=$('bd');if(!b)return;
   if(tab==='chats'){
-    b.innerHTML=`<input id=sq class=sq placeholder="Поиск чатов" value="${esc(q)}"><div class=tabs><div class="tb${flt==='all'?' on':''}" data-f=all>Все чаты <i id=c1>0</i></div><div class="tb${flt==='channel'?' on':''}" data-f=channel>Каналы <i id=c2>0</i></div></div><div id=cl></div>`;
-    $('sq').oninput=e=>{q=e.target.value;list()};
+    b.innerHTML=`<div class=sq id=sq>Поиск чатов</div><div class=tabs><div class="tb${flt==='all'?' on':''}" data-f=all>Все чаты <i id=c1>0</i></div><div class="tb${flt==='channel'?' on':''}" data-f=channel>Каналы <i id=c2>0</i></div></div><div id=cl></div>`;
+    $('sq').onclick=searchView;
     document.querySelectorAll('.tb').forEach(t=>t.onclick=()=>{flt=t.dataset.f;draw()});
     list()}
   else if(tab==='contacts'){
     const a=CH.filter(c=>c.type==='direct');
-    b.innerHTML=`<button class="wide" id=fd>Найти по юзернейму</button>`+(a.map(rowHtml).join('')||'<div class=empty>Контактов пока нет</div>');
-    $('fd').onclick=search;bindRows()}
+    b.innerHTML=`<div class=sq id=sq>Поиск по юзернейму</div>`+(a.map(rowHtml).join('')||'<div class=empty>Контактов пока нет</div>');
+    $('sq').onclick=searchView;bindRows()}
   else if(tab==='settings'){
     const it=(a,c,i,t,r='')=>`<div class=it data-a=${a}><div class=ico style="background:${c}">${i}</div><div class=itt>${t}</div>${r}</div>`;
     b.innerHTML=`<div class=grp>${it('lang','#a355e8','🌐','Язык<small class=sub>Русский</small>')}</div>
@@ -308,7 +330,7 @@ function draw(){
     b.querySelectorAll('.it').forEach(e=>e.onclick=()=>{const a=e.dataset.a;a==='stars'?starsView():a==='out'?auth.signOut():soon()});
     getStars().then(n=>{STARS=n;const e=$('sbal');if(e)e.textContent=n})}
   else{
-    b.innerHTML=`<div class=pring>${me.photo?`<img src="${me.photo}" style="width:100%;height:100%;object-fit:cover">`:av('@'+me.username,116)}</div>
+    b.innerHTML=`<div class=pring>${me.photo?`<img src="${me.photo}" style="width:100%;height:100%;object-fit:cover">`:av('@'+me.username,90)}</div>
     <div class=pn>${esc(me.name||'@'+me.username)}</div><div class=ps>в сети</div>
     <div class=pb><div id=pf><span>📷</span>Выбрать фото</div><div id=pe><span>✏️</span>Изменить</div><div id=pg><span>⚙️</span>Настройки</div></div>
     <div class="grp info"><div><b>${esc(auth.currentUser.email||'')}</b><small>Почта</small></div>
@@ -322,13 +344,59 @@ function draw(){
     $('pi3').onclick=()=>edit('bday','День рождения (например 31.12.2000)');
     $('pi4').onclick=soon}}
 
+// ===== ЭКРАН ПОИСКА =====
+const srow=c=>`<div class=sr data-id="${c.id}">${av(title(c),46)}<div class=srt><b>${esc(title(c))}</b><small>${TYPES[c.type]}</small></div></div>`;
+function searchView(){
+  sQ='';sTab='chats';
+  app.innerHTML=`<div class=sh><div class=sbar><input id=si placeholder="Поиск чатов" autocomplete=off><button class=sx id=sx>${IC.x}</button></div></div>
+  <div class=stabs><div class=stb data-s=chats>Чаты</div><div class=stb data-s=channel>Каналы</div><div class=stb data-s=apps>Приложения</div><div class=stb data-s=posts>Посты</div></div>
+  <div class=sbody id=sb></div>`;
+  $('si').oninput=e=>{sQ=e.target.value;sDraw()};
+  $('sx').onclick=()=>{if($('si').value){$('si').value='';sQ='';sDraw();$('si').focus()}else home()};
+  document.querySelectorAll('.stb').forEach(t=>t.onclick=()=>{sTab=t.dataset.s;sDraw()});
+  $('si').focus();
+  sDraw()}
+function sDraw(){
+  const b=$('sb');if(!b)return;
+  sSeq++;
+  document.querySelectorAll('.stb').forEach(t=>t.classList.toggle('on',t.dataset.s===sTab));
+  if(sTab==='apps'||sTab==='posts'){b.innerHTML='<div class=empty>Скоро</div>';return}
+  const t=sQ.trim().toLowerCase().replace(/^@/,'');
+  const ok=c=>sTab==='chats'||c.type==='channel';
+  if(!t){
+    const peers=sTab==='chats'?CH.filter(c=>c.type!=='channel').slice(0,10):[];
+    const rc=RC().map(id=>CH.find(c=>c.id===id)).filter(c=>c&&ok(c));
+    b.innerHTML=(peers.length?`<div class=peers>${peers.map(c=>`<div class=pe data-id="${c.id}">${av(title(c),54)}<span>${esc(title(c).replace(/^@/,''))}</span></div>`).join('')}</div>`:'')
+      +(rc.length?`<div class=band><span>Недавние</span><span id=clr>Очистить</span></div>${rc.map(srow).join('')}`:'')
+      +(!peers.length&&!rc.length?'<div class=empty>Введите юзернейм, чтобы найти человека</div>':'');
+    if($('clr'))$('clr').onclick=()=>{clrRC();sDraw()}}
+  else{
+    const m=CH.filter(c=>ok(c)&&title(c).toLowerCase().includes(t));
+    b.innerHTML=m.map(srow).join('')+`<div id=sf>${m.length?'':'<div class=empty>Ничего не найдено</div>'}</div>`;
+    if(sTab==='chats'&&/^[a-z0-9_]{3,20}$/.test(t))sFind(t)}
+  b.querySelectorAll('[data-id]').forEach(e=>e.onclick=()=>openChat(e.dataset.id))}
+async function sFind(n){
+  const k=++sSeq;let r;
+  try{r=await db.doc('usernames/'+n).get()}catch(e){return}
+  if(k!==sSeq||!r.exists||r.data().uid===me.uid)return;
+  if(CH.some(c=>c.type==='direct'&&title(c)==='@'+n))return;
+  const box=$('sf');if(!box)return;
+  box.innerHTML=`<div class=band><span>Глобальный поиск</span></div><div class=sr>${av('@'+n,46)}<div class=srt><b>@${esc(n)}</b><small>пользователь</small></div></div>`;
+  box.querySelector('.sr').onclick=()=>openUser(n)}
+async function openUser(n){
+  const r=await db.doc('usernames/'+n).get();if(!r.exists)return alert('Не найден');
+  const uid=r.data().uid;if(uid===me.uid)return alert('Это ты');
+  const id=[me.uid,uid].sort().join('_');
+  await db.doc('chats/'+id).set({type:'direct',members:[me.uid,uid],names:{[me.uid]:me.username,[uid]:n}},{merge:true});
+  openChat(id)}
+
 // ===== ЭКРАН «ЗВЁЗДЫ MAJORGRAM» =====
 function starsView(){
   app.innerHTML=`<div class=top><button class=ib id=bk>←</button></div><div class=body style="text-align:center;padding-bottom:30px">
-  <svg width=130 height=130 viewBox="0 0 24 24"><defs><linearGradient id=g1 x1=0 y1=0 x2=1 y2=1><stop offset=0 stop-color="#fff35c"/><stop offset=1 stop-color="#f5a623"/></linearGradient></defs><path fill="url(#g1)" stroke="#ffd23f" stroke-linejoin="round" stroke-width="1" d="M12 2.5l2.9 6.3 6.8.7-5.1 4.6 1.5 6.8L12 17.4l-6.1 3.5 1.5-6.8L2.3 9.5l6.8-.7z"/></svg>
-  <h1 style="margin:10px 0 8px;font-size:26px">Звёзды MajorGram</h1>
+  <svg width=96 height=96 viewBox="0 0 24 24"><defs><linearGradient id=g1 x1=0 y1=0 x2=1 y2=1><stop offset=0 stop-color="#fff35c"/><stop offset=1 stop-color="#f5a623"/></linearGradient></defs><path fill="url(#g1)" stroke="#ffd23f" stroke-linejoin="round" stroke-width="1" d="M12 2.5l2.9 6.3 6.8.7-5.1 4.6 1.5 6.8L12 17.4l-6.1 3.5 1.5-6.8L2.3 9.5l6.8-.7z"/></svg>
+  <h1 style="margin:8px 0 6px;font-size:22px">Звёзды MajorGram</h1>
   <p class=sub2>Звёзды MajorGram нужны для оплаты контента и услуг. <a id=more>Подробнее о звёздах ›</a></p>
-  <div class=grp style="padding:22px 16px;margin:22px 0 14px"><div class=bal><span>⭐</span><b id=sv>${STARS}</b></div><div class=sub>Ваш баланс</div>
+  <div class=grp style="padding:16px 14px;margin:16px 0 12px"><div class=bal><span>⭐</span><b id=sv>${STARS}</b></div><div class=sub>Ваш баланс</div>
   <div class=btns><button id=tp>＋ Пополнить</button><button id=stt>📊 Статистика</button></div><a id=gf class=lnk>🎁 Подарить звёзды друзьям</a></div>
   <div class="grp it" id=earn style="text-align:left"><div class=ico style="background:#34c37a">★</div><div class=itt>Заработать звёзды <span class=new>NEW</span><small class=sub>Скоро</small></div></div>
   <div class=tabs2><span class=on>Все операции</span><span>Зачисления</span><span>Списания</span></div>
@@ -341,13 +409,6 @@ function topup(){
   app.innerHTML=`<div class=top><button class=ib id=bk>←</button><h2>Пополнить</h2></div><div class=body></div>`;
   $('bk').onclick=starsView}
 
-async function search(){
-  const n=(prompt('Юзернейм (без @)')||'').trim().toLowerCase().replace('@','');if(!n)return;
-  const r=await db.doc('usernames/'+n).get();if(!r.exists)return alert('Не найден');
-  const uid=r.data().uid;if(uid===me.uid)return alert('Это ты');
-  const id=[me.uid,uid].sort().join('_');
-  await db.doc('chats/'+id).set({type:'direct',members:[me.uid,uid],names:{[me.uid]:me.username,[uid]:n}},{merge:true});
-  openChat(id)}
 async function newChat(){
   const t=prompt('1 — группа, 2 — канал');if(t!=='1'&&t!=='2')return;
   const name=prompt('Название');if(!name)return;
@@ -359,11 +420,12 @@ async function newChat(){
 
 // ===== ЧАТ =====
 async function openChat(id){
+  addRC(id);
   const c=(await db.doc('chats/'+id).get()).data();let key;
   if(c.type==='direct'){const o=c.members.find(x=>x!==me.uid);
     key=await shared(JSON.parse((await db.doc('users/'+o).get()).data().pub))}
   const can=c.type!=='channel'||c.owner===me.uid;
-  app.innerHTML=`<div class=top><button class=ib id=bk>←</button>${av(title(c),40)}<h2>${esc(title(c))}</h2></div><div class=msgs id=ms></div>${can?'<form id=fm><input id=tx placeholder="Сообщение" autocomplete=off><button>➤</button></form>':''}`;
+  app.innerHTML=`<div class=top><button class=ib id=bk>←</button>${av(title(c),36)}<h2>${esc(title(c))}</h2></div><div class=msgs id=ms></div>${can?'<form id=fm><input id=tx placeholder="Сообщение" autocomplete=off><button>➤</button></form>':''}`;
   $('bk').onclick=home;
   unsub();
   unsub=db.collection('chats/'+id+'/msgs').orderBy('at').limitToLast(100).onSnapshot(async s=>{
