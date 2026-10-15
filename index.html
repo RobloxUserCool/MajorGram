@@ -24,6 +24,19 @@ input{width:100%;padding:15px 18px;border-radius:26px;border:0;background:#2b374
 .ib{background:none;color:#fff;font-size:24px;padding:4px 10px}
 .body{flex:1;overflow:auto;padding:0 11px 100px}
 
+/* ===== ЗНАЧОК ВЕРИФИКАЦИИ И НИКИ ===== */
+.nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.vb{display:inline-block;width:.85em;height:.85em;margin-left:4px;flex:none;vertical-align:-.12em}
+
+/* ===== ШАПКА ЧАТА (как в Telegram) ===== */
+.ch{display:flex;align-items:center;gap:8px;padding:6px 8px}
+.chp{flex:1;min-width:0;display:flex;align-items:center;gap:8px;background:#243245;border-radius:24px;height:47px;padding:0 12px 0 4px}
+.chb{background:none;color:#fff;font-size:22px;padding:0 8px;height:40px;border-radius:20px}
+.cht{min-width:0;flex:1}
+.cht b{display:flex;align-items:center;min-width:0;font-size:17px;font-weight:600;line-height:20px}
+.cht small{display:block;font-size:13px;line-height:16px;color:#8493a6;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.chm{width:45px;height:45px;border-radius:50%;background:#243245;padding:0;font-size:20px;flex:none}
+
 /* ===== ПОИСК НА ГЛАВНОЙ И В КОНТАКТАХ ===== */
 .sq,.sbar input{background:#2b3748 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238493a6' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='M20 20l-4-4'/%3E%3C/svg%3E") no-repeat 17px center/18px}
 .sq{height:40px;line-height:40px;padding:0 18px 0 48px;margin:2px 0 9px;border-radius:20px;color:#8493a6;font-size:15px}
@@ -39,8 +52,8 @@ input{width:100%;padding:15px 18px;border-radius:26px;border:0;background:#2b374
 .row{display:flex;gap:13px;padding:9px 4px 9px 0;align-items:center}
 .av{border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:600;color:#fff;flex:none}
 .rt{flex:1;min-width:0}.l1{display:flex;justify-content:space-between;align-items:baseline}
-.l1 b{font-size:17px;font-weight:600;line-height:22px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.l1 small{color:#8493a6;font-size:13px;margin-left:8px}
+.l1 b{display:flex;align-items:center;min-width:0;font-size:17px;font-weight:600;line-height:22px}
+.l1 small{color:#8493a6;font-size:13px;margin-left:8px;flex:none}
 .l2{color:#8493a6;font-size:15px;line-height:20px;margin-top:2px}
 .empty{color:#8493a6;text-align:center;font-size:15px;padding:32px 20px}
 .wide{width:100%;margin:10px 0}
@@ -64,7 +77,7 @@ input{width:100%;padding:15px 18px;border-radius:26px;border:0;background:#2b374
 
 /* ===== ПРОФИЛЬ ===== */
 .pring{width:96px;height:96px;border-radius:50%;border:3px solid #1fc8d8;margin:4px auto 0;overflow:hidden;display:flex;align-items:center;justify-content:center}
-.pn{font-size:21px;font-weight:700;text-align:center;margin:10px 0 2px}
+.pn{display:flex;justify-content:center;align-items:center;font-size:21px;font-weight:700;margin:10px 0 2px}
 .ps{text-align:center;color:#8493a6;font-size:14px;margin-bottom:12px}
 .pb{display:flex;gap:8px;margin-bottom:12px}
 .pb div{flex:1;background:#243040;border-radius:14px;padding:10px 4px;text-align:center;font-weight:600;font-size:12px}
@@ -103,7 +116,7 @@ nav{position:absolute;left:16px;right:16px;bottom:calc(8px + env(safe-area-inset
 .band{display:flex;justify-content:space-between;align-items:center;background:#17212e;height:31px;padding:0 18px 0 16px;color:#8493a6;font-size:15px;font-weight:600}
 .sr{display:flex;align-items:center;gap:13px;padding-left:11px}
 .srt{flex:1;min-width:0;height:60px;display:flex;flex-direction:column;justify-content:center;border-bottom:1px solid #2a3748;padding-right:11px}
-.srt b{font-size:16px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.srt b{display:flex;align-items:center;min-width:0;font-size:16px;font-weight:600}
 .srt small{color:#8493a6;font-size:14px;margin-top:1px}
 
 /* ===== ЧАТ ===== */
@@ -111,6 +124,7 @@ nav{position:absolute;left:16px;right:16px;bottom:calc(8px + env(safe-area-inset
 .m{max-width:78%;padding:6px 11px;font-size:15px;border-radius:16px 16px 16px 4px;background:#182533;white-space:pre-wrap;word-break:break-word;align-self:flex-start}
 .m.me{background:#2b5278;border-radius:16px 16px 4px 16px;align-self:flex-end}
 .m b{display:block;font-size:12px;color:#6ab3f3}
+.m b .vb{width:12px;height:12px;margin-left:3px}
 form{display:flex;gap:8px;padding:6px 8px;background:#17212b}
 form input{height:40px;padding:0 16px;font-size:15px;border-radius:20px}
 form button{width:40px;height:40px;border-radius:50%;padding:0;font-size:17px;flex:none}
@@ -288,9 +302,25 @@ const IC={
   pen:'<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l4-1 11-11-3-3L5 16z"/></svg>',
   cam:'<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l2-2.5h6L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>',
   x:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>'};
-const rowHtml=c=>`<div class=row data-id="${c.id}">${av(title(c))}<div class=rt><div class=l1><b>${esc(title(c))}</b><small>${fmt(c.lastAt)}</small></div><div class=l2>${TYPES[c.type]}</div></div></div>`;
+
+// ===== ВЕРИФИКАЦИЯ: значок рядом с ником =====
+const VB='<svg class=vb viewBox="0 0 24 24"><path d="M12 1.6L14.33 3.31L17.2 3L18.36 5.64L21 6.8L20.69 9.67L22.4 12L20.69 14.33L21 17.2L18.36 18.36L17.2 21L14.33 20.69L12 22.4L9.67 20.69L6.8 21L5.64 18.36L3 17.2L3.31 14.33L1.6 12L3.31 9.67L3 6.8L5.64 5.64L6.8 3L9.67 3.31Z" fill="#64b5fd" stroke="#64b5fd" stroke-width="1.2" stroke-linejoin="round"/><path d="M7.6 12.4l3 3 5.8-6.2" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const nameH=(t,ok)=>`<span class=nm>${esc(t)}</span>${ok?VB:''}`;
+const VER={};
+async function loadVer(uids){
+  const need=[...new Set(uids)].filter(u=>u&&!(u in VER));
+  if(!need.length)return false;
+  await Promise.all(need.map(async u=>{
+    try{const d=await db.doc('users/'+u).get();VER[u]=!!(d.exists&&d.data().verified)}catch(e){VER[u]=false}}));
+  return true}
+const peer=c=>c.members.find(x=>x!==me.uid);
+const ver=c=>c.type==='direct'&&!!VER[peer(c)];
+
+const rowHtml=c=>`<div class=row data-id="${c.id}">${av(title(c))}<div class=rt><div class=l1><b>${nameH(title(c),ver(c))}</b><small>${fmt(c.lastAt)}</small></div><div class=l2>${TYPES[c.type]}</div></div></div>`;
 const bindRows=()=>document.querySelectorAll('.row[data-id]').forEach(r=>r.onclick=()=>openChat(r.dataset.id));
 const soon=()=>alert('Скоро');
+// шапка чата: стрелка, аватар, ник со значком, подпись; справа круглая кнопка «⋮»
+const chatHead=(a,name,sub,ok)=>`<div class=ch><div class=chp><button class=chb id=bk>←</button>${a}<div class=cht><b>${nameH(name,ok)}</b><small>${esc(sub)}</small></div></div><button class=chm id=cm>⋮</button></div>`;
 
 // ===== ЗВЁЗДЫ =====
 async function getStars(){try{const d=await db.doc('stars/'+me.uid).get();return d.exists?(d.data().balance||0):0}catch(e){return 0}}
@@ -327,9 +357,14 @@ function home(){
     $('m3').onclick=()=>auth.signOut()}
   if(tab==='chats'){$('fb').onclick=searchView;$('fb2').onclick=soon}
   document.querySelectorAll('.ni').forEach(n=>n.onclick=()=>{tab=n.dataset.t;home()});
+  // обновить свою отметку верификации
+  db.doc('users/'+me.uid).get().then(d=>{
+    const v=!!(d.exists&&d.data().verified);
+    if(v!==!!me.verified){me.verified=v;if(tab==='profile')draw()}}).catch(()=>{});
   unsubList=db.collection('chats').where('members','array-contains',me.uid).onSnapshot(s=>{
     CH=s.docs.map(d=>({id:d.id,...d.data()})).sort((x,y)=>(y.lastAt?.seconds||0)-(x.lastAt?.seconds||0));
-    $('cl')?list():draw()});
+    $('cl')?list():draw();
+    loadVer(CH.filter(c=>c.type==='direct').map(peer)).then(n=>{if(n)$('cl')?list():$('sb')?sDraw():draw()})});
   draw()}
 function list(){
   const l=$('cl');if(!l)return;
@@ -359,7 +394,7 @@ function draw(){
     getStars().then(n=>{STARS=n;const e=$('sbal');if(e)e.textContent=n})}
   else{
     b.innerHTML=`<div class=pring>${me.photo?`<img src="${me.photo}" style="width:100%;height:100%;object-fit:cover">`:av('@'+me.username,90)}</div>
-    <div class=pn>${esc(me.name||'@'+me.username)}</div><div class=ps>в сети</div>
+    <div class=pn>${nameH(me.name||'@'+me.username,me.verified)}</div><div class=ps>в сети</div>
     <div class=pb><div id=pf><span>📷</span>Выбрать фото</div><div id=pe><span>✏️</span>Изменить</div><div id=pg><span>⚙️</span>Настройки</div></div>
     <div class="grp info"><div><b>${esc(auth.currentUser.email||'')}</b><small>Почта</small></div>
     <div><b>@${esc(me.username)}</b><small>Имя пользователя</small></div>
@@ -378,7 +413,7 @@ const EXAMPLE="function onMessage(text){\n  if(text==='/start') return 'Прив
 const FATHER_HELP='Привет! Я BotFather. Здесь можно создавать своих ботов.\n\n/newbot — создать бота\n/mybots — мои боты\n/setcode — задать код бота\n/deletebot — удалить бота\n/cancel — отмена';
 const bav=(t,s=52)=>`<div class=av style="width:${s}px;height:${s}px;background:linear-gradient(135deg,#8e5cf7,#5b2fd6);font-size:${s*.42}px">${esc(t[0].toUpperCase())}</div>`;
 const botList=()=>[...Object.keys(SYS).map(u=>({u,name:SYS[u].name})),...Object.keys(me.bots||{}).map(u=>({u,name:me.bots[u].name}))];
-const brow=x=>`<div class=sr data-bot="${esc(x.u)}">${bav(x.name,46)}<div class=srt><b>${esc(x.name)}</b><small>бот · @${esc(x.u)}</small></div></div>`;
+const brow=x=>`<div class=sr data-bot="${esc(x.u)}">${bav(x.name,46)}<div class=srt><b>${nameH(x.name,false)}</b><small>бот · @${esc(x.u)}</small></div></div>`;
 const hk=u=>'mg_bh_'+me.uid+'_'+u;
 const loadH=u=>{try{return JSON.parse(localStorage.getItem(hk(u))||'[]')}catch(e){return[]}};
 const saveH=(u,h)=>{try{localStorage.setItem(hk(u),JSON.stringify(h))}catch(e){}};
@@ -388,12 +423,12 @@ function botChat(u){
   BF={};
   const sys=SYS[u],nm=sys?sys.name:me.bots[u].name;
   let H=loadH(u);
-  app.innerHTML=`<div class=top><button class=ib id=bk>←</button>${bav(nm,36)}<h2>${esc(nm)}</h2></div><div class=msgs id=ms></div><form id=fm><input id=tx placeholder="Сообщение" autocomplete=off><button>➤</button></form>`;
+  app.innerHTML=chatHead(bav(nm,40),nm,'бот',false)+`<div class=msgs id=ms></div><form id=fm><input id=tx placeholder="Сообщение" autocomplete=off><button>➤</button></form>`;
   const draw=()=>{const ms=$('ms');if(!ms)return;
     ms.innerHTML=H.map(m=>`<div class="m${m.me?' me':''}">${esc(m.t)}</div>`).join('');
     ms.scrollTop=ms.scrollHeight};
   const push=(mine,t)=>{H.push({me:mine,t});H=H.slice(-100);saveH(u,H);draw()};
-  $('bk').onclick=home;
+  $('bk').onclick=home;$('cm').onclick=soon;
   $('fm').onsubmit=async e=>{
     e.preventDefault();const t=$('tx').value.trim();if(!t)return;$('tx').value='';
     push(1,t);
@@ -474,7 +509,7 @@ function runBot(bot,text){
     w.postMessage(text)})}
 
 // ===== ЭКРАН ПОИСКА =====
-const srow=c=>`<div class=sr data-id="${c.id}">${av(title(c),46)}<div class=srt><b>${esc(title(c))}</b><small>${TYPES[c.type]}</small></div></div>`;
+const srow=c=>`<div class=sr data-id="${c.id}">${av(title(c),46)}<div class=srt><b>${nameH(title(c),ver(c))}</b><small>${TYPES[c.type]}</small></div></div>`;
 function searchView(){
   sQ='';sTab='chats';
   app.innerHTML=`<div class=sh><div class=sbar><input id=si placeholder="Поиск чатов" autocomplete=off><button class=sx id=sx>${IC.x}</button></div></div>
@@ -513,8 +548,11 @@ async function sFind(n){
   try{r=await db.doc('usernames/'+n).get()}catch(e){return}
   if(k!==sSeq||!r.exists||r.data().uid===me.uid||r.data().bot)return;
   if(CH.some(c=>c.type==='direct'&&title(c)==='@'+n))return;
+  const uid=r.data().uid;
+  await loadVer([uid]);
+  if(k!==sSeq)return;
   const box=$('sf');if(!box)return;
-  box.innerHTML=`<div class=band><span>Глобальный поиск</span></div><div class=sr>${av('@'+n,46)}<div class=srt><b>@${esc(n)}</b><small>пользователь</small></div></div>`;
+  box.innerHTML=`<div class=band><span>Глобальный поиск</span></div><div class=sr>${av('@'+n,46)}<div class=srt><b>${nameH('@'+n,VER[uid])}</b><small>пользователь</small></div></div>`;
   box.querySelector('.sr').onclick=()=>openUser(n)}
 async function openUser(n){
   const r=await db.doc('usernames/'+n).get();if(!r.exists)return alert('Не найден');
@@ -556,18 +594,21 @@ async function newChat(){
 async function openChat(id){
   addRC(id);
   const c=(await db.doc('chats/'+id).get()).data();let key;
-  if(c.type==='direct'){const o=c.members.find(x=>x!==me.uid);
-    key=await shared(JSON.parse((await db.doc('users/'+o).get()).data().pub))}
+  if(c.type==='direct'){const o=peer(c);
+    key=await shared(JSON.parse((await db.doc('users/'+o).get()).data().pub));
+    await loadVer([o])}
   const can=c.type!=='channel'||c.owner===me.uid;
-  app.innerHTML=`<div class=top><button class=ib id=bk>←</button>${av(title(c),36)}<h2>${esc(title(c))}</h2></div><div class=msgs id=ms></div>${can?'<form id=fm><input id=tx placeholder="Сообщение" autocomplete=off><button>➤</button></form>':''}`;
-  $('bk').onclick=home;
+  const sub=c.type==='direct'?TYPES.direct:TYPES[c.type]+' · участников: '+c.members.length;
+  app.innerHTML=chatHead(av(title(c),40),title(c),sub,ver(c))+`<div class=msgs id=ms></div>${can?'<form id=fm><input id=tx placeholder="Сообщение" autocomplete=off><button>➤</button></form>':''}`;
+  $('bk').onclick=home;$('cm').onclick=soon;
   unsub();
   unsub=db.collection('chats/'+id+'/msgs').orderBy('at').limitToLast(100).onSnapshot(async s=>{
+    if(c.type!=='direct')await loadVer(s.docs.map(d=>d.data().from));
     const h=await Promise.all(s.docs.map(async d=>{
       const m=d.data();let t=m.text;
       if(m.ct){try{t=new TextDecoder().decode(await crypto.subtle.decrypt({name:'AES-GCM',iv:ub(m.iv)},key,ub(m.ct)))}catch(e){t='🔒 не удалось расшифровать'}}
       const mine=m.from===me.uid;
-      return `<div class="m${mine?' me':''}">${!mine&&c.type!=='direct'?'<b>@'+esc(m.fromName)+'</b>':''}${esc(t)}</div>`}));
+      return `<div class="m${mine?' me':''}">${!mine&&c.type!=='direct'?'<b>@'+esc(m.fromName)+(VER[m.from]?VB:'')+'</b>':''}${esc(t)}</div>`}));
     const ms=$('ms');if(!ms)return;ms.innerHTML=h.join('');ms.scrollTop=ms.scrollHeight});
   if(can)$('fm').onsubmit=async e=>{
     e.preventDefault();const t=$('tx').value.trim();if(!t)return;$('tx').value='';
