@@ -11,6 +11,8 @@ body{margin:0;background:#1c2634;color:#fff;font:16px system-ui,sans-serif}
 button{border:0;border-radius:24px;padding:14px 18px;background:#2ea6ff;color:#fff;font:inherit;font-weight:600}
 button.alt{background:#2b3748}
 input{width:100%;padding:15px 18px;border-radius:26px;border:0;background:#2b3748;color:#fff;font:inherit;outline:0}
+.auth{margin:auto;width:min(340px,90%);display:flex;flex-direction:column;gap:10px}.auth h1{text-align:center}
+#er{color:#ff7a8a;min-height:1em;font-size:14px}
 .top{display:flex;align-items:center;gap:12px;padding:14px 16px}
 .top h1,.top h2{flex:1;margin:0;font-size:28px}.top h2{font-size:20px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .logo{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#2ea6ff,#8a5cff);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:22px;border:3px solid #34c37a}
@@ -65,7 +67,7 @@ nav{position:absolute;left:14px;right:14px;bottom:calc(14px + env(safe-area-inse
 form{display:flex;gap:8px;padding:8px 10px;background:#17212b}
 form button{width:48px;height:48px;border-radius:50%;padding:0;font-size:20px;flex:none}
 
-/* ===== ПРИВЕТСТВИЕ ===== */
+/* ===== ПРИВЕТСТВИЕ И ВХОД ПО НОМЕРУ ===== */
 .mgw{height:100%;display:flex;flex-direction:column;align-items:center;padding:24px 20px}
 .mglogo{margin-top:16vh;width:150px;height:150px;border-radius:34px;background:linear-gradient(135deg,#8e5cf7,#5b2fd6);display:flex;align-items:center;justify-content:center;font-size:92px;font-weight:800;box-shadow:0 10px 40px #5b2fd666}
 .mgname{font-size:32px;font-weight:700;margin-top:34px}
@@ -75,42 +77,51 @@ form button{width:48px;height:48px;border-radius:50%;padding:0;font-size:20px;fl
 .mgdots i:first-child{background:#8e5cf7}
 .mgen{margin-top:auto;color:#6cb4f0;font-size:20px;padding:14px}
 .mgstart{width:100%;padding:19px;font-size:19px;border-radius:30px;background:linear-gradient(90deg,#8e5cf7,#6a8bf5)}
+.mgh{font-size:24px;font-weight:700;margin-top:6vh;text-align:center}
+.mgsub{color:#8d99a6;text-align:center;margin:12px 0 26px;max-width:300px}
+.mgf{width:100%;border:1.5px solid #3b4859;border-radius:14px;padding:18px 16px;font-size:19px;color:#8d99a6;display:flex;justify-content:space-between;margin-bottom:20px;position:relative}
+.mgf.act{border-color:#8e5cf7;color:#fff}
+.mgf small{position:absolute;top:-9px;left:12px;background:#1c2634;padding:0 6px;color:#8e5cf7;font-size:13px}
+.mggo{align-self:flex-end;width:56px;height:56px;border-radius:50%;padding:0;background:#8e5cf7;font-size:26px}
+.mgpad{margin-top:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:7px;width:100%}
+.mgpad button{border-radius:16px;background:#2c3745;font-size:28px;font-weight:400;text-align:left;padding:14px 0 14px 20px}
+.mgpad small{font-size:14px;color:#8d99a6;margin-left:12px}
+.mgl{color:#6cb4f0;text-align:center;padding:10px;font-size:16px}
 
-/* ===== НОМЕР ТЕЛЕФОНА / КОД ===== */
-.ph{height:100%;display:flex;flex-direction:column;position:relative;padding:0 10px 10px;overflow:hidden}
-.phback{position:absolute;left:4px;top:4px;background:none;font-size:22px;padding:6px 10px;color:#7d8a99;z-index:2}
-.phtop{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:flex-end;padding:0 25px}
-.phh{font-size:20px;font-weight:700;text-align:center}
-.phs{color:#7d8a99;text-align:center;font-size:14px;line-height:1.35;margin:10px auto 28px;max-width:260px}
-.phf{width:100%;height:50px;border:1px solid #3b4859;border-radius:12px;padding:0 14px;font-size:16px;color:#7d8a99;display:flex;align-items:center;justify-content:space-between;margin-bottom:30px;position:relative}
-.phf.act{border:2px solid #5eb5f7;color:#fff;justify-content:flex-start;margin-bottom:0}
-.phf small{position:absolute;top:-9px;left:12px;background:#1c2634;padding:0 5px;color:#5eb5f7;font-size:12px}
-.phf .dv{display:block;width:1px;height:26px;background:#3b4859;margin:0 12px 0 42px}
-.phf em{font-style:normal;color:#5eb5f7;margin-left:1px;animation:bl 1s infinite}
-@keyframes bl{50%{opacity:0}}
-.pherr{color:#ff7a8a;font-size:13px;text-align:center;min-height:18px;margin:8px 0 0}
-.phlnk{color:#5eb5f7;text-align:center;font-size:14px;padding:6px}
-.phgo{align-self:flex-end;width:56px;height:56px;border-radius:50%;padding:0;background:#2299f3;margin:20px 10px 20px 0;display:flex;align-items:center;justify-content:center;flex:none}
-.phpad{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;flex:none}
-.phpad button{height:46px;border-radius:14px;background:#2c3745;font-size:26px;font-weight:400;padding:0 0 0 22px;display:flex;align-items:center;gap:14px;text-align:left}
-.phpad small{font-size:13px;color:#7d8a99}
-.phpad .bs{justify-content:center;padding:0;font-size:22px}
-@media(max-height:640px){
-  .phpad button{height:40px;font-size:22px}
-  .phs{margin-bottom:18px}
-  .phf{margin-bottom:20px}
-  .phgo{margin-top:10px;margin-bottom:12px}
-}
-/* ===== ЮЗЕРНЕЙМ ===== */
-.nm{margin:auto;width:min(340px,90%);display:flex;flex-direction:column;gap:12px}
+/* ===== РАЗМЕРЫ КАК В TELEGRAM ===== */
+.body{padding:0 11px 130px}
+.hm{padding:8px 16px 6px 14px;gap:10px}
+.hm h1{font-size:22px}
+.hm .logo{width:36px;height:36px;font-size:17px;border-width:2px}
+.hm .ib{font-size:24px;padding:4px 10px}
+.mnu{top:calc(52px + env(safe-area-inset-top))}
+
+input.sq{height:40px;padding:0 18px 0 48px;margin:2px 0 9px;font-size:15px;
+  background:#2b3748 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238493a6' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='M20 20l-4-4'/%3E%3C/svg%3E") no-repeat 17px center/18px}
+.sq::placeholder{color:#8493a6}
+
+.tabs{padding:4px;margin-bottom:6px}
+.tb{padding:5px 6px;font-size:15px}
+.tb i{display:inline-block;font-size:12px;line-height:16px;padding:0 6px;margin-left:5px}
+
+.row{gap:13px;padding:9px 4px 9px 0}
+.l1 b{font-size:17px;font-weight:600;line-height:22px}
+.l1 small{font-size:13px}
+.l2{font-size:15px;line-height:20px;margin-top:2px}
+
+nav{left:16px;right:16px;bottom:calc(8px + env(safe-area-inset-bottom));padding:4px;border-radius:30px}
+.ni{flex:1 1 auto;gap:1px;padding:5px 8px;border-radius:24px;font-size:12px;line-height:14px}
+.ni svg{width:22px;height:22px}
+
+.fab{width:48px;height:48px;right:20px;bottom:calc(77px + env(safe-area-inset-bottom))}
+.fab svg{width:22px;height:22px}
+.fab2{position:absolute;right:26px;bottom:calc(135px + env(safe-area-inset-bottom));width:36px;height:36px;border-radius:50%;padding:0;background:#2b3748;display:flex;align-items:center;justify-content:center}
+.fab2 svg{width:20px;height:20px}
 </style></head><body><div id="app"></div>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script>
-// Адрес воркера бота
-const BOT='https://majorgram-bot.daniil-suhorukov216.workers.dev';
-
 firebase.initializeApp({
   apiKey:"AIzaSyATikQr2x_dEq_rAga1m4--gVCCVQdR3-M",
   authDomain:"majorgram-3cd73.firebaseapp.com",
@@ -121,7 +132,7 @@ firebase.initializeApp({
 const auth=firebase.auth(),db=firebase.firestore(),FV=firebase.firestore.FieldValue;
 const app=document.getElementById('app'),$=i=>document.getElementById(i);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-let me,K,unsub=()=>{},unsubList=()=>{},busy=0,tab='chats',flt='all',q='',CH=[],STARS=0,PH='';
+let me,K,unsub=()=>{},unsubList=()=>{},busy=0,tab='chats',flt='all',q='',CH=[],STARS=0;
 
 // ===== ШИФРОВАНИЕ (личные чаты) =====
 const b64=b=>btoa(String.fromCharCode(...new Uint8Array(b))),ub=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
@@ -135,15 +146,9 @@ async function shared(pubJ){
   const pu=await crypto.subtle.importKey('jwk',pubJ,EC,false,[]);
   return crypto.subtle.deriveKey({name:'ECDH',public:pu},pr,{name:'AES-GCM',length:256},false,['encrypt','decrypt'])}
 
-// ===== СВЯЗЬ С БОТОМ =====
-async function api(path,body){
-  let r;
-  try{r=await fetch(BOT+'/api/'+path,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(body)})}
-  catch(e){throw Error('Нет связи с ботом')}
-  try{return await r.json()}catch(e){throw Error('Ошибка сервера')}}
-const fmtPh=d=>`+${d[0]} (${d.slice(1,4)}) ${d.slice(4,7)}-${d.slice(7,9)}-${d.slice(9,11)}`;
+// ===== ВХОД / РЕГИСТРАЦИЯ =====
+const run=async f=>{try{await f()}catch(e){$('er').textContent=e.message}};
 
-// ===== ВХОД =====
 // --- Приветственный экран ---
 function authView(){
   app.innerHTML=`<div class=mgw><div class=mglogo>M</div><div class=mgname>MajorGram</div>
@@ -151,111 +156,68 @@ function authView(){
   <div class=mgdots><i></i><i></i><i></i><i></i><i></i><i></i></div>
   <div class=mgen id=mgen>Continue in English</div>
   <button class=mgstart id=mgs>Начать общение</button></div>`;
-  $('mgs').onclick=phoneView;
+  $('mgs').onclick=showEmail;
   $('mgen').onclick=()=>{
     $('mgt').innerHTML='The <b>fastest</b> messenger in the world.<br><b>Free and secure.</b>';
     $('mgs').textContent='Start messaging';$('mgen').style.display='none'}}
 
-// --- Клавиатура (общая для номера и кода) ---
-function keypad(onKey){
-  [['1',''],['2','ABC'],['3','DEF'],['4','GHI'],['5','JKL'],['6','MNO'],['7','PQRS'],['8','TUV'],['9','WXYZ'],['',''],['0','+'],['⌫','']].forEach(k=>{
-    const b=document.createElement('button');
-    if(k[0]==='⌫'){b.className='bs';b.textContent='⌫'}
-    else b.innerHTML=k[0]+(k[1]?'<small>'+k[1]+'</small>':'');
-    if(!k[0])b.style.visibility='hidden';
-    b.onclick=()=>onKey(k[0]);
-    $('php').appendChild(b)})}
-const arrow='<svg width=26 height=26 viewBox="0 0 24 24" fill=none stroke="#fff" stroke-width=2.2 stroke-linecap=round stroke-linejoin=round><path d="M4 12h16M13 5l7 7-7 7"/></svg>';
-const msg=(t,ok)=>{const e=$('pher');if(!e)return;e.textContent=t;e.style.color=ok?'#7bc862':'#ff7a8a'};
+// --- Вход по почте + ссылки на номер и назад ---
+function showEmail(){
+  emailView();
+  const a=document.querySelector('.auth');
+  const p=document.createElement('div');p.className='mgl';p.textContent='Войти по номеру';p.onclick=phoneView;
+  const b=document.createElement('div');b.className='mgl';b.textContent='← Назад';b.onclick=authView;
+  a.append(p,b)}
 
 // --- Экран «Номер телефона» ---
 function phoneView(){
-  let d='',wait=0;
-  app.innerHTML=`<div class=ph>
-  <button class=phback id=phb>←</button>
-  <div class=phtop>
-    <div class=phh>Номер телефона</div>
-    <div class=phs>Проверьте код страны и введите свой номер телефона.</div>
-    <div class=phf><span>Страна</span><span>›</span></div>
-    <div class="phf act"><small>Номер телефона</small><span>+</span><i class=dv></i><span id=phn></span><em>|</em></div>
-    <div class=pherr id=pher></div>
-  </div>
-  <button class=phgo id=phg>${arrow}</button>
-  <div class=phpad id=php></div></div>`;
-  $('phb').onclick=authView;
-  keypad(k=>{
-    if(k==='⌫')d=d.slice(0,-1);else if(d.length<11)d+=k;
-    $('phn').textContent=d;msg('')});
-  $('phg').onclick=async()=>{
-    if(d.length<11){msg('Введите номер полностью');return}
-    if(wait)return;wait=1;msg('');
-    try{
-      const r=await api('code',{phone:d});
-      if(r.ok){PH=d;codeView();return}
-      msg(r.error||'Ошибка')}
-    catch(e){msg(e.message)}
-    wait=0}}
+  let d='';
+  app.innerHTML=`<div class=top><button class=ib id=bk>←</button></div>
+  <div class=mgw style="margin-top:-20px">
+  <div class=mgh>Номер телефона</div>
+  <div class=mgsub>Проверьте код страны и введите свой номер телефона.</div>
+  <div class=mgf><span>Страна</span><span>›</span></div>
+  <div class="mgf act"><small>Номер телефона</small><span id=mgn>+</span></div>
+  <button class=mggo id=mgg>➜</button>
+  <div class=mgpad id=mgp></div></div>`;
+  $('bk').onclick=showEmail;
+  [['1',''],['2','ABC'],['3','DEF'],['4','GHI'],['5','JKL'],['6','MNO'],['7','PQRS'],['8','TUV'],['9','WXYZ'],['',''],['0','+'],['⌫','']].forEach(k=>{
+    const b=document.createElement('button');
+    b.innerHTML=k[0]+(k[1]?'<small>'+k[1]+'</small>':'');
+    if(!k[0])b.style.visibility='hidden';
+    b.onclick=()=>{
+      if(k[0]==='⌫')d=d.slice(0,-1);else if(d.length<15)d+=k[0];
+      $('mgn').textContent='+'+d};
+    $('mgp').appendChild(b)});
+  // сюда позже подключим вход по номеру через бота
+  $('mgg').onclick=()=>d.length<7?alert('Введите номер полностью'):soon()}
 
-// --- Экран «Введите код» ---
-function codeView(){
-  let c='',wait=0;
-  app.innerHTML=`<div class=ph>
-  <button class=phback id=phb>←</button>
-  <div class=phtop>
-    <div class=phh>Введите код</div>
-    <div class=phs>Код отправлен ботом @majorgramone_bot в Telegram для номера ${fmtPh(PH)}</div>
-    <div class="phf act"><small>Код</small><span id=phn></span><em>|</em></div>
-    <div class=pherr id=pher></div>
-    <div class=phlnk id=phr>Отправить код снова</div>
-  </div>
-  <button class=phgo id=phg>${arrow}</button>
-  <div class=phpad id=php></div></div>`;
-  $('phb').onclick=phoneView;
-  keypad(k=>{
-    if(k==='⌫')c=c.slice(0,-1);else if(c.length<6)c+=k;
-    $('phn').textContent=c;msg('')});
-  $('phr').onclick=async()=>{
-    try{const r=await api('code',{phone:PH});r.ok?msg('Код отправлен снова',1):msg(r.error||'Ошибка')}
-    catch(e){msg(e.message)}};
-  $('phg').onclick=async()=>{
-    if(c.length<6){msg('Введите 6 цифр');return}
-    if(wait)return;wait=1;msg('');
-    try{
-      const r=await api('verify',{phone:PH,code:c});
-      if(r.ok){await auth.signInWithCustomToken(r.token);return}
-      msg(r.error||'Ошибка');c='';$('phn').textContent=''}
-    catch(e){msg(e.message)}
-    wait=0}}
-
-// --- Юзернейм для нового аккаунта ---
-function nameView(u){
-  app.innerHTML=`<div class=nm><h2 style="text-align:center;margin:0">Придумайте юзернейм</h2>
-  <div class=phs style="margin:0 auto">По нему вас будут находить в MajorGram. Только a-z, 0-9 и _, от 3 до 20 символов.</div>
-  <input id=un placeholder="@юзернейм" autocapitalize=off autocomplete=off>
-  <button id=nb>Продолжить</button><div class=pherr id=pher></div><div class=phlnk id=nx>Выйти</div></div>`;
-  $('nx').onclick=()=>auth.signOut();
-  $('nb').onclick=async()=>{
+// --- Форма почты (старый вход) ---
+function emailView(){
+  app.innerHTML=`<div class=auth><h1>MajorGram</h1><input id=em type=email placeholder="Почта"><input id=pw type=password placeholder="Пароль"><input id=un placeholder="@юзернейм (для регистрации)"><button id=li>Войти</button><button id=su class=alt>Регистрация</button><p id=er></p></div>`;
+  $('li').onclick=()=>run(()=>auth.signInWithEmailAndPassword($('em').value,$('pw').value));
+  $('su').onclick=()=>run(async()=>{
     const n=$('un').value.replace('@','').trim().toLowerCase();
-    if(!/^[a-z0-9_]{3,20}$/.test(n)){msg('3–20 символов: a-z, 0-9 и _');return}
-    $('nb').disabled=true;msg('');
+    if(!/^[a-z0-9_]{3,20}$/.test(n))throw Error('Юзернейм: 3–20 символов, a-z, 0-9 и _');
+    busy=1;let c;
     try{
+      c=await auth.createUserWithEmailAndPassword($('em').value,$('pw').value);
       K=await keys();
-      const ph=u.uid.replace(/^ph/,'');
       await db.runTransaction(async t=>{
         const r=db.doc('usernames/'+n);
         if((await t.get(r)).exists)throw Error('Юзернейм занят');
-        t.set(r,{uid:u.uid});
-        t.set(db.doc('users/'+u.uid),{username:n,pub:JSON.stringify(K.pub),phone:fmtPh(ph)})});
-      await begin(u)}
-    catch(e){msg(e.message);$('nb').disabled=false}}}
+        t.set(r,{uid:c.user.uid});
+        t.set(db.doc('users/'+c.user.uid),{username:n,pub:JSON.stringify(K.pub)})});
+    }catch(e){if(c)await c.user.delete();busy=0;throw e}
+    busy=0;await begin(c.user)})}
 
 auth.onAuthStateChanged(async u=>{if(busy)return;unsub();unsubList();
-  if(!u){if(!$('mgs')&&!$('php'))authView();return}
+  if(!u){if(!$('li')&&!$('mgs')&&!$('mgp'))authView();return}
   await begin(u)});
 async function begin(u){
   K=await keys();
   const d=await db.doc('users/'+u.uid).get();
-  if(!d.exists){nameView(u);return}
+  if(!d.exists){await auth.signOut();return}
   me={uid:u.uid,...d.data()};
   if(d.data().pub!==JSON.stringify(K.pub))await db.doc('users/'+u.uid).update({pub:JSON.stringify(K.pub)});
   home()}
@@ -274,7 +236,8 @@ const IC={
   con:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="10" r="3"/><path d="M6.5 18c2-3.5 9-3.5 11 0"/></svg>',
   set:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/></svg>',
   pro:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="9" cy="10" r=".8"/><circle cx="15" cy="10" r=".8"/><path d="M8 14c1 2 7 2 8 0"/></svg>',
-  pen:'<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l4-1 11-11-3-3L5 16z"/></svg>'};
+  pen:'<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l4-1 11-11-3-3L5 16z"/></svg>',
+  cam:'<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l2-2.5h6L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>'};
 const rowHtml=c=>`<div class=row data-id="${c.id}">${av(title(c))}<div class=rt><div class=l1><b>${esc(title(c))}</b><small>${fmt(c.lastAt)}</small></div><div class=l2>${TYPES[c.type]}</div></div></div>`;
 const bindRows=()=>document.querySelectorAll('.row[data-id]').forEach(r=>r.onclick=()=>openChat(r.dataset.id));
 const soon=()=>alert('Скоро');
@@ -303,8 +266,8 @@ function home(){
   const st=tab==='settings';
   const head=st?'<div class=top><h1 style="font-size:26px">Настройки</h1></div>'
     :tab==='profile'?'<div class=top><h1 style="font-size:26px">Профиль</h1></div>'
-    :'<div class=top><div class=logo>M</div><h1>MajorGram</h1><button class=ib id=mn>⋮</button></div><div class=mnu id=mnu hidden><div id=m1>Новая группа или канал</div><div id=m2>Найти пользователя</div><div id=m3>Выйти</div></div>';
-  app.innerHTML=`${head}<div class=body id=bd></div>${tab==='chats'?`<button class=fab id=fb>${IC.pen}</button>`:''}
+    :'<div class="top hm"><div class=logo>M</div><h1>MajorGram</h1><button class=ib id=mn>⋮</button></div><div class=mnu id=mnu hidden><div id=m1>Новая группа или канал</div><div id=m2>Найти пользователя</div><div id=m3>Выйти</div></div>';
+  app.innerHTML=`${head}<div class=body id=bd></div>${tab==='chats'?`<button class=fab2 id=fb2>${IC.cam}</button><button class=fab id=fb>${IC.pen}</button>`:''}
   <nav>${[['chats','Чаты',IC.chat],['contacts','Контакты',IC.con],['settings','Настройки',IC.set],['profile','Профиль',IC.pro]].map(([k,n,i])=>`<div class="ni${tab===k?' on':''}" data-t="${k}">${i}<span>${n}</span></div>`).join('')}</nav>`;
   if(tab==='chats'||tab==='contacts'){
     if($('mn')){
@@ -312,7 +275,7 @@ function home(){
       $('m1').onclick=()=>{$('mnu').hidden=true;newChat()};
       $('m2').onclick=()=>{$('mnu').hidden=true;search()};
       $('m3').onclick=()=>auth.signOut()}}
-  if(tab==='chats')$('fb').onclick=search;
+  if(tab==='chats'){$('fb').onclick=search;$('fb2').onclick=soon}
   document.querySelectorAll('.ni').forEach(n=>n.onclick=()=>{tab=n.dataset.t;home()});
   unsubList=db.collection('chats').where('members','array-contains',me.uid).onSnapshot(s=>{
     CH=s.docs.map(d=>({id:d.id,...d.data()})).sort((x,y)=>(y.lastAt?.seconds||0)-(x.lastAt?.seconds||0));
@@ -348,11 +311,11 @@ function draw(){
     b.innerHTML=`<div class=pring>${me.photo?`<img src="${me.photo}" style="width:100%;height:100%;object-fit:cover">`:av('@'+me.username,116)}</div>
     <div class=pn>${esc(me.name||'@'+me.username)}</div><div class=ps>в сети</div>
     <div class=pb><div id=pf><span>📷</span>Выбрать фото</div><div id=pe><span>✏️</span>Изменить</div><div id=pg><span>⚙️</span>Настройки</div></div>
-    <div class="grp info"><div><b>${esc(auth.currentUser.email||'')||'—'}</b><small>Почта</small></div>
+    <div class="grp info"><div><b>${esc(auth.currentUser.email||'')}</b><small>Почта</small></div>
     <div><b>@${esc(me.username)}</b><small>Имя пользователя</small></div>
     <div id=pi2><b>${esc(me.about||'Не указано')}</b><small>О себе</small></div>
     <div id=pi3><b>${esc(me.bday||'Не указано')}</b><small>День рождения</small></div>
-    <div id=pi4><b>${esc(me.phone||'Не указан')}</b><small>Телефон</small></div></div>`;
+    <div id=pi4><b>Не указан</b><small>Телефон</small></div></div>`;
     $('pf').onclick=pickPhoto;$('pe').onclick=editName;
     $('pg').onclick=()=>{tab='settings';home()};
     $('pi2').onclick=()=>edit('about','О себе');
