@@ -6,7 +6,9 @@
 <script>if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js')</script>
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{margin:0;background:#1c2634;color:#fff;font:16px system-ui,sans-serif}
+html,body{overscroll-behavior:none}
+body{margin:0;background:#1c2634;color:#fff;font:16px system-ui,sans-serif;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+input,.m{-webkit-user-select:text;user-select:text}
 #app{height:100dvh;display:flex;flex-direction:column;position:relative;overflow:hidden;padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)}
 button{border:0;border-radius:20px;padding:11px 16px;background:#2ea6ff;color:#fff;font:inherit;font-size:15px;font-weight:600}
 button.alt{background:#2b3748}
@@ -113,6 +115,15 @@ form{display:flex;gap:8px;padding:6px 8px;background:#17212b}
 form input{height:40px;padding:0 16px;font-size:15px;border-radius:20px}
 form button{width:40px;height:40px;border-radius:50%;padding:0;font-size:17px;flex:none}
 
+/* ===== ОКНА И УВЕДОМЛЕНИЯ ===== */
+.ov{position:fixed;inset:0;background:#0009;display:flex;align-items:center;justify-content:center;z-index:50;padding:20px}
+.dlg{background:#242f3d;border-radius:18px;padding:18px;width:min(320px,100%)}
+.dlg h3{margin:0 0 12px;font-size:17px}
+.dlg input{height:42px;padding:0 14px;font-size:15px;border-radius:12px}
+.dbt{display:flex;justify-content:flex-end;gap:8px;margin-top:14px}
+.dbt button{background:none;color:#5eb5f7;padding:8px 14px}
+.toast{position:fixed;left:50%;bottom:calc(90px + env(safe-area-inset-bottom));transform:translateX(-50%);background:#2b3748;color:#fff;padding:10px 18px;border-radius:18px;font-size:14px;z-index:60;box-shadow:0 4px 14px #0008;max-width:80%;text-align:center}
+
 /* ===== ПРИВЕТСТВИЕ И ВХОД ПО НОМЕРУ ===== */
 .mgw{height:100%;display:flex;flex-direction:column;align-items:center;padding:24px 20px}
 .mglogo{margin-top:16vh;width:150px;height:150px;border-radius:34px;background:linear-gradient(135deg,#8e5cf7,#5b2fd6);display:flex;align-items:center;justify-content:center;font-size:92px;font-weight:800;box-shadow:0 10px 40px #5b2fd666}
@@ -148,7 +159,24 @@ firebase.initializeApp({
 const auth=firebase.auth(),db=firebase.firestore(),FV=firebase.firestore.FieldValue;
 const app=document.getElementById('app'),$=i=>document.getElementById(i);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-let me,K,unsub=()=>{},unsubList=()=>{},busy=0,tab='chats',flt='all',CH=[],STARS=0,sTab='chats',sQ='',sSeq=0;
+let me,K,unsub=()=>{},unsubList=()=>{},busy=0,tab='chats',flt='all',CH=[],STARS=0,sTab='chats',sQ='',sSeq=0,BF={};
+
+// ===== УВЕДОМЛЕНИЯ И СВОИ ОКНА (вместо alert/prompt с адресом сайта) =====
+function toast(m){
+  const t=document.createElement('div');t.className='toast';t.textContent=m;
+  document.body.appendChild(t);setTimeout(()=>t.remove(),2200)}
+window.alert=toast;
+function ask(title,value='',ph=''){
+  return new Promise(res=>{
+    const o=document.createElement('div');o.className='ov';
+    o.innerHTML='<div class=dlg><h3></h3><input autocomplete=off><div class=dbt><button id=dlc>Отмена</button><button id=dlo>ОК</button></div></div>';
+    o.querySelector('h3').textContent=title;
+    const i=o.querySelector('input');i.value=value;i.placeholder=ph;
+    const done=v=>{o.remove();res(v)};
+    o.querySelector('#dlc').onclick=()=>done(null);
+    o.querySelector('#dlo').onclick=()=>done(i.value);
+    i.onkeydown=e=>{if(e.key==='Enter')done(i.value)};
+    document.body.appendChild(o);i.focus()})}
 
 // ===== ШИФРОВАНИЕ (личные чаты) =====
 const b64=b=>btoa(String.fromCharCode(...new Uint8Array(b))),ub=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
@@ -269,8 +297,8 @@ async function getStars(){try{const d=await db.doc('stars/'+me.uid).get();return
 
 // ===== ПРОФИЛЬ: СОХРАНЕНИЕ =====
 async function saveMe(o){await db.doc('users/'+me.uid).update(o);Object.assign(me,o);draw()}
-async function edit(k,t){const v=prompt(t,me[k]||'');if(v===null)return;await saveMe({[k]:v.trim().slice(0,70)})}
-async function editName(){const v=prompt('Имя',me.name||me.username);if(v===null)return;await saveMe({name:v.trim().slice(0,30)})}
+async function edit(k,t){const v=await ask(t,me[k]||'');if(v===null)return;await saveMe({[k]:v.trim().slice(0,70)})}
+async function editName(){const v=await ask('Имя',me.name||me.username);if(v===null)return;await saveMe({name:v.trim().slice(0,30)})}
 function pickPhoto(){
   const i=document.createElement('input');i.type='file';i.accept='image/*';
   i.onchange=()=>{const f=i.files[0];if(!f)return;const im=new Image();
@@ -344,6 +372,107 @@ function draw(){
     $('pi3').onclick=()=>edit('bday','День рождения (например 31.12.2000)');
     $('pi4').onclick=soon}}
 
+// ===== БОТЫ =====
+const SYS={BotFather:{name:'BotFather'}};
+const EXAMPLE="function onMessage(text){\n  if(text==='/start') return 'Привет! Я бот.';\n  return 'Вы написали: '+text;\n}";
+const FATHER_HELP='Привет! Я BotFather. Здесь можно создавать своих ботов.\n\n/newbot — создать бота\n/mybots — мои боты\n/setcode — задать код бота\n/deletebot — удалить бота\n/cancel — отмена';
+const bav=(t,s=52)=>`<div class=av style="width:${s}px;height:${s}px;background:linear-gradient(135deg,#8e5cf7,#5b2fd6);font-size:${s*.42}px">${esc(t[0].toUpperCase())}</div>`;
+const botList=()=>[...Object.keys(SYS).map(u=>({u,name:SYS[u].name})),...Object.keys(me.bots||{}).map(u=>({u,name:me.bots[u].name}))];
+const brow=x=>`<div class=sr data-bot="${esc(x.u)}">${bav(x.name,46)}<div class=srt><b>${esc(x.name)}</b><small>бот · @${esc(x.u)}</small></div></div>`;
+const hk=u=>'mg_bh_'+me.uid+'_'+u;
+const loadH=u=>{try{return JSON.parse(localStorage.getItem(hk(u))||'[]')}catch(e){return[]}};
+const saveH=(u,h)=>{try{localStorage.setItem(hk(u),JSON.stringify(h))}catch(e){}};
+const saveBots=()=>db.doc('users/'+me.uid).update({bots:me.bots});
+
+function botChat(u){
+  BF={};
+  const sys=SYS[u],nm=sys?sys.name:me.bots[u].name;
+  let H=loadH(u);
+  app.innerHTML=`<div class=top><button class=ib id=bk>←</button>${bav(nm,36)}<h2>${esc(nm)}</h2></div><div class=msgs id=ms></div><form id=fm><input id=tx placeholder="Сообщение" autocomplete=off><button>➤</button></form>`;
+  const draw=()=>{const ms=$('ms');if(!ms)return;
+    ms.innerHTML=H.map(m=>`<div class="m${m.me?' me':''}">${esc(m.t)}</div>`).join('');
+    ms.scrollTop=ms.scrollHeight};
+  const push=(mine,t)=>{H.push({me:mine,t});H=H.slice(-100);saveH(u,H);draw()};
+  $('bk').onclick=home;
+  $('fm').onsubmit=async e=>{
+    e.preventDefault();const t=$('tx').value.trim();if(!t)return;$('tx').value='';
+    push(1,t);
+    const r=sys?await fatherReply(t):await runBot(me.bots[u],t);
+    if(r)push(0,r)};
+  if(!H.length&&sys)push(0,FATHER_HELP);
+  draw()}
+
+async function fatherReply(t){
+  const low=t.toLowerCase();
+  if(low==='/cancel'){BF={};return 'Отменено.'}
+  if(BF.step==='code')return saveCode(t);
+  if(t.startsWith('/')){
+    BF={};
+    if(low==='/start'||low==='/help')return FATHER_HELP;
+    if(low==='/newbot'){BF={step:'name'};return 'Как назовём бота? Напишите имя, например: Мой помощник'}
+    if(low==='/mybots'){
+      const k=Object.keys(me.bots||{});
+      return k.length?'Ваши боты:\n'+k.map(n=>'@'+n+' — '+me.bots[n].name).join('\n'):'У вас пока нет ботов. Создайте первого: /newbot'}
+    if(low==='/setcode'||low==='/deletebot'){
+      const k=Object.keys(me.bots||{});
+      if(!k.length)return 'У вас пока нет ботов. Создайте первого: /newbot';
+      BF={step:'pick',cmd:low==='/setcode'?'code':'del'};
+      return 'Какой бот? Напишите его юзернейм:\n'+k.map(n=>'@'+n).join('\n')}
+    return 'Не знаю такую команду.\n\n'+FATHER_HELP}
+  if(BF.step==='name'){
+    if(t.length>30)return 'Слишком длинное имя (до 30 символов). Напишите покороче.';
+    BF={step:'user',name:t};
+    return 'Теперь юзернейм бота. Он должен заканчиваться на bot, например: moy_helper_bot'}
+  if(BF.step==='user')return makeBot(t);
+  if(BF.step==='pick'){
+    const n=low.replace('@','').trim();
+    if(!me.bots||!me.bots[n])return 'У вас нет такого бота. Напишите юзернейм из списка или /cancel';
+    if(BF.cmd==='del'){
+      delete me.bots[n];BF={};
+      try{await saveBots()}catch(e){return 'Не получилось: '+e.message}
+      return 'Бот @'+n+' удалён.'}
+    BF={step:'code',n};
+    return 'Пришлите код бота одним сообщением. В нём должна быть функция onMessage(text), которая возвращает ответ. Пример:\n\n'+EXAMPLE+'\n\nОтмена: /cancel'}
+  return FATHER_HELP}
+
+async function makeBot(t){
+  const n=t.toLowerCase().replace('@','').trim();
+  if(!/^[a-z0-9_]{2,17}bot$/.test(n))return 'Юзернейм должен заканчиваться на bot, содержать только a-z, 0-9 и _, всего 5–20 символов. Например: moy_helper_bot';
+  if(Object.keys(SYS).some(k=>k.toLowerCase()===n))return 'Этот юзернейм занят, попробуйте другой.';
+  try{
+    await db.runTransaction(async tr=>{
+      const r=db.doc('usernames/'+n);
+      if((await tr.get(r)).exists)throw Error('taken');
+      tr.set(r,{uid:me.uid,bot:true})});
+  }catch(e){return e.message==='taken'?'Этот юзернейм занят, попробуйте другой.':'Не получилось создать: '+e.message}
+  me.bots=me.bots||{};
+  me.bots[n]={name:BF.name,code:EXAMPLE};
+  try{await saveBots()}catch(e){delete me.bots[n];return 'Не получилось сохранить: '+e.message}
+  BF={};
+  return 'Готово! Бот @'+n+' создан и уже отвечает по примеру кода.\n\nНайдите его через поиск (раздел «Боты») и напишите ему. Свой код: /setcode'}
+
+async function saveCode(t){
+  if(t.length>20000)return 'Слишком длинный код (максимум 20000 символов). Пришлите короче или /cancel';
+  if(!/onMessage/.test(t))return 'В коде должна быть функция onMessage(text). Пришлите ещё раз или /cancel';
+  try{new Function(t)}catch(e){return 'Ошибка в коде: '+e.message+'\nПришлите исправленный код или /cancel'}
+  const n=BF.n;me.bots[n].code=t;BF={};
+  try{await saveBots()}catch(e){return 'Не получилось сохранить: '+e.message}
+  return 'Код сохранён ✅ Напишите боту @'+n+', чтобы проверить.'}
+
+// код бота выполняется в изолированном фоновом потоке, без доступа к странице и к сети
+function runBot(bot,text){
+  return new Promise(res=>{
+    const src="self.fetch=self.XMLHttpRequest=self.WebSocket=self.importScripts=undefined;\n"+bot.code+
+      "\n;self.onmessage=async function(e){try{var r=await onMessage(e.data);self.postMessage({ok:1,r:r==null?'':String(r)})}catch(x){self.postMessage({ok:0,r:String(x&&x.message||x)})}};";
+    const url=URL.createObjectURL(new Blob([src],{type:'text/javascript'}));
+    const w=new Worker(url);
+    let done=0,tm;
+    const fin=r=>{if(done)return;done=1;clearTimeout(tm);w.terminate();URL.revokeObjectURL(url);res(r)};
+    tm=setTimeout(()=>fin('⚠️ Бот не ответил за 3 секунды'),3000);
+    w.onmessage=e=>fin(e.data.ok?e.data.r:'⚠️ Ошибка бота: '+e.data.r);
+    w.onerror=e=>fin('⚠️ Ошибка в коде бота: '+(e.message||''));
+    w.postMessage(text)})}
+
 // ===== ЭКРАН ПОИСКА =====
 const srow=c=>`<div class=sr data-id="${c.id}">${av(title(c),46)}<div class=srt><b>${esc(title(c))}</b><small>${TYPES[c.type]}</small></div></div>`;
 function searchView(){
@@ -366,25 +495,30 @@ function sDraw(){
   if(!t){
     const peers=sTab==='chats'?CH.filter(c=>c.type!=='channel').slice(0,10):[];
     const rc=RC().map(id=>CH.find(c=>c.id===id)).filter(c=>c&&ok(c));
-    b.innerHTML=(peers.length?`<div class=peers>${peers.map(c=>`<div class=pe data-id="${c.id}">${av(title(c),54)}<span>${esc(title(c).replace(/^@/,''))}</span></div>`).join('')}</div>`:'')
+    let h=(peers.length?`<div class=peers>${peers.map(c=>`<div class=pe data-id="${c.id}">${av(title(c),54)}<span>${esc(title(c).replace(/^@/,''))}</span></div>`).join('')}</div>`:'')
       +(rc.length?`<div class=band><span>Недавние</span><span id=clr>Очистить</span></div>${rc.map(srow).join('')}`:'')
-      +(!peers.length&&!rc.length?'<div class=empty>Введите юзернейм, чтобы найти человека</div>':'');
+      +(sTab==='chats'?`<div class=band><span>Боты</span></div>${botList().map(brow).join('')}`:'');
+    if(!h)h='<div class=empty>Введите юзернейм, чтобы найти человека</div>';
+    b.innerHTML=h;
     if($('clr'))$('clr').onclick=()=>{clrRC();sDraw()}}
   else{
     const m=CH.filter(c=>ok(c)&&title(c).toLowerCase().includes(t));
-    b.innerHTML=m.map(srow).join('')+`<div id=sf>${m.length?'':'<div class=empty>Ничего не найдено</div>'}</div>`;
+    const bm=sTab==='chats'?botList().filter(x=>x.u.toLowerCase().includes(t)||x.name.toLowerCase().includes(t)):[];
+    b.innerHTML=m.map(srow).join('')+bm.map(brow).join('')+`<div id=sf>${m.length||bm.length?'':'<div class=empty>Ничего не найдено</div>'}</div>`;
     if(sTab==='chats'&&/^[a-z0-9_]{3,20}$/.test(t))sFind(t)}
-  b.querySelectorAll('[data-id]').forEach(e=>e.onclick=()=>openChat(e.dataset.id))}
+  b.querySelectorAll('[data-id]').forEach(e=>e.onclick=()=>openChat(e.dataset.id));
+  b.querySelectorAll('[data-bot]').forEach(e=>e.onclick=()=>botChat(e.dataset.bot))}
 async function sFind(n){
   const k=++sSeq;let r;
   try{r=await db.doc('usernames/'+n).get()}catch(e){return}
-  if(k!==sSeq||!r.exists||r.data().uid===me.uid)return;
+  if(k!==sSeq||!r.exists||r.data().uid===me.uid||r.data().bot)return;
   if(CH.some(c=>c.type==='direct'&&title(c)==='@'+n))return;
   const box=$('sf');if(!box)return;
   box.innerHTML=`<div class=band><span>Глобальный поиск</span></div><div class=sr>${av('@'+n,46)}<div class=srt><b>@${esc(n)}</b><small>пользователь</small></div></div>`;
   box.querySelector('.sr').onclick=()=>openUser(n)}
 async function openUser(n){
   const r=await db.doc('usernames/'+n).get();if(!r.exists)return alert('Не найден');
+  if(r.data().bot)return alert('Это бот');
   const uid=r.data().uid;if(uid===me.uid)return alert('Это ты');
   const id=[me.uid,uid].sort().join('_');
   await db.doc('chats/'+id).set({type:'direct',members:[me.uid,uid],names:{[me.uid]:me.username,[uid]:n}},{merge:true});
@@ -410,11 +544,11 @@ function topup(){
   $('bk').onclick=starsView}
 
 async function newChat(){
-  const t=prompt('1 — группа, 2 — канал');if(t!=='1'&&t!=='2')return;
-  const name=prompt('Название');if(!name)return;
-  const us=(prompt('Юзернеймы участников через запятую')||'').split(',').map(s=>s.trim().replace('@','').toLowerCase()).filter(Boolean);
+  const t=await ask('1 — группа, 2 — канал');if(t!=='1'&&t!=='2')return;
+  const name=await ask('Название');if(!name)return;
+  const us=((await ask('Юзернеймы участников через запятую'))||'').split(',').map(s=>s.trim().replace('@','').toLowerCase()).filter(Boolean);
   const ids=[me.uid];
-  for(const n of us){const r=await db.doc('usernames/'+n).get();if(r.exists&&!ids.includes(r.data().uid))ids.push(r.data().uid)}
+  for(const n of us){const r=await db.doc('usernames/'+n).get();if(r.exists&&!r.data().bot&&!ids.includes(r.data().uid))ids.push(r.data().uid)}
   const ref=await db.collection('chats').add({type:t==='1'?'group':'channel',name,members:ids,owner:me.uid,lastAt:FV.serverTimestamp()});
   openChat(ref.id)}
 
