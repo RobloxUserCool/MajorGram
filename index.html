@@ -28,15 +28,6 @@ input{width:100%;padding:15px 18px;border-radius:26px;border:0;background:#2b374
 .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .vb{display:inline-block;width:.85em;height:.85em;margin-left:4px;flex:none;vertical-align:-.12em}
 
-/* ===== ШАПКА ЧАТА (как в Telegram) ===== */
-.ch{display:flex;align-items:center;gap:8px;padding:6px 8px}
-.chp{flex:1;min-width:0;display:flex;align-items:center;gap:8px;background:#243245;border-radius:24px;height:47px;padding:0 12px 0 4px}
-.chb{background:none;color:#fff;font-size:22px;padding:0 8px;height:40px;border-radius:20px}
-.cht{min-width:0;flex:1}
-.cht b{display:flex;align-items:center;min-width:0;font-size:17px;font-weight:600;line-height:20px}
-.cht small{display:block;font-size:13px;line-height:16px;color:#8493a6;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.chm{width:45px;height:45px;border-radius:50%;background:#243245;padding:0;font-size:20px;flex:none}
-
 /* ===== ПОИСК НА ГЛАВНОЙ И В КОНТАКТАХ ===== */
 .sq,.sbar input{background:#2b3748 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238493a6' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='M20 20l-4-4'/%3E%3C/svg%3E") no-repeat 17px center/18px}
 .sq{height:40px;line-height:40px;padding:0 18px 0 48px;margin:2px 0 9px;border-radius:20px;color:#8493a6;font-size:15px}
@@ -119,15 +110,57 @@ nav{position:absolute;left:16px;right:16px;bottom:calc(8px + env(safe-area-inset
 .srt b{display:flex;align-items:center;min-width:0;font-size:16px;font-weight:600}
 .srt small{color:#8493a6;font-size:14px;margin-top:1px}
 
-/* ===== ЧАТ ===== */
-.msgs{flex:1;overflow:auto;padding:8px 10px;display:flex;flex-direction:column;gap:5px;background:#0e1621}
-.m{max-width:78%;padding:6px 11px;font-size:15px;border-radius:16px 16px 16px 4px;background:#182533;white-space:pre-wrap;word-break:break-word;align-self:flex-start}
-.m.me{background:#2b5278;border-radius:16px 16px 4px 16px;align-self:flex-end}
-.m b{display:block;font-size:12px;color:#6ab3f3}
-.m b .vb{width:12px;height:12px;margin-left:3px}
-form{display:flex;gap:8px;padding:6px 8px;background:#17212b}
-form input{height:40px;padding:0 16px;font-size:15px;border-radius:20px}
-form button{width:40px;height:40px;border-radius:50%;padding:0;font-size:17px;flex:none}
+/* ===== ЭКРАН ЧАТА (как в Telegram) ===== */
+.chat{flex:1;min-height:0;position:relative;overflow:hidden;background-color:#111c2a;background-image:var(--wp),linear-gradient(165deg,#1b2a3d 0%,#121d2b 55%,#0d1621 100%);background-size:150px 150px,100% 100%}
+
+/* шапка: плашка со стрелкой, аватаром, ником и подписью + круглая кнопка */
+.ch{position:absolute;top:0;left:0;right:0;z-index:3;display:flex;align-items:center;gap:8px;padding:6px 8px}
+.chp{flex:1;min-width:0;display:flex;align-items:center;gap:8px;background:rgba(36,50,69,.82);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-radius:24px;height:47px;padding:0 12px 0 4px}
+.chb{background:none;color:#fff;width:40px;height:40px;padding:0;border-radius:50%;display:flex;align-items:center;justify-content:center;flex:none}
+.chb svg{width:24px;height:24px}
+.cht{min-width:0;flex:1}
+.cht b{display:flex;align-items:center;min-width:0;font-size:17px;font-weight:600;line-height:20px}
+.cht small{display:block;font-size:13px;line-height:16px;color:#8493a6;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.chm{width:47px;height:47px;border-radius:50%;background:rgba(36,50,69,.82);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);padding:0;font-size:20px;flex:none}
+
+/* лента сообщений */
+.msgs{position:absolute;inset:0;overflow:auto;padding:62px 9px 66px;display:flex;flex-direction:column;gap:2px}
+.dt{align-self:center;margin:8px 0 4px}
+.dt span{display:inline-block;background:rgba(33,45,59,.85);color:#c4cfdb;font-size:13.5px;font-weight:500;padding:3px 11px;border-radius:14px}
+
+/* пузыри */
+.m{position:relative;max-width:84%;padding:5px 10px 6px 11px;font-size:16px;line-height:1.25;border-radius:17px;background:#212d3b;white-space:pre-wrap;word-break:break-word;align-self:flex-start}
+.m.f{margin-top:6px}
+.m:not(.me):not(.f){border-top-left-radius:6px}
+.m:not(.me):not(.l){border-bottom-left-radius:6px}
+.m:not(.me).l{border-bottom-left-radius:0}
+.m.me{align-self:flex-end;background-color:#4f6fe0;background-image:linear-gradient(180deg,#6b59d9 0%,#4f6fe0 50%,#3a84e8 100%);background-attachment:fixed}
+.m.me:not(.f){border-top-right-radius:6px}
+.m.me:not(.l){border-bottom-right-radius:6px}
+.m.me.l{border-bottom-right-radius:0}
+/* хвостики */
+.m.l::after{content:'';position:absolute;bottom:0;width:9px;height:11px}
+.m:not(.me).l::after{left:-8px;background:#212d3b;clip-path:path('M9 0V11H0Q8 10 9 0Z')}
+.m.me.l::after{right:-8px;background:inherit;clip-path:path('M0 0V11H9Q1 10 0 0Z')}
+/* имя отправителя в группе */
+.sn{display:flex;align-items:center;font-size:15px;font-weight:600;line-height:20px;margin-bottom:1px}
+.sn .vb{width:13px;height:13px}
+/* время и галочки */
+.ts{float:right;margin:8px 0 -4px 10px;display:inline-flex;align-items:center;gap:3px;font-size:11.5px;line-height:1;color:#8696a8}
+.m.me .ts{color:rgba(255,255,255,.72)}
+.ckw{display:inline-flex}
+.ckw.sd{color:#b9c3d6}
+.ckw.rd{color:#5ad7ff}
+.ck{width:17px;height:12px}
+
+/* поле ввода */
+.cmp{position:absolute;left:8px;right:8px;bottom:8px;z-index:3;display:flex;gap:8px;align-items:center}
+.cin{flex:1;min-width:0;display:flex;align-items:center;background:rgba(36,50,69,.92);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-radius:24px;height:47px;padding:0 4px}
+.cin input{flex:1;min-width:0;height:44px;padding:0 6px;font-size:16px;background:none;border-radius:0}
+.cin input::placeholder{color:#8493a6}
+.ci{background:none;width:40px;height:40px;padding:0;color:#8493a6;display:flex;align-items:center;justify-content:center;border-radius:50%;flex:none}
+.ci svg,.cs svg{width:24px;height:24px}
+.cs{width:47px;height:47px;border-radius:50%;padding:0;background:#2ea6ff;color:#fff;display:flex;align-items:center;justify-content:center;flex:none}
 
 /* ===== ОКНА И УВЕДОМЛЕНИЯ ===== */
 .ov{position:fixed;inset:0;background:#0009;display:flex;align-items:center;justify-content:center;z-index:50;padding:20px}
@@ -174,6 +207,20 @@ const auth=firebase.auth(),db=firebase.firestore(),FV=firebase.firestore.FieldVa
 const app=document.getElementById('app'),$=i=>document.getElementById(i);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 let me,K,unsub=()=>{},unsubList=()=>{},busy=0,tab='chats',flt='all',CH=[],STARS=0,sTab='chats',sQ='',sSeq=0,BF={};
+
+// ===== ОБОИ ЧАТА: тонкий узор из значков =====
+const WPS='<svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" viewBox="0 0 150 150" fill="none" stroke="#fff" stroke-opacity=".07" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">'
+ +'<circle cx="24" cy="26" r="8"/>'
+ +'<path d="M82 12l3.5 7.2 7.9 1.1-5.7 5.6 1.3 7.9L82 30l-7 3.8 1.3-7.9-5.7-5.6 7.9-1.1z"/>'
+ +'<path d="M118 70c-6-7-16 0-9 8l9 9 9-9c7-8-3-15-9-8z"/>'
+ +'<path d="M28 90h24a7 7 0 0 0 0-14 11 11 0 0 0-21-2 8 8 0 0 0-3 16z"/>'
+ +'<path d="M104 112v14M97 119h14"/>'
+ +'<path d="M30 124a10 10 0 1 0 8 14 8 8 0 1 1-8-14z"/>'
+ +'<path d="M60 142q6-8 12 0t12 0"/>'
+ +'<path d="M128 22a6 6 0 1 1 6 6 10 10 0 1 1-10-10"/>'
+ +'<circle cx="60" cy="52" r="2"/><circle cx="136" cy="112" r="2"/><circle cx="70" cy="104" r="2"/><circle cx="12" cy="66" r="2"/>'
+ +'</svg>';
+document.documentElement.style.setProperty('--wp','url("data:image/svg+xml,'+encodeURIComponent(WPS)+'")');
 
 // ===== УВЕДОМЛЕНИЯ И СВОИ ОКНА (вместо alert/prompt с адресом сайта) =====
 function toast(m){
@@ -289,6 +336,7 @@ async function begin(u){
 const TYPES={direct:'личный чат',group:'группа',channel:'канал'};
 const title=c=>c.type==='direct'?'@'+c.names[Object.keys(c.names).find(k=>k!==me.uid)]:c.name;
 const COLS=['#e17076','#faa774','#a695e7','#7bc862','#6ec9cb','#65aadd','#ee7aae'];
+const ncol=u=>{let h=0;for(const c of String(u))h=(h*31+c.charCodeAt(0))>>>0;return COLS[h%7]};
 const av=(t,s=52)=>{let h=0;for(const c of t)h=(h*31+c.charCodeAt(0))>>>0;
   const l=[...t.replace(/^@/,'')][0]||'?';
   return `<div class=av style="width:${s}px;height:${s}px;background:${COLS[h%7]};font-size:${s*.42}px">${esc(l.toUpperCase())}</div>`};
@@ -301,7 +349,12 @@ const IC={
   pro:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="9" cy="10" r=".8"/><circle cx="15" cy="10" r=".8"/><path d="M8 14c1 2 7 2 8 0"/></svg>',
   pen:'<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l4-1 11-11-3-3L5 16z"/></svg>',
   cam:'<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l2-2.5h6L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>',
-  x:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>'};
+  x:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>',
+  back:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>',
+  emo:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8.5 14c1 1.6 5 1.6 7 0"/><circle cx="9.3" cy="10" r=".6"/><circle cx="14.7" cy="10" r=".6"/></svg>',
+  clip:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11l-8.2 8.2a5 5 0 0 1-7-7L13 4.2a3.4 3.4 0 0 1 4.8 4.8l-8.2 8.2a1.8 1.8 0 0 1-2.6-2.6L14.4 7"/></svg>',
+  mic:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="12" rx="3"/><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v3"/></svg>',
+  snd:'<svg viewBox="0 0 24 24"><path d="M3.5 11.5L20.5 4l-5.5 16-3.2-6.3z" fill="#fff"/></svg>'};
 
 // ===== ВЕРИФИКАЦИЯ: значок рядом с ником =====
 const VB='<svg class=vb viewBox="0 0 24 24"><path d="M12 1.6L14.33 3.31L17.2 3L18.36 5.64L21 6.8L20.69 9.67L22.4 12L20.69 14.33L21 17.2L18.36 18.36L17.2 21L14.33 20.69L12 22.4L9.67 20.69L6.8 21L5.64 18.36L3 17.2L3.31 14.33L1.6 12L3.31 9.67L3 6.8L5.64 5.64L6.8 3L9.67 3.31Z" fill="#64b5fd" stroke="#64b5fd" stroke-width="1.2" stroke-linejoin="round"/><path d="M7.6 12.4l3 3 5.8-6.2" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
@@ -319,8 +372,37 @@ const ver=c=>c.type==='direct'&&!!VER[peer(c)];
 const rowHtml=c=>`<div class=row data-id="${c.id}">${av(title(c))}<div class=rt><div class=l1><b>${nameH(title(c),ver(c))}</b><small>${fmt(c.lastAt)}</small></div><div class=l2>${TYPES[c.type]}</div></div></div>`;
 const bindRows=()=>document.querySelectorAll('.row[data-id]').forEach(r=>r.onclick=()=>openChat(r.dataset.id));
 const soon=()=>alert('Скоро');
-// шапка чата: стрелка, аватар, ник со значком, подпись; справа круглая кнопка «⋮»
-const chatHead=(a,name,sub,ok)=>`<div class=ch><div class=chp><button class=chb id=bk>←</button>${a}<div class=cht><b>${nameH(name,ok)}</b><small>${esc(sub)}</small></div></div><button class=chm id=cm>⋮</button></div>`;
+
+// ===== ЧАТ: шапка, поле ввода, сообщения =====
+const chatHead=(a,name,sub,ok)=>`<div class=ch><div class=chp><button class=chb id=bk>${IC.back}</button>${a}<div class=cht><b>${nameH(name,ok)}</b><small>${esc(sub)}</small></div></div><button class=chm id=cm>⋮</button></div>`;
+const CMP=`<form class=cmp id=fm><div class=cin><button type=button class=ci id=em>${IC.emo}</button><input id=tx placeholder="Сообщение" autocomplete=off><button type=button class=ci id=at>${IC.clip}</button></div><button type=button class=cs id=cs>${IC.mic}</button></form>`;
+function bindCmp(send){
+  const tx=$('tx'),cs=$('cs');
+  const go=()=>{const t=tx.value.trim();if(!t)return;tx.value='';cs.innerHTML=IC.mic;send(t)};
+  tx.oninput=()=>{cs.innerHTML=tx.value.trim()?IC.snd:IC.mic};
+  cs.onpointerdown=e=>e.preventDefault();
+  cs.onclick=()=>tx.value.trim()?go():soon();
+  $('fm').onsubmit=e=>{e.preventDefault();go()};
+  $('em').onclick=soon;$('at').onclick=soon}
+const P2=n=>String(n).padStart(2,'0');
+const hm=d=>P2(d.getHours())+':'+P2(d.getMinutes());
+const MON=['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
+const fmtDay=d=>d.toDateString()===new Date().toDateString()?'Сегодня':d.getDate()+' '+MON[d.getMonth()]+(d.getFullYear()!==new Date().getFullYear()?' '+d.getFullYear():'');
+// две галочки: серые = отправлено, голубые = прочитано
+const CK='<svg class=ck viewBox="0 0 17 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M1 6.5l3.2 3.2L10.5 2.3M6 6.5l3.2 3.2L15.5 2.3"/></svg>';
+// items: [{mine,uid,nm,t,d,read}]
+function msgsHtml(items,names){
+  let h='',pd='';
+  items.forEach((m,i)=>{
+    const day=m.d.toDateString(),p=items[i-1],n=items[i+1];
+    if(day!==pd){h+=`<div class=dt><span>${fmtDay(m.d)}</span></div>`;pd=day}
+    const f=!p||p.uid!==m.uid||p.d.toDateString()!==day;
+    const l=!n||n.uid!==m.uid||n.d.toDateString()!==day;
+    h+=`<div class="m${m.mine?' me':''}${f?' f':''}${l?' l':''}">`
+      +(names&&!m.mine&&f?`<b class=sn style="color:${ncol(m.uid)}">${m.nm}</b>`:'')
+      +esc(m.t)
+      +`<span class=ts>${hm(m.d)}${m.mine?`<span class="ckw ${m.read?'rd':'sd'}">${CK}</span>`:''}</span></div>`});
+  return h}
 
 // ===== ЗВЁЗДЫ =====
 async function getStars(){try{const d=await db.doc('stars/'+me.uid).get();return d.exists?(d.data().balance||0):0}catch(e){return 0}}
@@ -423,17 +505,17 @@ function botChat(u){
   BF={};
   const sys=SYS[u],nm=sys?sys.name:me.bots[u].name;
   let H=loadH(u);
-  app.innerHTML=chatHead(bav(nm,40),nm,'бот',false)+`<div class=msgs id=ms></div><form id=fm><input id=tx placeholder="Сообщение" autocomplete=off><button>➤</button></form>`;
+  app.innerHTML=`<div class=chat>${chatHead(bav(nm,40),nm,'бот',false)}<div class=msgs id=ms></div>${CMP}</div>`;
   const draw=()=>{const ms=$('ms');if(!ms)return;
-    ms.innerHTML=H.map(m=>`<div class="m${m.me?' me':''}">${esc(m.t)}</div>`).join('');
+    ms.innerHTML=msgsHtml(H.map((m,i)=>({mine:!!m.me,uid:m.me?me.uid:'bot',nm:'',t:m.t,d:new Date(m.ts||Date.now()),read:m.r===undefined?true:!!m.r})),false);
     ms.scrollTop=ms.scrollHeight};
-  const push=(mine,t)=>{H.push({me:mine,t});H=H.slice(-100);saveH(u,H);draw()};
+  const push=(mine,t)=>{const o={me:mine,t,ts:Date.now(),r:mine?0:1};H.push(o);H=H.slice(-100);saveH(u,H);draw();return o};
   $('bk').onclick=home;$('cm').onclick=soon;
-  $('fm').onsubmit=async e=>{
-    e.preventDefault();const t=$('tx').value.trim();if(!t)return;$('tx').value='';
-    push(1,t);
+  bindCmp(async t=>{
+    const o=push(1,t);
     const r=sys?await fatherReply(t):await runBot(me.bots[u],t);
-    if(r)push(0,r)};
+    o.r=1;saveH(u,H);
+    if(r)push(0,r);else draw()});
   if(!H.length&&sys)push(0,FATHER_HELP);
   draw()}
 
@@ -599,23 +681,53 @@ async function openChat(id){
     await loadVer([o])}
   const can=c.type!=='channel'||c.owner===me.uid;
   const sub=c.type==='direct'?TYPES.direct:TYPES[c.type]+' · участников: '+c.members.length;
-  app.innerHTML=chatHead(av(title(c),40),title(c),sub,ver(c))+`<div class=msgs id=ms></div>${can?'<form id=fm><input id=tx placeholder="Сообщение" autocomplete=off><button>➤</button></form>':''}`;
+  app.innerHTML=`<div class=chat>${chatHead(av(title(c),40),title(c),sub,ver(c))}<div class=msgs id=ms></div>${can?CMP:''}</div>`;
   $('bk').onclick=home;$('cm').onclick=soon;
+
+  const others=c.members.filter(x=>x!==me.uid);
+  let docs=[],RD={},rs=0,first=1,marked='';
+  const TX=new Map();
+  const dec=async m=>{
+    if(m.ct){try{return new TextDecoder().decode(await crypto.subtle.decrypt({name:'AES-GCM',iv:ub(m.iv)},key,ub(m.ct)))}catch(e){return '🔒 не удалось расшифровать'}}
+    return m.text||''};
+  // прочитано: кто-то из собеседников открыл чат позже, чем отправлено сообщение
+  const isRead=m=>m.from===me.uid&&m.at&&others.some(u=>RD[u]&&RD[u].toMillis&&RD[u].toMillis()>=m.at.toMillis());
+  // отметить свои «прочитано», когда чат открыт
+  const markRead=()=>{
+    if(document.hidden)return;
+    const last=[...docs].reverse().find(m=>m.from!==me.uid);
+    if(!last||!last.at||marked===last.id)return;
+    const mine=RD[me.uid];
+    if(mine&&mine.toMillis&&mine.toMillis()>=last.at.toMillis())return;
+    marked=last.id;
+    db.doc('chats/'+id).update(new firebase.firestore.FieldPath('reads',me.uid),FV.serverTimestamp()).catch(()=>{})};
+  const render=async()=>{
+    const k=++rs;
+    if(c.type!=='direct')await loadVer(docs.map(m=>m.from));
+    for(const m of docs)if(!TX.has(m.id))TX.set(m.id,await dec(m));
+    if(k!==rs)return;
+    const ms=$('ms');if(!ms)return;
+    const stick=first||ms.scrollHeight-ms.scrollTop-ms.clientHeight<150;
+    ms.innerHTML=msgsHtml(docs.map(m=>({
+      mine:m.from===me.uid,uid:m.from,
+      nm:'@'+esc(m.fromName||'')+(VER[m.from]?VB:''),
+      t:TX.get(m.id),d:m.at?m.at.toDate():new Date(),read:isRead(m)})),c.type!=='direct');
+    if(stick)ms.scrollTop=ms.scrollHeight;
+    first=0;markRead()};
   unsub();
-  unsub=db.collection('chats/'+id+'/msgs').orderBy('at').limitToLast(100).onSnapshot(async s=>{
-    if(c.type!=='direct')await loadVer(s.docs.map(d=>d.data().from));
-    const h=await Promise.all(s.docs.map(async d=>{
-      const m=d.data();let t=m.text;
-      if(m.ct){try{t=new TextDecoder().decode(await crypto.subtle.decrypt({name:'AES-GCM',iv:ub(m.iv)},key,ub(m.ct)))}catch(e){t='🔒 не удалось расшифровать'}}
-      const mine=m.from===me.uid;
-      return `<div class="m${mine?' me':''}">${!mine&&c.type!=='direct'?'<b>@'+esc(m.fromName)+(VER[m.from]?VB:'')+'</b>':''}${esc(t)}</div>`}));
-    const ms=$('ms');if(!ms)return;ms.innerHTML=h.join('');ms.scrollTop=ms.scrollHeight});
-  if(can)$('fm').onsubmit=async e=>{
-    e.preventDefault();const t=$('tx').value.trim();if(!t)return;$('tx').value='';
+  const u1=db.collection('chats/'+id+'/msgs').orderBy('at').limitToLast(100).onSnapshot(s=>{
+    docs=s.docs.map(d=>({id:d.id,...d.data({serverTimestamps:'estimate'})}));render()});
+  const u2=db.doc('chats/'+id).onSnapshot(d=>{
+    RD=((d.data({serverTimestamps:'estimate'})||{}).reads)||{};render()});
+  const vis=()=>{if(!document.hidden)markRead()};
+  document.addEventListener('visibilitychange',vis);
+  unsub=()=>{u1();u2();document.removeEventListener('visibilitychange',vis)};
+
+  if(can)bindCmp(async t=>{
     const p={from:me.uid,fromName:me.username,at:FV.serverTimestamp()};
     if(c.type==='direct'){const iv=crypto.getRandomValues(new Uint8Array(12));
       p.iv=b64(iv);p.ct=b64(await crypto.subtle.encrypt({name:'AES-GCM',iv},key,new TextEncoder().encode(t)))}
     else p.text=t;
     await db.collection('chats/'+id+'/msgs').add(p);
-    db.doc('chats/'+id).update({lastAt:FV.serverTimestamp()})}}
+    db.doc('chats/'+id).update({lastAt:FV.serverTimestamp()})})}
 </script></body></html>
