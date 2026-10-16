@@ -116,6 +116,7 @@ nav{position:absolute;left:16px;right:16px;bottom:calc(8px + env(safe-area-inset
 /* шапка: плашка со стрелкой, аватаром, ником и подписью + круглая кнопка */
 .ch{position:absolute;top:0;left:0;right:0;z-index:3;display:flex;align-items:center;gap:8px;padding:6px 8px}
 .chp{flex:1;min-width:0;display:flex;align-items:center;gap:8px;background:rgba(36,50,69,.82);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-radius:24px;height:47px;padding:0 12px 0 4px}
+.cpr{flex:1;min-width:0;display:flex;align-items:center;gap:8px}
 .chb{background:none;color:#fff;width:40px;height:40px;padding:0;border-radius:50%;display:flex;align-items:center;justify-content:center;flex:none}
 .chb svg{width:24px;height:24px}
 .cht{min-width:0;flex:1}
@@ -143,7 +144,7 @@ nav{position:absolute;left:16px;right:16px;bottom:calc(8px + env(safe-area-inset
 .m:not(.me).l::after{left:-8px;background:#212d3b;clip-path:path('M9 0V11H0Q8 10 9 0Z')}
 .m.me.l::after{right:-8px;background:inherit;clip-path:path('M0 0V11H9Q1 10 0 0Z')}
 /* имя отправителя в группе */
-.sn{display:flex;align-items:center;font-size:15px;font-weight:600;line-height:20px;margin-bottom:1px}
+.sn{display:flex;align-items:center;font-size:15px;font-weight:600;line-height:20px;margin-bottom:1px;cursor:pointer}
 .sn .vb{width:13px;height:13px}
 /* время и галочки */
 .ts{float:right;margin:8px 0 -4px 10px;display:inline-flex;align-items:center;gap:3px;font-size:11.5px;line-height:1;color:#8696a8}
@@ -374,7 +375,7 @@ const bindRows=()=>document.querySelectorAll('.row[data-id]').forEach(r=>r.oncli
 const soon=()=>alert('Скоро');
 
 // ===== ЧАТ: шапка, поле ввода, сообщения =====
-const chatHead=(a,name,sub,ok)=>`<div class=ch><div class=chp><button class=chb id=bk>${IC.back}</button>${a}<div class=cht><b>${nameH(name,ok)}</b><small>${esc(sub)}</small></div></div><button class=chm id=cm>⋮</button></div>`;
+const chatHead=(a,name,sub,ok)=>`<div class=ch><div class=chp><button class=chb id=bk>${IC.back}</button><div class=cpr id=cpr>${a}<div class=cht><b>${nameH(name,ok)}</b><small>${esc(sub)}</small></div></div></div><button class=chm id=cm>⋮</button></div>`;
 const CMP=`<form class=cmp id=fm><div class=cin><button type=button class=ci id=em>${IC.emo}</button><input id=tx placeholder="Сообщение" autocomplete=off><button type=button class=ci id=at>${IC.clip}</button></div><button type=button class=cs id=cs>${IC.mic}</button></form>`;
 function bindCmp(send){
   const tx=$('tx'),cs=$('cs');
@@ -399,7 +400,7 @@ function msgsHtml(items,names){
     const f=!p||p.uid!==m.uid||p.d.toDateString()!==day;
     const l=!n||n.uid!==m.uid||n.d.toDateString()!==day;
     h+=`<div class="m${m.mine?' me':''}${f?' f':''}${l?' l':''}">`
-      +(names&&!m.mine&&f?`<b class=sn style="color:${ncol(m.uid)}">${m.nm}</b>`:'')
+      +(names&&!m.mine&&f?`<b class=sn data-u="${m.uid}" style="color:${ncol(m.uid)}">${m.nm}</b>`:'')
       +esc(m.t)
       +`<span class=ts>${hm(m.d)}${m.mine?`<span class="ckw ${m.read?'rd':'sd'}">${CK}</span>`:''}</span></div>`});
   return h}
@@ -644,6 +645,38 @@ async function openUser(n){
   await db.doc('chats/'+id).set({type:'direct',members:[me.uid,uid],names:{[me.uid]:me.username,[uid]:n}},{merge:true});
   openChat(id)}
 
+// ===== ПРОФИЛЬ ПОЛЬЗОВАТЕЛЯ (по нажатию на аватар или ник) =====
+async function userView(cid,c,uid){
+  if(!uid&&c.type==='direct')uid=peer(c);
+  let d={};
+  if(uid){try{const s=await db.doc('users/'+uid).get();if(s.exists)d=s.data()}catch(e){}}
+  const un=d.username||(c.names&&c.names[uid])||'';
+  const nm=uid?(d.name||'@'+un):c.name;
+  const sub=uid?'был(а) недавно':TYPES[c.type]+' · участников: '+c.members.length;
+  const pic=d.photo?`<img src="${esc(d.photo)}" style="width:100%;height:100%;object-fit:cover">`:av(uid?'@'+un:nm,144);
+  const info=(un?`<div id=uun><b>@${esc(un)}</b><small>Имя пользователя</small></div>`:'')
+    +(d.about?`<div><b>${esc(d.about)}</b><small>О себе</small></div>`:'');
+  app.innerHTML=`<div class=top><button class=ib id=bk>←</button><div style="flex:1"></div><button class=ib id=mo>⋮</button></div>
+  <div class=body>
+    <div class=pring style="width:150px;height:150px">${pic}</div>
+    <div class=pn style="font-size:26px;margin-top:14px">${nameH(nm,!!d.verified)}</div>
+    <div class=ps>${esc(sub)}</div>
+    <div class=pb><div id=u1><span>💬</span>Чат</div><div id=u2><span>🔔</span>Звук</div><div id=u3><span>📞</span>Звонок</div><div id=u4><span>🎥</span>Видео</div></div>
+    ${info?`<div class="grp info">${info}</div>`:''}
+    ${uid?`<div class=grp><div class=it id=uadd><div class=ico style="background:#2ea6ff">＋</div><div class=itt>Добавить в контакты</div></div></div>`:''}
+    <div class=tabs2 id=utb><span class=on>Медиа</span><span>Избранное</span><span>Файлы</span><span>Ссылки</span></div>
+    <div class=empty>Пока пусто</div>
+  </div>`;
+  $('bk').onclick=()=>openChat(cid);
+  $('u1').onclick=()=>openChat(cid);
+  ['mo','u2','u3','u4'].forEach(i=>$(i).onclick=soon);
+  if($('uadd'))$('uadd').onclick=soon;
+  if($('uun'))$('uun').onclick=()=>{
+    try{navigator.clipboard.writeText('@'+un);alert('Юзернейм скопирован')}catch(e){}};
+  document.querySelectorAll('#utb span').forEach(t=>t.onclick=()=>{
+    document.querySelectorAll('#utb span').forEach(x=>x.classList.remove('on'));
+    t.classList.add('on')})}
+
 // ===== ЭКРАН «ЗВЁЗДЫ MAJORGRAM» =====
 function starsView(){
   app.innerHTML=`<div class=top><button class=ib id=bk>←</button></div><div class=body style="text-align:center;padding-bottom:30px">
@@ -683,6 +716,7 @@ async function openChat(id){
   const sub=c.type==='direct'?TYPES.direct:TYPES[c.type]+' · участников: '+c.members.length;
   app.innerHTML=`<div class=chat>${chatHead(av(title(c),40),title(c),sub,ver(c))}<div class=msgs id=ms></div>${can?CMP:''}</div>`;
   $('bk').onclick=home;$('cm').onclick=soon;
+  $('cpr').onclick=()=>userView(id,c);
 
   const others=c.members.filter(x=>x!==me.uid);
   let docs=[],RD={},rs=0,first=1,marked='';
@@ -712,6 +746,7 @@ async function openChat(id){
       mine:m.from===me.uid,uid:m.from,
       nm:'@'+esc(m.fromName||'')+(VER[m.from]?VB:''),
       t:TX.get(m.id),d:m.at?m.at.toDate():new Date(),read:isRead(m)})),c.type!=='direct');
+    ms.querySelectorAll('.sn[data-u]').forEach(e=>e.onclick=()=>userView(id,c,e.dataset.u));
     if(stick)ms.scrollTop=ms.scrollHeight;
     first=0;markRead()};
   unsub();
