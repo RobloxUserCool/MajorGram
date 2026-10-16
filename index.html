@@ -16,12 +16,17 @@ input{width:100%;padding:15px 18px;border-radius:26px;border:0;background:#2b374
 .auth{margin:auto;width:min(340px,90%);display:flex;flex-direction:column;gap:10px}.auth h1{text-align:center}
 #er{color:#ff7a8a;min-height:1em;font-size:14px}
 
+/* ===== ИКОНКИ (SVG) ===== */
+.gi{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none;display:block}
+.gi.f{fill:currentColor;stroke:currentColor;stroke-width:1.2}
+
 /* ===== ШАПКА ===== */
 .top{display:flex;align-items:center;gap:10px;padding:8px 16px 6px 14px}
 .top h1,.top h2{flex:1;margin:0;font-size:22px}
 .top h2{font-size:18px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .logo{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#2ea6ff,#8a5cff);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:17px;border:2px solid #34c37a;flex:none}
 .ib{background:none;color:#fff;font-size:24px;padding:4px 10px}
+.ib svg{width:24px;height:24px;display:block}
 .body{flex:1;overflow:auto;padding:0 11px 100px}
 
 /* ===== ЗНАЧОК ВЕРИФИКАЦИИ И НИКИ ===== */
@@ -52,7 +57,8 @@ input{width:100%;padding:15px 18px;border-radius:26px;border:0;background:#2b374
 /* ===== НАСТРОЙКИ ===== */
 .grp{background:#222f3f;border-radius:16px;margin:0 0 12px;overflow:hidden}
 .it{display:flex;gap:14px;align-items:center;padding:9px 14px}
-.ico{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px;flex:none;color:#fff}
+.ico{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex:none;color:#fff}
+.ico .gi{width:19px;height:19px}
 .itt{flex:1;font-size:16px}.itt small{display:block}
 .sub{color:#8493a6;font-size:13px}.val{color:#5eb5f7;font-size:16px}
 .gt{color:#5eb5f7;font-size:14px;font-weight:600;padding:12px 14px 0}
@@ -60,8 +66,12 @@ input{width:100%;padding:15px 18px;border-radius:26px;border:0;background:#2b374
 
 /* ===== ЗВЁЗДЫ ===== */
 .bal{display:flex;justify-content:center;align-items:center;gap:8px;font-size:34px}
-.btns{display:flex;gap:10px;margin:14px 0 12px}.btns button{flex:1}
-.lnk{color:#5eb5f7;display:block;font-size:15px}
+.bal .gi{width:30px;height:30px;color:#f5b72b}
+.btns{display:flex;gap:10px;margin:14px 0 12px}
+.btns button{flex:1;display:flex;align-items:center;justify-content:center;gap:7px}
+.btns .gi{width:19px;height:19px}
+.lnk{color:#5eb5f7;display:flex;align-items:center;justify-content:center;gap:7px;font-size:15px}
+.lnk .gi{width:19px;height:19px}
 .new{font-size:11px;background:#2ea6ff;border-radius:6px;padding:2px 6px;margin-left:6px}
 .tabs2{display:flex;gap:20px;color:#8493a6;font-size:15px;font-weight:600;padding:8px 4px;overflow:auto;white-space:nowrap;text-align:left}.tabs2 .on{color:#5eb5f7}
 .sub2{color:#cfd7e3;font-size:15px;padding:0 10px;line-height:1.4}.sub2 a{color:#5eb5f7}
@@ -71,9 +81,23 @@ input{width:100%;padding:15px 18px;border-radius:26px;border:0;background:#2b374
 .pn{display:flex;justify-content:center;align-items:center;font-size:21px;font-weight:700;margin:10px 0 2px}
 .ps{text-align:center;color:#8493a6;font-size:14px;margin-bottom:12px}
 .pb{display:flex;gap:8px;margin-bottom:12px}
-.pb div{flex:1;background:#243040;border-radius:14px;padding:10px 4px;text-align:center;font-weight:600;font-size:12px}
-.pb span{display:block;font-size:20px;margin-bottom:2px}
+.pb div{flex:1;background:#243040;border-radius:16px;padding:12px 4px 10px;text-align:center;font-weight:600;font-size:12.5px}
+.pb .gi{width:25px;height:25px;margin:0 auto 6px;color:#fff}
 .info div{padding:9px 14px}.info b{display:block;font-weight:400;font-size:16px;word-break:break-word}.info small{color:#8493a6;font-size:13px}
+
+/* ===== ПРОФИЛЬ СОБЕСЕДНИКА (как в Telegram) ===== */
+.whn{display:inline-block;background:#0f1823;color:#fff;border-radius:12px;padding:2px 9px;font-size:13px;margin-left:8px}
+.uc{display:flex;align-items:center;background:#222f3f;border-radius:18px;margin:0 0 12px;padding:14px 16px}
+.uc .ut{flex:1;min-width:0}
+.uc .ut b{display:block;font-weight:400;font-size:19px;word-break:break-word}
+.uc .ut small{color:#8493a6;font-size:14px;display:block;margin-top:3px}
+.uc .gi{width:30px;height:30px;color:#fff}
+.uc.add{padding:16px;gap:16px;font-size:19px}
+.uc.add .gi{width:28px;height:28px;color:#b8c4d3}
+.ptabs{display:flex;background:#222f3f;border-radius:28px;padding:5px;gap:2px;margin:0 0 10px;overflow-x:auto;white-space:nowrap;scrollbar-width:none}
+.ptabs::-webkit-scrollbar{display:none}
+.ptabs span{flex:none;padding:11px 20px;border-radius:24px;color:#8493a6;font-size:17px;font-weight:600}
+.ptabs span.on{background:#2b4764;color:#6ab9f7}
 
 /* ===== КНОПКИ И НИЖНЯЯ ПАНЕЛЬ ===== */
 .fab{position:absolute;right:20px;bottom:calc(77px + env(safe-area-inset-bottom));width:48px;height:48px;border-radius:50%;padding:0;box-shadow:0 4px 14px #0008;display:flex;align-items:center;justify-content:center}
@@ -122,7 +146,7 @@ nav{position:absolute;left:16px;right:16px;bottom:calc(8px + env(safe-area-inset
 .cht{min-width:0;flex:1}
 .cht b{display:flex;align-items:center;min-width:0;font-size:17px;font-weight:600;line-height:20px}
 .cht small{display:block;font-size:13px;line-height:16px;color:#8493a6;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.chm{width:47px;height:47px;border-radius:50%;background:rgba(36,50,69,.82);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);padding:0;font-size:20px;flex:none}
+.chm{width:47px;height:47px;border-radius:50%;background:rgba(36,50,69,.82);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);padding:0;flex:none;display:flex;align-items:center;justify-content:center}
 
 /* лента сообщений */
 .msgs{position:absolute;inset:0;overflow:auto;padding:62px 9px 66px;display:flex;flex-direction:column;gap:2px}
@@ -187,9 +211,11 @@ nav{position:absolute;left:16px;right:16px;bottom:calc(8px + env(safe-area-inset
 .mgf{width:100%;border:1.5px solid #3b4859;border-radius:14px;padding:18px 16px;font-size:19px;color:#8d99a6;display:flex;justify-content:space-between;margin-bottom:20px;position:relative}
 .mgf.act{border-color:#8e5cf7;color:#fff}
 .mgf small{position:absolute;top:-9px;left:12px;background:#1c2634;padding:0 6px;color:#8e5cf7;font-size:13px}
-.mggo{align-self:flex-end;width:56px;height:56px;border-radius:50%;padding:0;background:#8e5cf7;font-size:26px}
+.mggo{align-self:flex-end;width:56px;height:56px;border-radius:50%;padding:0;background:#8e5cf7;display:flex;align-items:center;justify-content:center}
+.mggo svg{width:26px;height:26px}
 .mgpad{margin-top:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:7px;width:100%}
-.mgpad button{border-radius:16px;background:#2c3745;font-size:28px;font-weight:400;text-align:left;padding:14px 0 14px 20px}
+.mgpad button{border-radius:16px;background:#2c3745;font-size:28px;font-weight:400;text-align:left;padding:14px 0 14px 20px;display:flex;align-items:center}
+.mgpad button svg{width:30px;height:30px}
 .mgpad small{font-size:14px;color:#8d99a6;margin-left:12px}
 .mgl{color:#6cb4f0;text-align:center;padding:10px;font-size:16px}
 </style></head><body><div id="app"></div>
@@ -257,6 +283,33 @@ const RC=()=>{try{return JSON.parse(localStorage.getItem('mg_rc')||'[]')}catch(e
 const addRC=id=>{try{localStorage.setItem('mg_rc',JSON.stringify([id,...RC().filter(x=>x!==id)].slice(0,15)))}catch(e){}};
 const clrRC=()=>{try{localStorage.removeItem('mg_rc')}catch(e){}};
 
+// ===== ИКОНКИ ДЛЯ НАСТРОЕК И ПРОФИЛЕЙ (контурные, как в Telegram) =====
+const G={
+  globe:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3.2 3 3.2 15 0 18M12 3c-3.2 3-3.2 15 0 18"/>',
+  starf:'<path d="M12 3l2.7 5.8 6.3.7-4.7 4.3 1.3 6.2L12 16.8 6.4 20l1.3-6.2L3 9.5l6.3-.7z"/>',
+  store:'<path d="M4 9.5l1.6-5.5h12.8L20 9.5M4 9.5a2.7 2.7 0 0 0 5.3 0 2.7 2.7 0 0 0 5.4 0 2.7 2.7 0 0 0 5.3 0M5.5 12.5V20h13v-7.5M10 20v-4.5h4V20"/>',
+  gift:'<rect x="3.5" y="8" width="17" height="4" rx="1"/><path d="M5 12v8h14v-8M12 8v12M12 8c-1-3-5-4.5-5-2s3 2 5 2zM12 8c1-3 5-4.5 5-2s-3 2-5 2z"/>',
+  chat:'<path d="M12 3.5c-4.7 0-8.5 3.2-8.5 7.2 0 2.2 1.2 4.2 3 5.5L6 20.5l3.7-2.2c.7.2 1.5.3 2.3.3 4.7 0 8.5-3.2 8.5-7.2S16.700 3.500 12 3.500z"/>',
+  help:'<circle cx="12" cy="12" r="9"/><path d="M9.6 9.6a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1.100.9-1.100 1.700"/><circle cx="12" cy="16.800" r=".7" fill="currentColor"/>',
+  bulb:'<path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.500 10.900c.6.5 1 1.200 1 2.100h5c0-.9.4-1.600 1-2.100A6 6 0 0 0 12 3z"/>',
+  shield:'<path d="M12 3l7 3v5.500c0 4.300-3 7.700-7 9.500-4-1.800-7-5.200-7-9.500V6z"/><path d="M9 12l2.200 2.200L15.500 10"/>',
+  exit:'<path d="M10 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h4M15 8l4 4-4 4M19 12H9"/>',
+  cam:'<path d="M4 8h3l2-2.500h6L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.500"/>',
+  pen:'<path d="M4 20l4-1 11-11-3-3L5 16z"/><path d="M14 6l3 3"/>',
+  gear:'<circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.600 5.600l2.100 2.100M16.300 16.300l2.100 2.100M18.400 5.600l-2.100 2.100M7.700 16.300l-2.100 2.100"/>',
+  bell:'<path d="M6 16v-5a6 6 0 0 1 12 0v5l1.500 2h-15zM10 21h4"/>',
+  phone:'<path d="M6.500 3.500l3 .5 1.200 4-2 1.500a12 12 0 0 0 5.800 5.800l1.500-2 4 1.200.5 3a2 2 0 0 1-2 2.200A16 16 0 0 1 4.300 5.500a2 2 0 0 1 2.200-2z"/>',
+  video:'<rect x="3" y="6.500" width="12.500" height="11" rx="2.500"/><path d="M15.500 10.500l5-3v9l-5-3z"/>',
+  adduser:'<circle cx="9.500" cy="8" r="3.500"/><path d="M3 20c.5-3.800 3-6 6.500-6s6 2.200 6.500 6M19 6.500v6M16 9.500h6"/>',
+  dots:'<circle cx="12" cy="5" r="1.700" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.700" fill="currentColor" stroke="none"/><circle cx="12" cy="19" r="1.700" fill="currentColor" stroke="none"/>',
+  plus:'<path d="M12 5v14M5 12h14"/>',
+  stats:'<path d="M5 20v-8M12 20V5M19 20v-5"/>',
+  qr:'<rect x="3.500" y="3.500" width="7" height="7" rx="1.500"/><rect x="13.500" y="3.500" width="7" height="7" rx="1.500"/><rect x="3.500" y="13.500" width="7" height="7" rx="1.500"/><path d="M14 14h2.500v2.500H14zM18 18h2.500v2.500H18zM18 14h2.500M14 18v2.500"/>',
+  back:'<path d="M19 12H5M11 6l-6 6 6 6"/>',
+  arrow:'<path d="M5 12h14M13 6l6 6-6 6"/>',
+  bksp:'<path d="M21 5H9l-6 7 6 7h12z"/><path d="M12.500 9.500l5 5M17.500 9.500l-5 5"/>'};
+const sv=n=>`<svg class="gi${n==='starf'?' f':''}" viewBox="0 0 24 24">${G[n]}</svg>`;
+
 // ===== ВХОД / РЕГИСТРАЦИЯ =====
 const run=async f=>{try{await f()}catch(e){$('er').textContent=e.message}};
 
@@ -277,27 +330,28 @@ function showEmail(){
   emailView();
   const a=document.querySelector('.auth');
   const p=document.createElement('div');p.className='mgl';p.textContent='Войти по номеру';p.onclick=phoneView;
-  const b=document.createElement('div');b.className='mgl';b.textContent='← Назад';b.onclick=authView;
+  const b=document.createElement('div');b.className='mgl';b.textContent='Назад';b.onclick=authView;
   a.append(p,b)}
 
 // --- Экран «Номер телефона» ---
 function phoneView(){
   let d='';
-  app.innerHTML=`<div class=top><button class=ib id=bk>←</button></div>
+  app.innerHTML=`<div class=top><button class=ib id=bk>${sv('back')}</button></div>
   <div class=mgw style="margin-top:-20px">
   <div class=mgh>Номер телефона</div>
   <div class=mgsub>Проверьте код страны и введите свой номер телефона.</div>
   <div class=mgf><span>Страна</span><span>›</span></div>
   <div class="mgf act"><small>Номер телефона</small><span id=mgn>+</span></div>
-  <button class=mggo id=mgg>➜</button>
+  <button class=mggo id=mgg><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">${G.arrow}</svg></button>
   <div class=mgpad id=mgp></div></div>`;
   $('bk').onclick=showEmail;
-  [['1',''],['2','ABC'],['3','DEF'],['4','GHI'],['5','JKL'],['6','MNO'],['7','PQRS'],['8','TUV'],['9','WXYZ'],['',''],['0','+'],['⌫','']].forEach(k=>{
+  [['1',''],['2','ABC'],['3','DEF'],['4','GHI'],['5','JKL'],['6','MNO'],['7','PQRS'],['8','TUV'],['9','WXYZ'],['',''],['0','+'],['del','']].forEach(k=>{
     const b=document.createElement('button');
-    b.innerHTML=k[0]+(k[1]?'<small>'+k[1]+'</small>':'');
+    if(k[0]==='del')b.innerHTML=sv('bksp');
+    else b.innerHTML=k[0]+(k[1]?'<small>'+k[1]+'</small>':'');
     if(!k[0])b.style.visibility='hidden';
     b.onclick=()=>{
-      if(k[0]==='⌫')d=d.slice(0,-1);else if(d.length<15)d+=k[0];
+      if(k[0]==='del')d=d.slice(0,-1);else if(d.length<15)d+=k[0];
       $('mgn').textContent='+'+d};
     $('mgp').appendChild(b)});
   // сюда позже подключим вход по номеру через бота
@@ -375,7 +429,7 @@ const bindRows=()=>document.querySelectorAll('.row[data-id]').forEach(r=>r.oncli
 const soon=()=>alert('Скоро');
 
 // ===== ЧАТ: шапка, поле ввода, сообщения =====
-const chatHead=(a,name,sub,ok)=>`<div class=ch><div class=chp><button class=chb id=bk>${IC.back}</button><div class=cpr id=cpr>${a}<div class=cht><b>${nameH(name,ok)}</b><small>${esc(sub)}</small></div></div></div><button class=chm id=cm>⋮</button></div>`;
+const chatHead=(a,name,sub,ok)=>`<div class=ch><div class=chp><button class=chb id=bk>${IC.back}</button><div class=cpr id=cpr>${a}<div class=cht><b>${nameH(name,ok)}</b><small>${esc(sub)}</small></div></div></div><button class=chm id=cm>${sv('dots')}</button></div>`;
 const CMP=`<form class=cmp id=fm><div class=cin><button type=button class=ci id=em>${IC.emo}</button><input id=tx placeholder="Сообщение" autocomplete=off><button type=button class=ci id=at>${IC.clip}</button></div><button type=button class=cs id=cs>${IC.mic}</button></form>`;
 function bindCmp(send){
   const tx=$('tx'),cs=$('cs');
@@ -430,7 +484,7 @@ function home(){
   const head=tab==='settings'?H('Настройки')
     :tab==='profile'?H('Профиль')
     :tab==='contacts'?H('Контакты')
-    :'<div class=top><div class=logo>M</div><h1>MajorGram</h1><button class=ib id=mn>⋮</button></div><div class=mnu id=mnu hidden><div id=m1>Новая группа или канал</div><div id=m2>Найти пользователя</div><div id=m3>Выйти</div></div>';
+    :'<div class=top><div class=logo>M</div><h1>MajorGram</h1><button class=ib id=mn>'+sv('dots')+'</button></div><div class=mnu id=mnu hidden><div id=m1>Новая группа или канал</div><div id=m2>Найти пользователя</div><div id=m3>Выйти</div></div>';
   app.innerHTML=`${head}<div class=body id=bd></div>${tab==='chats'?`<button class=fab2 id=fb2>${IC.cam}</button><button class=fab id=fb>${IC.pen}</button>`:''}
   <nav>${[['chats','Чаты',IC.chat],['contacts','Контакты',IC.con],['settings','Настройки',IC.set],['profile','Профиль',IC.pro]].map(([k,n,i])=>`<div class="ni${tab===k?' on':''}" data-t="${k}">${i}<span>${n}</span></div>`).join('')}</nav>`;
   if($('mn')){
@@ -453,7 +507,7 @@ function list(){
   const l=$('cl');if(!l)return;
   $('c1').textContent=CH.length;$('c2').textContent=CH.filter(c=>c.type==='channel').length;
   const a=CH.filter(c=>flt==='all'||c.type==='channel');
-  l.innerHTML=a.map(rowHtml).join('')||'<div class=empty>Пока пусто. Нажми ✎ и найди человека по юзернейму</div>';
+  l.innerHTML=a.map(rowHtml).join('')||'<div class=empty>Пока пусто. Нажми на карандаш и найди человека по юзернейму</div>';
   bindRows()}
 function draw(){
   const b=$('bd');if(!b)return;
@@ -467,18 +521,18 @@ function draw(){
     b.innerHTML=`<div class=sq id=sq>Поиск по юзернейму</div>`+(a.map(rowHtml).join('')||'<div class=empty>Контактов пока нет</div>');
     $('sq').onclick=searchView;bindRows()}
   else if(tab==='settings'){
-    const it=(a,c,i,t,r='')=>`<div class=it data-a=${a}><div class=ico style="background:${c}">${i}</div><div class=itt>${t}</div>${r}</div>`;
-    b.innerHTML=`<div class=grp>${it('lang','#a355e8','🌐','Язык<small class=sub>Русский</small>')}</div>
-    <div class=grp>${it('prem','#7b6cf0','★','MajorGram Premium')}${it('stars','#f5a623','★','Звёзды MajorGram',`<span class=val id=sbal>${STARS}</span>`)}${it('biz','#e5484d','🏪','MajorGram для бизнеса')}${it('gift','#f2711c','🎁','Отправить подарок')}</div>
-    <div class=grp><div class=gt>Помощь</div>${it('ask','#f5a623','💬','Задать вопрос')}${it('faq','#2ea6ff','?','Вопросы о MajorGram')}${it('feat','#a355e8','💡','Возможности MajorGram')}${it('priv','#34c37a','🛡','Политика конфиденциальности')}</div>
-    <div class=grp>${it('out','#2b3748','⎋','Выйти из аккаунта')}</div>
+    const it=(a,c,i,t,r='')=>`<div class=it data-a=${a}><div class=ico style="background:${c}">${sv(i)}</div><div class=itt>${t}</div>${r}</div>`;
+    b.innerHTML=`<div class=grp>${it('lang','#a355e8','globe','Язык<small class=sub>Русский</small>')}</div>
+    <div class=grp>${it('prem','#7b6cf0','starf','MajorGram Premium')}${it('stars','#f5a623','starf','Звёзды MajorGram',`<span class=val id=sbal>${STARS}</span>`)}${it('biz','#e5484d','store','MajorGram для бизнеса')}${it('gift','#f2711c','gift','Отправить подарок')}</div>
+    <div class=grp><div class=gt>Помощь</div>${it('ask','#f5a623','chat','Задать вопрос')}${it('faq','#2ea6ff','help','Вопросы о MajorGram')}${it('feat','#a355e8','bulb','Возможности MajorGram')}${it('priv','#34c37a','shield','Политика конфиденциальности')}</div>
+    <div class=grp>${it('out','#2b3748','exit','Выйти из аккаунта')}</div>
     <p class=ver>MajorGram v0.1</p>`;
     b.querySelectorAll('.it').forEach(e=>e.onclick=()=>{const a=e.dataset.a;a==='stars'?starsView():a==='out'?auth.signOut():soon()});
     getStars().then(n=>{STARS=n;const e=$('sbal');if(e)e.textContent=n})}
   else{
     b.innerHTML=`<div class=pring>${me.photo?`<img src="${me.photo}" style="width:100%;height:100%;object-fit:cover">`:av('@'+me.username,90)}</div>
     <div class=pn>${nameH(me.name||'@'+me.username,me.verified)}</div><div class=ps>в сети</div>
-    <div class=pb><div id=pf><span>📷</span>Выбрать фото</div><div id=pe><span>✏️</span>Изменить</div><div id=pg><span>⚙️</span>Настройки</div></div>
+    <div class=pb><div id=pf>${sv('cam')}Выбрать фото</div><div id=pe>${sv('pen')}Изменить</div><div id=pg>${sv('gear')}Настройки</div></div>
     <div class="grp info"><div><b>${esc(auth.currentUser.email||'')}</b><small>Почта</small></div>
     <div><b>@${esc(me.username)}</b><small>Имя пользователя</small></div>
     <div id=pi2><b>${esc(me.about||'Не указано')}</b><small>О себе</small></div>
@@ -575,7 +629,7 @@ async function saveCode(t){
   try{new Function(t)}catch(e){return 'Ошибка в коде: '+e.message+'\nПришлите исправленный код или /cancel'}
   const n=BF.n;me.bots[n].code=t;BF={};
   try{await saveBots()}catch(e){return 'Не получилось сохранить: '+e.message}
-  return 'Код сохранён ✅ Напишите боту @'+n+', чтобы проверить.'}
+  return 'Код сохранён. Напишите боту @'+n+', чтобы проверить.'}
 
 // код бота выполняется в изолированном фоновом потоке, без доступа к странице и к сети
 function runBot(bot,text){
@@ -586,9 +640,9 @@ function runBot(bot,text){
     const w=new Worker(url);
     let done=0,tm;
     const fin=r=>{if(done)return;done=1;clearTimeout(tm);w.terminate();URL.revokeObjectURL(url);res(r)};
-    tm=setTimeout(()=>fin('⚠️ Бот не ответил за 3 секунды'),3000);
-    w.onmessage=e=>fin(e.data.ok?e.data.r:'⚠️ Ошибка бота: '+e.data.r);
-    w.onerror=e=>fin('⚠️ Ошибка в коде бота: '+(e.message||''));
+    tm=setTimeout(()=>fin('Бот не ответил за 3 секунды'),3000);
+    w.onmessage=e=>fin(e.data.ok?e.data.r:'Ошибка бота: '+e.data.r);
+    w.onerror=e=>fin('Ошибка в коде бота: '+(e.message||''));
     w.postMessage(text)})}
 
 // ===== ЭКРАН ПОИСКА =====
@@ -654,23 +708,24 @@ async function userView(cid,c,uid){
   const nm=uid?(d.name||'@'+un):c.name;
   const sub=uid?'был(а) недавно':TYPES[c.type]+' · участников: '+c.members.length;
   const pic=d.photo?`<img src="${esc(d.photo)}" style="width:100%;height:100%;object-fit:cover">`:av(uid?'@'+un:nm,144);
-  const info=(un?`<div id=uun><b>@${esc(un)}</b><small>Имя пользователя</small></div>`:'')
-    +(d.about?`<div><b>${esc(d.about)}</b><small>О себе</small></div>`:'');
-  app.innerHTML=`<div class=top><button class=ib id=bk>←</button><div style="flex:1"></div><button class=ib id=mo>⋮</button></div>
+  app.innerHTML=`<div class=top><button class=ib id=bk>${sv('back')}</button><div style="flex:1"></div><button class=ib id=mo>${sv('dots')}</button></div>
   <div class=body>
     <div class=pring style="width:150px;height:150px">${pic}</div>
     <div class=pn style="font-size:26px;margin-top:14px">${nameH(nm,!!d.verified)}</div>
-    <div class=ps>${esc(sub)}</div>
-    <div class=pb><div id=u1><span>💬</span>Чат</div><div id=u2><span>🔔</span>Звук</div><div id=u3><span>📞</span>Звонок</div><div id=u4><span>🎥</span>Видео</div></div>
-    ${info?`<div class="grp info">${info}</div>`:''}
-    ${uid?`<div class=grp><div class=it id=uadd><div class=ico style="background:#2ea6ff">＋</div><div class=itt>Добавить в контакты</div></div></div>`:''}
-    <div class=tabs2 id=utb><span class=on>Медиа</span><span>Избранное</span><span>Файлы</span><span>Ссылки</span></div>
+    <div class=ps>${esc(sub)}${uid?'<span class=whn id=whn>когда?</span>':''}</div>
+    <div class=pb><div id=u1>${sv('chat')}Чат</div><div id=u2>${sv('bell')}Звук</div><div id=u3>${sv('phone')}Звонок</div><div id=u4>${sv('video')}Видео</div></div>
+    ${un?`<div class=uc><div class=ut id=uun><b>@${esc(un)}</b><small>Имя пользователя</small></div><span id=uqr>${sv('qr')}</span></div>`:''}
+    ${d.about?`<div class=uc><div class=ut><b>${esc(d.about)}</b><small>О себе</small></div></div>`:''}
+    ${uid?`<div class="uc add" id=uadd>${sv('adduser')}<span>Добавить в контакты</span></div>`:''}
+    <div class=ptabs id=utb><span class=on>Медиа</span><span>Избранное</span><span>Файлы</span><span>Ссылки</span></div>
     <div class=empty>Пока пусто</div>
   </div>`;
   $('bk').onclick=()=>openChat(cid);
   $('u1').onclick=()=>openChat(cid);
   ['mo','u2','u3','u4'].forEach(i=>$(i).onclick=soon);
+  if($('whn'))$('whn').onclick=soon;
   if($('uadd'))$('uadd').onclick=soon;
+  if($('uqr'))$('uqr').onclick=soon;
   if($('uun'))$('uun').onclick=()=>{
     try{navigator.clipboard.writeText('@'+un);alert('Юзернейм скопирован')}catch(e){}};
   document.querySelectorAll('#utb span').forEach(t=>t.onclick=()=>{
@@ -679,13 +734,13 @@ async function userView(cid,c,uid){
 
 // ===== ЭКРАН «ЗВЁЗДЫ MAJORGRAM» =====
 function starsView(){
-  app.innerHTML=`<div class=top><button class=ib id=bk>←</button></div><div class=body style="text-align:center;padding-bottom:30px">
+  app.innerHTML=`<div class=top><button class=ib id=bk>${sv('back')}</button></div><div class=body style="text-align:center;padding-bottom:30px">
   <svg width=96 height=96 viewBox="0 0 24 24"><defs><linearGradient id=g1 x1=0 y1=0 x2=1 y2=1><stop offset=0 stop-color="#fff35c"/><stop offset=1 stop-color="#f5a623"/></linearGradient></defs><path fill="url(#g1)" stroke="#ffd23f" stroke-linejoin="round" stroke-width="1" d="M12 2.5l2.9 6.3 6.8.7-5.1 4.6 1.5 6.8L12 17.4l-6.1 3.5 1.5-6.8L2.3 9.5l6.8-.7z"/></svg>
   <h1 style="margin:8px 0 6px;font-size:22px">Звёзды MajorGram</h1>
   <p class=sub2>Звёзды MajorGram нужны для оплаты контента и услуг. <a id=more>Подробнее о звёздах ›</a></p>
-  <div class=grp style="padding:16px 14px;margin:16px 0 12px"><div class=bal><span>⭐</span><b id=sv>${STARS}</b></div><div class=sub>Ваш баланс</div>
-  <div class=btns><button id=tp>＋ Пополнить</button><button id=stt>📊 Статистика</button></div><a id=gf class=lnk>🎁 Подарить звёзды друзьям</a></div>
-  <div class="grp it" id=earn style="text-align:left"><div class=ico style="background:#34c37a">★</div><div class=itt>Заработать звёзды <span class=new>NEW</span><small class=sub>Скоро</small></div></div>
+  <div class=grp style="padding:16px 14px;margin:16px 0 12px"><div class=bal>${sv('starf')}<b id=sv>${STARS}</b></div><div class=sub>Ваш баланс</div>
+  <div class=btns><button id=tp>${sv('plus')}Пополнить</button><button id=stt>${sv('stats')}Статистика</button></div><a id=gf class=lnk>${sv('gift')}Подарить звёзды друзьям</a></div>
+  <div class="grp it" id=earn style="text-align:left"><div class=ico style="background:#34c37a">${sv('starf')}</div><div class=itt>Заработать звёзды <span class=new>NEW</span><small class=sub>Скоро</small></div></div>
   <div class=tabs2><span class=on>Все операции</span><span>Зачисления</span><span>Списания</span></div>
   <div class=empty>Операций пока нет</div></div>`;
   $('bk').onclick=()=>{tab='settings';home()};$('tp').onclick=topup;
@@ -693,7 +748,7 @@ function starsView(){
   getStars().then(n=>{STARS=n;if($('sv'))$('sv').textContent=n})}
 function topup(){
   // СЮДА ПОЗЖЕ ДОБАВИМ ПЕРЕХОД В ТЕЛЕГРАМ-БОТА ДЛЯ ПОКУПКИ ЗВЁЗД
-  app.innerHTML=`<div class=top><button class=ib id=bk>←</button><h2>Пополнить</h2></div><div class=body></div>`;
+  app.innerHTML=`<div class=top><button class=ib id=bk>${sv('back')}</button><h2>Пополнить</h2></div><div class=body></div>`;
   $('bk').onclick=starsView}
 
 async function newChat(){
@@ -722,7 +777,7 @@ async function openChat(id){
   let docs=[],RD={},rs=0,first=1,marked='';
   const TX=new Map();
   const dec=async m=>{
-    if(m.ct){try{return new TextDecoder().decode(await crypto.subtle.decrypt({name:'AES-GCM',iv:ub(m.iv)},key,ub(m.ct)))}catch(e){return '🔒 не удалось расшифровать'}}
+    if(m.ct){try{return new TextDecoder().decode(await crypto.subtle.decrypt({name:'AES-GCM',iv:ub(m.iv)},key,ub(m.ct)))}catch(e){return 'Не удалось расшифровать'}}
     return m.text||''};
   // прочитано: кто-то из собеседников открыл чат позже, чем отправлено сообщение
   const isRead=m=>m.from===me.uid&&m.at&&others.some(u=>RD[u]&&RD[u].toMillis&&RD[u].toMillis()>=m.at.toMillis());
