@@ -5,16 +5,15 @@
 <link rel="manifest" href="manifest.json">
 <script>if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js')</script>
 <style>
+:root{--ac:#2ea6ff;--ac1:#2995e6;--ac2:#58b8ff;--acl:#62bcff;--acd:#204261}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{overscroll-behavior:none}
 body{margin:0;background:#1c2634;color:#fff;font:16px system-ui,sans-serif;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 input,.m{-webkit-user-select:text;user-select:text}
 #app{height:100dvh;display:flex;flex-direction:column;position:relative;overflow:hidden;padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)}
-button{border:0;border-radius:20px;padding:11px 16px;background:#2ea6ff;color:#fff;font:inherit;font-size:15px;font-weight:600}
+button{border:0;border-radius:20px;padding:11px 16px;background:var(--ac);color:#fff;font:inherit;font-size:15px;font-weight:600}
 button.alt{background:#2b3748}
 input{width:100%;padding:15px 18px;border-radius:26px;border:0;background:#2b3748;color:#fff;font:inherit;outline:0}
-.auth{margin:auto;width:min(340px,90%);display:flex;flex-direction:column;gap:10px}.auth h1{text-align:center}
-#er{color:#ff7a8a;min-height:1em;font-size:14px}
 
 /* ===== ИКОНКИ (SVG) ===== */
 .gi{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none;display:block}
@@ -40,9 +39,9 @@ input{width:100%;padding:15px 18px;border-radius:26px;border:0;background:#2b374
 /* ===== ВКЛАДКИ ===== */
 .tabs{display:flex;background:#243040;border-radius:20px;padding:4px;margin-bottom:6px}
 .tb{flex:1;text-align:center;padding:5px 6px;border-radius:16px;color:#9aa7b8;font-weight:600;font-size:15px}
-.tb.on{background:#2b4764;color:#5eb5f7}
+.tb.on{background:var(--acd);color:var(--acl)}
 .tb i{display:inline-block;font-style:normal;font-size:12px;line-height:16px;background:#3a4658;color:#fff;border-radius:10px;padding:0 6px;margin-left:5px}
-.tb.on i{background:#4aa8ee;color:#10243a}
+.tb.on i{background:var(--acl);color:#10243a}
 
 /* ===== СТРОКИ ЧАТОВ ===== */
 .row{display:flex;gap:13px;padding:9px 4px 9px 0;align-items:center}
@@ -60,13 +59,13 @@ input{width:100%;padding:15px 18px;border-radius:26px;border:0;background:#2b374
 .ico{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex:none;color:#fff}
 .ico .gi{width:19px;height:19px}
 .itt{flex:1;font-size:16px}.itt small{display:block}
-.sub{color:#8493a6;font-size:13px}.val{color:#5eb5f7;font-size:16px}
-.gt{color:#5eb5f7;font-size:14px;font-weight:600;padding:12px 14px 0}
+.sub{color:#8493a6;font-size:13px}.val{color:var(--acl);font-size:16px}
+.gt{color:var(--acl);font-size:14px;font-weight:600;padding:12px 14px 0}
 .ver{text-align:center;color:#6b7a8d;font-size:12px;margin:6px 0}
 /* переключатель */
 .sw{width:46px;height:26px;border-radius:13px;background:#3a4658;position:relative;flex:none;transition:background .2s}
 .sw::after{content:'';position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:left .2s}
-.sw.on{background:#2ea6ff}
+.sw.on{background:var(--ac)}
 .sw.on::after{left:23px}
 
 /* ===== ЗВЁЗДЫ ===== */
@@ -75,11 +74,11 @@ input{width:100%;padding:15px 18px;border-radius:26px;border:0;background:#2b374
 .btns{display:flex;gap:10px;margin:14px 0 12px}
 .btns button{flex:1;display:flex;align-items:center;justify-content:center;gap:7px}
 .btns .gi{width:19px;height:19px}
-.lnk{color:#5eb5f7;display:flex;align-items:center;justify-content:center;gap:7px;font-size:15px}
+.lnk{color:var(--acl);display:flex;align-items:center;justify-content:center;gap:7px;font-size:15px}
 .lnk .gi{width:19px;height:19px}
-.new{font-size:11px;background:#2ea6ff;border-radius:6px;padding:2px 6px;margin-left:6px}
-.tabs2{display:flex;gap:20px;color:#8493a6;font-size:15px;font-weight:600;padding:8px 4px;overflow:auto;white-space:nowrap;text-align:left}.tabs2 .on{color:#5eb5f7}
-.sub2{color:#cfd7e3;font-size:15px;padding:0 10px;line-height:1.4}.sub2 a{color:#5eb5f7}
+.new{font-size:11px;background:var(--ac);border-radius:6px;padding:2px 6px;margin-left:6px}
+.tabs2{display:flex;gap:20px;color:#8493a6;font-size:15px;font-weight:600;padding:8px 4px;overflow:auto;white-space:nowrap;text-align:left}.tabs2 .on{color:var(--acl)}
+.sub2{color:#cfd7e3;font-size:15px;padding:0 10px;line-height:1.4}.sub2 a{color:var(--acl)}
 
 /* ===== ПРОФИЛЬ ===== */
 .pring{width:96px;height:96px;border-radius:50%;border:3px solid #1fc8d8;margin:4px auto 0;overflow:hidden;display:flex;align-items:center;justify-content:center}
@@ -102,7 +101,7 @@ input{width:100%;padding:15px 18px;border-radius:26px;border:0;background:#2b374
 .ptabs{display:flex;background:#222f3f;border-radius:28px;padding:5px;gap:2px;margin:0 0 10px;overflow-x:auto;white-space:nowrap;scrollbar-width:none}
 .ptabs::-webkit-scrollbar{display:none}
 .ptabs span{flex:none;padding:11px 20px;border-radius:24px;color:#8493a6;font-size:17px;font-weight:600}
-.ptabs span.on{background:#2b4764;color:#6ab9f7}
+.ptabs span.on{background:var(--acd);color:var(--acl)}
 
 /* ===== КНОПКИ И НИЖНЯЯ ПАНЕЛЬ ===== */
 .fab{position:absolute;right:20px;bottom:calc(77px + env(safe-area-inset-bottom));width:48px;height:48px;border-radius:50%;padding:0;box-shadow:0 4px 14px #0008;display:flex;align-items:center;justify-content:center}
@@ -112,7 +111,7 @@ input{width:100%;padding:15px 18px;border-radius:26px;border:0;background:#2b374
 nav{position:absolute;left:16px;right:16px;bottom:calc(8px + env(safe-area-inset-bottom));display:flex;background:#243245ee;border-radius:30px;padding:4px;backdrop-filter:blur(8px)}
 .ni{flex:1 1 auto;display:flex;flex-direction:column;align-items:center;gap:1px;padding:5px 8px;border-radius:24px;font-size:12px;line-height:14px;font-weight:600}
 .ni svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.ni.on{background:#2d4863;color:#5eb5f7}
+.ni.on{background:var(--acd);color:var(--acl)}
 .mnu{position:absolute;right:12px;top:calc(52px + env(safe-area-inset-top));background:#2b3748;border-radius:14px;padding:4px 0;z-index:5;box-shadow:0 6px 20px #000a}
 .mnu[hidden]{display:none}.mnu div{padding:12px 18px;font-size:15px}
 
@@ -126,7 +125,7 @@ nav{position:absolute;left:16px;right:16px;bottom:calc(8px + env(safe-area-inset
 .stabs{display:flex;overflow-x:auto;white-space:nowrap;background:#243040;border-radius:20px;padding:4px;margin:0 11px 4px;scrollbar-width:none}
 .stabs::-webkit-scrollbar{display:none}
 .stb{flex:none;padding:5px 16px;border-radius:16px;color:#9aa7b8;font-size:15px;font-weight:600}
-.stb.on{background:#2b4764;color:#5eb5f7}
+.stb.on{background:var(--acd);color:var(--acl)}
 .sbody{flex:1;overflow:auto;padding-bottom:20px}
 .peers{display:flex;overflow-x:auto;padding:12px 0 10px;scrollbar-width:none}
 .peers::-webkit-scrollbar{display:none}
@@ -164,7 +163,7 @@ nav{position:absolute;left:16px;right:16px;bottom:calc(8px + env(safe-area-inset
 .m:not(.me):not(.f){border-top-left-radius:6px}
 .m:not(.me):not(.l){border-bottom-left-radius:6px}
 .m:not(.me).l{border-bottom-left-radius:0}
-.m.me{align-self:flex-end;background-color:#4f6fe0;background-image:linear-gradient(180deg,#6b59d9 0%,#4f6fe0 50%,#3a84e8 100%);background-attachment:fixed}
+.m.me{align-self:flex-end;background-color:var(--ac);background-image:linear-gradient(180deg,var(--ac1) 0%,var(--ac) 50%,var(--ac2) 100%);background-attachment:fixed}
 .m.me:not(.f){border-top-right-radius:6px}
 .m.me:not(.l){border-bottom-right-radius:6px}
 .m.me.l{border-bottom-right-radius:0}
@@ -190,7 +189,7 @@ nav{position:absolute;left:16px;right:16px;bottom:calc(8px + env(safe-area-inset
 .cin input::placeholder{color:#8493a6}
 .ci{background:none;width:40px;height:40px;padding:0;color:#8493a6;display:flex;align-items:center;justify-content:center;border-radius:50%;flex:none}
 .ci svg,.cs svg{width:24px;height:24px}
-.cs{width:47px;height:47px;border-radius:50%;padding:0;background:#2ea6ff;color:#fff;display:flex;align-items:center;justify-content:center;flex:none}
+.cs{width:47px;height:47px;border-radius:50%;padding:0;background:var(--ac);color:#fff;display:flex;align-items:center;justify-content:center;flex:none}
 /* плашка вместо поля ввода, когда писать нельзя */
 .lk{position:absolute;left:8px;right:8px;bottom:8px;z-index:3;height:47px;border-radius:24px;background:rgba(36,50,69,.92);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);display:none;align-items:center;justify-content:center;color:#8493a6;font-size:15px;padding:0 16px;text-align:center}
 
@@ -200,31 +199,58 @@ nav{position:absolute;left:16px;right:16px;bottom:calc(8px + env(safe-area-inset
 .dlg h3{margin:0 0 12px;font-size:17px}
 .dlg input{height:42px;padding:0 14px;font-size:15px;border-radius:12px}
 .dbt{display:flex;justify-content:flex-end;gap:8px;margin-top:14px}
-.dbt button{background:none;color:#5eb5f7;padding:8px 14px}
+.dbt button{background:none;color:var(--acl);padding:8px 14px}
 .toast{position:fixed;left:50%;bottom:calc(90px + env(safe-area-inset-bottom));transform:translateX(-50%);background:#2b3748;color:#fff;padding:10px 18px;border-radius:18px;font-size:14px;z-index:60;box-shadow:0 4px 14px #0008;max-width:80%;text-align:center}
 
-/* ===== ПРИВЕТСТВИЕ И ВХОД ПО НОМЕРУ ===== */
-.mgw{height:100%;display:flex;flex-direction:column;align-items:center;padding:24px 20px}
-.mglogo{margin-top:16vh;width:150px;height:150px;border-radius:34px;background:linear-gradient(135deg,#8e5cf7,#5b2fd6);display:flex;align-items:center;justify-content:center;font-size:92px;font-weight:800;box-shadow:0 10px 40px #5b2fd666}
-.mgname{font-size:32px;font-weight:700;margin-top:34px}
-.mgtag{text-align:center;font-size:18px;line-height:1.4;margin-top:14px;max-width:320px}
-.mgdots{display:flex;gap:10px;margin-top:30px}
-.mgdots i{width:8px;height:8px;border-radius:50%;background:#7b8794}
-.mgdots i:first-child{background:#8e5cf7}
-.mgen{margin-top:auto;color:#6cb4f0;font-size:20px;padding:14px}
-.mgstart{width:100%;padding:19px;font-size:19px;border-radius:30px;background:linear-gradient(90deg,#8e5cf7,#6a8bf5)}
-.mgh{font-size:24px;font-weight:700;margin-top:6vh;text-align:center}
-.mgsub{color:#8d99a6;text-align:center;margin:12px 0 26px;max-width:300px}
-.mgf{width:100%;border:1.5px solid #3b4859;border-radius:14px;padding:18px 16px;font-size:19px;color:#8d99a6;display:flex;justify-content:space-between;margin-bottom:20px;position:relative}
-.mgf.act{border-color:#8e5cf7;color:#fff}
-.mgf small{position:absolute;top:-9px;left:12px;background:#1c2634;padding:0 6px;color:#8e5cf7;font-size:13px}
-.mggo{align-self:flex-end;width:56px;height:56px;border-radius:50%;padding:0;background:#8e5cf7;display:flex;align-items:center;justify-content:center}
-.mggo svg{width:26px;height:26px}
-.mgpad{margin-top:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:7px;width:100%}
-.mgpad button{border-radius:16px;background:#2c3745;font-size:28px;font-weight:400;text-align:left;padding:14px 0 14px 20px;display:flex;align-items:center}
-.mgpad button svg{width:30px;height:30px}
-.mgpad small{font-size:14px;color:#8d99a6;margin-left:12px}
-.mgl{color:#6cb4f0;text-align:center;padding:10px;font-size:16px}
+/* ===== ПРИВЕТСТВИЕ (как ZeroGram) ===== */
+.wel{position:relative;height:100%;display:flex;flex-direction:column;align-items:center;padding:0 20px 70px}
+.gearb{position:absolute;top:calc(16px + env(safe-area-inset-top));right:12px;width:40px;height:40px;padding:0;background:none;color:var(--ac);display:flex;align-items:center;justify-content:center;border-radius:50%}
+.gearb svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.wlogo{margin-top:clamp(36px,16.5dvh,119px);width:150px;height:150px;border-radius:34px;background:linear-gradient(135deg,#8e5cf7,#5b2fd6);display:flex;align-items:center;justify-content:center;font-size:92px;font-weight:800;box-shadow:0 10px 40px #5b2fd666;flex:none}
+.wname{margin-top:28px;font-size:28px;line-height:34px;font-weight:500}
+.wtag{margin-top:10px;font-size:16px;line-height:20px;text-align:center;max-width:320px}
+.wdots{display:flex;gap:5px;margin-top:28px}
+.wdots i{width:6px;height:6px;border-radius:50%;background:#7b8794}
+.wdots i:first-child{background:var(--ac)}
+.wen{margin-top:auto;height:40px;line-height:40px;margin-bottom:24px;font-size:16px;color:var(--acl)}
+.wbtn{width:100%;max-width:400px;height:48px;padding:0;border-radius:24px;font-size:16px;font-weight:500;background:linear-gradient(90deg,var(--ac1),var(--ac2))}
+
+/* ===== ЭКРАН НОМЕРА ТЕЛЕФОНА И КОДА (по скриншоту) ===== */
+.ph{height:100%;display:flex;flex-direction:column;align-items:center}
+.pht{margin-top:clamp(16px,20.8dvh,150px);font-size:20px;line-height:24px;font-weight:500;text-align:center}
+.phs{margin-top:8px;max-width:275px;font-size:15px;line-height:18.5px;color:#7a8794;text-align:center}
+.phf{position:relative;width:calc(100% - 70px);max-width:420px;height:50px;margin-top:30px;border:1px solid #4a596c;border-radius:16px;display:flex;align-items:center;padding:0 19px 0 14px;font-size:18px;color:#6f7c8a}
+.phf.act{border:2px solid var(--acl);padding:0 18px 0 13px;color:#fff}
+.phf small{position:absolute;top:-9px;left:12px;padding:0 6px;background:#1c2634;color:var(--acl);font-size:13px;line-height:18px}
+.chv{width:8px;height:15px;margin-left:auto;flex:none;fill:none;stroke:#7a8794;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.pc{width:60px;flex:none;color:#fff;white-space:nowrap}
+.pd{width:1px;height:20px;background:#4a596c;flex:none}
+.pn{margin-left:6px;flex:1;min-width:0;color:#fff;white-space:nowrap;overflow:hidden}
+.phg{align-self:flex-end;margin:auto 20px 20px 0;width:56px;height:56px;padding:0;border-radius:50%;background:var(--ac);display:flex;align-items:center;justify-content:center;flex:none}
+.phg svg{width:28px;height:28px}
+.kp{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;width:100%;padding:0 10px 14px;flex:none}
+.kp button{height:47px;padding:0 21px;border-radius:14px;background:#2c3744;color:#fff;font-size:26px;font-weight:400;display:flex;align-items:center;justify-content:space-between}
+.kp button:active{background:#364352}
+.kp button small{font-size:14px;line-height:1;color:#7a8794;font-weight:400}
+.kp .k1{border-top-left-radius:22px}
+.kp .k3{border-top-right-radius:22px}
+.kp .kd{border-bottom-right-radius:22px;justify-content:center;padding:0}
+.kp .kd svg{width:26px;height:26px;fill:none;stroke:#fff;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.kp .ke{visibility:hidden}
+
+/* ===== ВЫБОР ЦВЕТА ИНТЕРФЕЙСА ===== */
+.thb{position:fixed;inset:0;background:#0008;z-index:50;display:flex;align-items:flex-end}
+.ths{width:100%;background:#212d3b;border-radius:16px 16px 0 0;padding:8px 16px calc(20px + env(safe-area-inset-bottom))}
+.thh{width:36px;height:4px;border-radius:2px;background:#4a5a6e;margin:0 auto 14px}
+.tht{font-size:17px;font-weight:600;margin-bottom:16px}
+.thg{display:grid;grid-template-columns:repeat(5,1fr);gap:14px 0;justify-items:center}
+.thc{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative}
+.thc svg{width:24px;height:24px}
+.thc.rb{background:conic-gradient(#f44,#fa0,#ee3,#4c8,#2ae,#85f,#e6b,#f44)}
+.thc.rb svg{display:none}.thc.rb.on svg{display:block}
+.thc input{position:absolute;inset:0;width:100%;height:100%;opacity:0;padding:0;border:0}
+.thn{color:#8493a6;font-size:14px;margin:16px 0 0}
+.thd{width:100%;height:48px;padding:0;border-radius:24px;font-size:16px;margin-top:18px}
 </style></head><body><div id="app"></div>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
@@ -240,7 +266,7 @@ firebase.initializeApp({
 const auth=firebase.auth(),db=firebase.firestore(),FV=firebase.firestore.FieldValue;
 const app=document.getElementById('app'),$=i=>document.getElementById(i);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-let me,K,unsub=()=>{},unsubList=()=>{},busy=0,tab='chats',flt='all',CH=[],STARS=0,sTab='chats',sQ='',sSeq=0,BF={};
+let me,K,unsub=()=>{},unsubList=()=>{},busy=0,tab='chats',flt='all',CH=[],STARS=0,sTab='chats',sQ='',sSeq=0,BF={},NAV=null;
 const GID='chat'; // общая группа для всех: id чата и юзернейм @chat
 
 // ===== ОБОИ ЧАТА: тонкий узор из значков =====
@@ -260,7 +286,7 @@ document.documentElement.style.setProperty('--wp','url("data:image/svg+xml,'+enc
 // ===== УВЕДОМЛЕНИЯ И СВОИ ОКНА (вместо alert/prompt с адресом сайта) =====
 function toast(m){
   const t=document.createElement('div');t.className='toast';t.textContent=m;
-  document.body.appendChild(t);setTimeout(()=>t.remove(),2200)}
+  document.body.appendChild(t);setTimeout(()=>t.remove(),2800)}
 window.alert=toast;
 function ask(title,value='',ph=''){
   return new Promise(res=>{
@@ -315,82 +341,163 @@ const G={
   qr:'<rect x="3.500" y="3.500" width="7" height="7" rx="1.500"/><rect x="13.500" y="3.500" width="7" height="7" rx="1.500"/><rect x="3.500" y="13.500" width="7" height="7" rx="1.500"/><path d="M14 14h2.500v2.500H14zM18 18h2.500v2.500H18zM18 14h2.500M14 18v2.500"/>',
   back:'<path d="M19 12H5M11 6l-6 6 6 6"/>',
   arrow:'<path d="M5 12h14M13 6l6 6-6 6"/>',
-  bksp:'<path d="M21 5H9l-6 7 6 7h12z"/><path d="M12.500 9.500l5 5M17.500 9.500l-5 5"/>'};
+  bksp:'<path d="M9.500 5H19a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H9.500L3 12z"/><path d="M12.500 9.500l5 5M17.500 9.500l-5 5"/>'};
 const sv=n=>`<svg class="gi${n==='starf'?' f':''}" viewBox="0 0 24 24">${G[n]}</svg>`;
 
-// ===== ВХОД / РЕГИСТРАЦИЯ =====
-const run=async f=>{try{await f()}catch(e){$('er').textContent=e.message}};
+// ===== ЦВЕТ ИНТЕРФЕЙСА =====
+let ACC='#2ea6ff';
+const ACS=['#2ea6ff','#e5484d','#f5a623','#f2711c','#34c37a','#29c4c4','#8e5cf7','#e56bb0','#7a8ba0'];
+const mixc=(a,b,t)=>{const p=h=>[1,3,5].map(i=>parseInt(h.substr(i,2),16));const x=p(a),y=p(b);
+  return '#'+x.map((v,i)=>Math.round(v+(y[i]-v)*t).toString(16).padStart(2,'0')).join('')};
+function applyAccent(c){
+  if(!/^#[0-9a-f]{6}$/i.test(c))c='#2ea6ff';
+  c=c.toLowerCase();ACC=c;
+  const s=document.documentElement.style;
+  s.setProperty('--ac',c);
+  s.setProperty('--ac1',mixc(c,'#000000',.1));
+  s.setProperty('--ac2',mixc(c,'#ffffff',.2));
+  s.setProperty('--acl',mixc(c,'#ffffff',.25));
+  s.setProperty('--acd',mixc(c,'#1c2634',.78));
+  try{localStorage.setItem('mg_ac',c)}catch(e){}}
+try{applyAccent(localStorage.getItem('mg_ac')||'#2ea6ff')}catch(e){applyAccent('#2ea6ff')}
 
-// --- Приветственный экран ---
+const GEAR='<svg viewBox="0 0 24 24"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>';
+const CK2='<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+function themeSheet(){
+  const o=document.createElement('div');o.className='thb';
+  o.innerHTML=`<div class=ths><div class=thh></div><div class=tht>Цвет интерфейса</div>
+  <div class=thg>${ACS.map(c=>`<div class=thc data-c="${c}" style="background:${c}"></div>`).join('')}<label class="thc rb">${CK2}<input type=color value="${ACC}"></label></div>
+  <p class=thn>Основной цвет кнопок, вкладок и сообщений. Нажмите на радугу, чтобы выбрать любой цвет.</p>
+  <button class=thd>Готово</button></div>`;
+  const rb=o.querySelector('.rb'),ip=o.querySelector('input');
+  const mark=()=>{o.querySelectorAll('.thc[data-c]').forEach(e=>e.innerHTML=e.dataset.c===ACC?CK2:'');rb.classList.toggle('on',!ACS.includes(ACC))};
+  o.querySelectorAll('.thc[data-c]').forEach(e=>e.onclick=()=>{applyAccent(e.dataset.c);ip.value=e.dataset.c;mark()});
+  ip.oninput=()=>{applyAccent(ip.value);mark()};
+  o.querySelector('.thd').onclick=()=>o.remove();
+  o.onclick=e=>{if(e.target===o)o.remove()};
+  document.body.appendChild(o);mark()}
+
+// ===== ВОРКЕР CLOUDFLARE (вход по номеру, код приходит от Telegram-бота) =====
+// Если при нажатии на стрелку видишь «Ошибка 404», поменяй адреса здесь:
+const W='https://majorgram-bot.daniil-suhorukov216.workers.dev';
+const EP={send:'/login/send',verify:'/login/verify'};
+async function wcall(path,body){
+  let r;
+  try{r=await fetch(W+path,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)})}
+  catch(e){throw Error('Нет связи с сервером')}
+  let j={};try{j=await r.json()}catch(e){}
+  if(!r.ok||j.ok===false||j.error)throw Error(j.error||j.message||('Ошибка '+r.status+' '+path));
+  return j}
+
+// кнопка «назад» телефона возвращает на прошлый экран входа
+window.addEventListener('popstate',()=>{if(NAV){const f=NAV;NAV=null;f()}});
+const pushNav=f=>{NAV=f;try{history.pushState({},'')}catch(e){}};
+
+// ===== ВХОД / РЕГИСТРАЦИЯ =====
+// --- Приветственный экран (как ZeroGram) ---
 function authView(){
-  app.innerHTML=`<div class=mgw><div class=mglogo>M</div><div class=mgname>MajorGram</div>
-  <div class=mgtag id=mgt>Самый <b>быстрый</b> мессенджер в мире.<br><b>Бесплатный и безопасный.</b></div>
-  <div class=mgdots><i></i><i></i><i></i><i></i><i></i><i></i></div>
-  <div class=mgen id=mgen>Continue in English</div>
-  <button class=mgstart id=mgs>Начать общение</button></div>`;
-  $('mgs').onclick=showEmail;
+  NAV=null;
+  app.innerHTML=`<div class=wel><button class=gearb id=gb>${GEAR}</button>
+  <div class=wlogo>M</div><div class=wname>MajorGram</div>
+  <div class=wtag id=mgt>Самый <b>быстрый</b> мессенджер в мире.<br><b>Бесплатный и безопасный.</b></div>
+  <div class=wdots><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <div class=wen id=mgen>Continue in English</div>
+  <button class=wbtn id=mgs>Начать общение</button></div>`;
+  $('gb').onclick=themeSheet;
+  $('mgs').onclick=phoneView;
   $('mgen').onclick=()=>{
     $('mgt').innerHTML='The <b>fastest</b> messenger in the world.<br><b>Free and secure.</b>';
     $('mgs').textContent='Start messaging';$('mgen').style.display='none'}}
 
-// --- Вход по почте + ссылки на номер и назад ---
-function showEmail(){
-  emailView();
-  const a=document.querySelector('.auth');
-  const p=document.createElement('div');p.className='mgl';p.textContent='Войти по номеру';p.onclick=phoneView;
-  const b=document.createElement('div');b.className='mgl';b.textContent='Назад';b.onclick=authView;
-  a.append(p,b)}
+// --- цифровая клавиатура ---
+const ARW=`<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">${G.arrow}</svg>`;
+const BKS=`<svg viewBox="0 0 24 24">${G.bksp}</svg>`;
+function keypad(el,on){
+  const L={2:'ABC',3:'DEF',4:'GHI',5:'JKL',6:'MNO',7:'PQRS',8:'TUV',9:'WXYZ',0:'+'};
+  [1,2,3,4,5,6,7,8,9,'e',0,'d'].forEach((k,i)=>{
+    const b=document.createElement('button');
+    if(k==='e')b.className='ke';
+    else if(k==='d'){b.className='kd';b.innerHTML=BKS}
+    else b.innerHTML=k+(L[k]?'<small>'+L[k]+'</small>':'');
+    if(i===0)b.classList.add('k1');
+    if(i===2)b.classList.add('k3');
+    b.onclick=()=>on(k);
+    el.appendChild(b)})}
+
+// --- код страны отделяется от номера ---
+const CC3=['380','375','374','373','372','371','370','998','996','995','994','993','992','977','972','971','966','965','964','963','962','961','421','420','359','358','357','356','355','354','353','352','351'];
+function splitNum(d){
+  if(!d)return['',''];
+  let n=1;
+  if(d[0]!=='7'&&d[0]!=='1')n=CC3.includes(d.slice(0,3))?3:2;
+  return[d.slice(0,n),d.slice(n)]}
 
 // --- Экран «Номер телефона» ---
 function phoneView(){
+  pushNav(authView);
   let d='';
-  app.innerHTML=`<div class=top><button class=ib id=bk>${sv('back')}</button></div>
-  <div class=mgw style="margin-top:-20px">
-  <div class=mgh>Номер телефона</div>
-  <div class=mgsub>Проверьте код страны и введите свой номер телефона.</div>
-  <div class=mgf><span>Страна</span><span>›</span></div>
-  <div class="mgf act"><small>Номер телефона</small><span id=mgn>+</span></div>
-  <button class=mggo id=mgg><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">${G.arrow}</svg></button>
-  <div class=mgpad id=mgp></div></div>`;
-  $('bk').onclick=showEmail;
-  [['1',''],['2','ABC'],['3','DEF'],['4','GHI'],['5','JKL'],['6','MNO'],['7','PQRS'],['8','TUV'],['9','WXYZ'],['',''],['0','+'],['del','']].forEach(k=>{
-    const b=document.createElement('button');
-    if(k[0]==='del')b.innerHTML=sv('bksp');
-    else b.innerHTML=k[0]+(k[1]?'<small>'+k[1]+'</small>':'');
-    if(!k[0])b.style.visibility='hidden';
-    b.onclick=()=>{
-      if(k[0]==='del')d=d.slice(0,-1);else if(d.length<15)d+=k[0];
-      $('mgn').textContent='+'+d};
-    $('mgp').appendChild(b)});
-  // сюда позже подключим вход по номеру через бота
-  $('mgg').onclick=()=>d.length<7?alert('Введите номер полностью'):soon()}
+  app.innerHTML=`<div class=ph><div class=pht>Номер телефона</div>
+  <div class=phs>Проверьте код страны и введите свой номер телефона.</div>
+  <div class=phf id=cf><span>Страна</span><svg class=chv viewBox="0 0 8 15"><path d="M1 1l6.500 6.500L1 14"/></svg></div>
+  <div class="phf act"><small>Номер телефона</small><div class=pc>+<span id=pcc></span></div><i class=pd></i><span class=pn id=pnn></span></div>
+  <button class=phg id=pg>${ARW}</button><div class=kp id=kp></div></div>`;
+  const show=()=>{const[c,n]=splitNum(d);$('pcc').textContent=c;$('pnn').textContent=n};
+  keypad($('kp'),k=>{
+    if(k==='d')d=d.slice(0,-1);else if(d.length<15)d+=k;
+    show()});
+  $('cf').onclick=soon;
+  $('pg').onclick=async()=>{
+    if(d.length<7)return alert('Введите номер полностью');
+    const b=$('pg');b.disabled=true;
+    try{await wcall(EP.send,{phone:'+'+d});codeView(d)}
+    catch(e){alert(e.message)}
+    b.disabled=false}}
 
-// --- Форма почты (старый вход) ---
-function emailView(){
-  app.innerHTML=`<div class=auth><h1>MajorGram</h1><input id=em type=email placeholder="Почта"><input id=pw type=password placeholder="Пароль"><input id=un placeholder="@юзернейм (для регистрации)"><button id=li>Войти</button><button id=su class=alt>Регистрация</button><p id=er></p></div>`;
-  $('li').onclick=()=>run(()=>auth.signInWithEmailAndPassword($('em').value,$('pw').value));
-  $('su').onclick=()=>run(async()=>{
-    const n=$('un').value.replace('@','').trim().toLowerCase();
-    if(!/^[a-z0-9_]{3,20}$/.test(n))throw Error('Юзернейм: 3–20 символов, a-z, 0-9 и _');
-    busy=1;let c;
+// --- Экран «Введите код» (код присылает Telegram-бот) ---
+function codeView(phone){
+  pushNav(phoneView);
+  let c='';
+  app.innerHTML=`<div class=ph><div class=pht>Введите код</div>
+  <div class=phs>Код отправил бот @majorgramone_bot в Telegram.</div>
+  <div class="phf act"><small>Код</small><span class=pn id=cn style="margin-left:0;letter-spacing:3px"></span></div>
+  <button class=phg id=pg>${ARW}</button><div class=kp id=kp></div></div>`;
+  keypad($('kp'),k=>{
+    if(k==='d')c=c.slice(0,-1);else if(c.length<10)c+=k;
+    $('cn').textContent=c});
+  $('pg').onclick=async()=>{
+    if(!c)return alert('Введите код');
+    const b=$('pg');b.disabled=true;
     try{
-      c=await auth.createUserWithEmailAndPassword($('em').value,$('pw').value);
-      K=await keys();
-      await db.runTransaction(async t=>{
-        const r=db.doc('usernames/'+n);
-        if((await t.get(r)).exists)throw Error('Юзернейм занят');
-        t.set(r,{uid:c.user.uid});
-        t.set(db.doc('users/'+c.user.uid),{username:n,pub:JSON.stringify(K.pub)})});
-    }catch(e){if(c)await c.user.delete();busy=0;throw e}
-    busy=0;await begin(c.user)})}
+      const j=await wcall(EP.verify,{phone:'+'+phone,code:c});
+      if(!j.token)throw Error('Сервер не вернул токен входа');
+      await auth.signInWithCustomToken(j.token)}
+    catch(e){alert(e.message)}
+    b.disabled=false}}
 
 auth.onAuthStateChanged(async u=>{if(busy)return;unsub();unsubList();
-  if(!u){if(!$('li')&&!$('mgs')&&!$('mgp'))authView();return}
+  if(!u){if(!$('mgs')&&!$('kp'))authView();return}
   await begin(u)});
+
+// первый вход по номеру: создаём профиль со случайным юзернеймом (потом можно сменить)
+async function mkProfile(u){
+  for(let i=0;i<6;i++){
+    const n='user'+Math.floor(1e7+Math.random()*9e7);
+    try{
+      await db.runTransaction(async t=>{
+        const r=db.doc('usernames/'+n);
+        if((await t.get(r)).exists)throw Error('taken');
+        t.set(r,{uid:u.uid});
+        t.set(db.doc('users/'+u.uid),{username:n,pub:JSON.stringify(K.pub)})});
+      return true}
+    catch(e){if(e.message!=='taken')return false}}
+  return false}
+
 async function begin(u){
   K=await keys();
-  const d=await db.doc('users/'+u.uid).get();
-  if(!d.exists){await auth.signOut();return}
+  let d=await db.doc('users/'+u.uid).get();
+  if(!d.exists){
+    if(!(await mkProfile(u))){await auth.signOut();return}
+    d=await db.doc('users/'+u.uid).get()}
   me={uid:u.uid,...d.data()};
   if(d.data().pub!==JSON.stringify(K.pub))await db.doc('users/'+u.uid).update({pub:JSON.stringify(K.pub)});
   try{await joinChat()}catch(e){console.log('chat',e)}
@@ -505,6 +612,7 @@ function pickPhoto(){
 
 // ===== ГЛАВНЫЙ ЭКРАН =====
 function home(){
+  NAV=null;
   unsub();unsubList();
   const H=t=>`<div class=top><h1>${t}</h1></div>`;
   const head=tab==='settings'?H('Настройки')
@@ -559,7 +667,7 @@ function draw(){
     b.innerHTML=`<div class=pring>${me.photo?`<img src="${me.photo}" style="width:100%;height:100%;object-fit:cover">`:av('@'+me.username,90)}</div>
     <div class=pn>${nameH(me.name||'@'+me.username,me.verified)}</div><div class=ps>в сети</div>
     <div class=pb><div id=pf>${sv('cam')}Выбрать фото</div><div id=pe>${sv('pen')}Изменить</div><div id=pg>${sv('gear')}Настройки</div></div>
-    <div class="grp info"><div><b>${esc(auth.currentUser.email||'')}</b><small>Почта</small></div>
+    <div class="grp info">${auth.currentUser.email?`<div><b>${esc(auth.currentUser.email)}</b><small>Почта</small></div>`:''}
     <div><b>@${esc(me.username)}</b><small>Имя пользователя</small></div>
     <div id=pi2><b>${esc(me.about||'Не указано')}</b><small>О себе</small></div>
     <div id=pi3><b>${esc(me.bday||'Не указано')}</b><small>День рождения</small></div>
