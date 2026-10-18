@@ -215,13 +215,15 @@ nav{position:absolute;left:16px;right:16px;bottom:calc(8px + env(safe-area-inset
 .wen{margin-top:auto;height:40px;line-height:40px;margin-bottom:24px;font-size:16px;color:var(--acl)}
 .wbtn{width:100%;max-width:400px;height:48px;padding:0;border-radius:24px;font-size:16px;font-weight:500;background:linear-gradient(90deg,var(--ac1),var(--ac2))}
 
-/* ===== ЭКРАН НОМЕРА ТЕЛЕФОНА И КОДА (по скриншоту) ===== */
+/* ===== ЭКРАН НОМЕРА ТЕЛЕФОНА, КОДА И ЮЗЕРНЕЙМА (по скриншоту) ===== */
 .ph{height:100%;display:flex;flex-direction:column;align-items:center}
 .pht{margin-top:clamp(16px,20.8dvh,150px);font-size:20px;line-height:24px;font-weight:500;text-align:center}
 .phs{margin-top:8px;max-width:275px;font-size:15px;line-height:18.5px;color:#7a8794;text-align:center}
 .phf{position:relative;width:calc(100% - 70px);max-width:420px;height:50px;margin-top:30px;border:1px solid #4a596c;border-radius:16px;display:flex;align-items:center;padding:0 19px 0 14px;font-size:18px;color:#6f7c8a}
 .phf.act{border:2px solid var(--acl);padding:0 18px 0 13px;color:#fff}
 .phf small{position:absolute;top:-9px;left:12px;padding:0 6px;background:#1c2634;color:var(--acl);font-size:13px;line-height:18px}
+.phf input{flex:1;min-width:0;height:100%;padding:0;border-radius:0;background:none;font-size:18px;color:#fff}
+.phf .at{color:#7a8794;margin-right:2px}
 .chv{width:8px;height:15px;margin-left:auto;flex:none;fill:none;stroke:#7a8794;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .pc{width:60px;flex:none;color:#fff;white-space:nowrap}
 .pd{width:1px;height:20px;background:#4a596c;flex:none}
@@ -378,9 +380,8 @@ function themeSheet(){
   document.body.appendChild(o);mark()}
 
 // ===== ВОРКЕР CLOUDFLARE (вход по номеру, код приходит от Telegram-бота) =====
-// Если при нажатии на стрелку видишь «Ошибка 404», поменяй адреса здесь:
 const W='https://majorgram-bot.daniil-suhorukov216.workers.dev';
-const EP={send:'/login/send',verify:'/login/verify'};
+const EP={send:'/api/code',verify:'/api/verify'};
 async function wcall(path,body){
   let r;
   try{r=await fetch(W+path,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)})}
@@ -431,6 +432,7 @@ function splitNum(d){
   let n=1;
   if(d[0]!=='7'&&d[0]!=='1')n=CC3.includes(d.slice(0,3))?3:2;
   return[d.slice(0,n),d.slice(n)]}
+const fmtNum=n=>[n.slice(0,3),n.slice(3,6),n.slice(6,8),n.slice(8,10)].filter(Boolean).join(' ');
 
 // --- Экран «Номер телефона» ---
 function phoneView(){
@@ -441,13 +443,13 @@ function phoneView(){
   <div class=phf id=cf><span>Страна</span><svg class=chv viewBox="0 0 8 15"><path d="M1 1l6.500 6.500L1 14"/></svg></div>
   <div class="phf act"><small>Номер телефона</small><div class=pc>+<span id=pcc></span></div><i class=pd></i><span class=pn id=pnn></span></div>
   <button class=phg id=pg>${ARW}</button><div class=kp id=kp></div></div>`;
-  const show=()=>{const[c,n]=splitNum(d);$('pcc').textContent=c;$('pnn').textContent=n};
+  const show=()=>{const[c,n]=splitNum(d);$('pcc').textContent=c;$('pnn').textContent=fmtNum(n)};
   keypad($('kp'),k=>{
-    if(k==='d')d=d.slice(0,-1);else if(d.length<15)d+=k;
+    if(k==='d')d=d.slice(0,-1);else if(d.length<11)d+=k;
     show()});
   $('cf').onclick=soon;
   $('pg').onclick=async()=>{
-    if(d.length<7)return alert('Введите номер полностью');
+    if(d.length<11)return alert('Введите номер полностью');
     const b=$('pg');b.disabled=true;
     try{await wcall(EP.send,{phone:'+'+d});codeView(d)}
     catch(e){alert(e.message)}
@@ -456,48 +458,58 @@ function phoneView(){
 // --- Экран «Введите код» (код присылает Telegram-бот) ---
 function codeView(phone){
   pushNav(phoneView);
-  let c='';
+  let c='',busyV=0;
   app.innerHTML=`<div class=ph><div class=pht>Введите код</div>
-  <div class=phs>Код отправил бот @majorgramone_bot в Telegram.</div>
+  <div class=phs>Код отправлен ботом в Telegram. Он действует 5 минут.</div>
   <div class="phf act"><small>Код</small><span class=pn id=cn style="margin-left:0;letter-spacing:3px"></span></div>
   <button class=phg id=pg>${ARW}</button><div class=kp id=kp></div></div>`;
-  keypad($('kp'),k=>{
-    if(k==='d')c=c.slice(0,-1);else if(c.length<10)c+=k;
-    $('cn').textContent=c});
-  $('pg').onclick=async()=>{
-    if(!c)return alert('Введите код');
-    const b=$('pg');b.disabled=true;
+  const send=async()=>{
+    if(busyV)return;
+    if(c.length<6)return alert('Введите код из 6 цифр');
+    busyV=1;
     try{
       const j=await wcall(EP.verify,{phone:'+'+phone,code:c});
       if(!j.token)throw Error('Сервер не вернул токен входа');
       await auth.signInWithCustomToken(j.token)}
-    catch(e){alert(e.message)}
-    b.disabled=false}}
+    catch(e){alert(e.message);c='';if($('cn'))$('cn').textContent=''}
+    busyV=0};
+  keypad($('kp'),k=>{
+    if(k==='d')c=c.slice(0,-1);else if(c.length<6)c+=k;
+    $('cn').textContent=c;
+    if(c.length===6)send()});
+  $('pg').onclick=send}
 
-auth.onAuthStateChanged(async u=>{if(busy)return;unsub();unsubList();
-  if(!u){if(!$('mgs')&&!$('kp'))authView();return}
-  await begin(u)});
-
-// первый вход по номеру: создаём профиль со случайным юзернеймом (потом можно сменить)
-async function mkProfile(u){
-  for(let i=0;i<6;i++){
-    const n='user'+Math.floor(1e7+Math.random()*9e7);
+// --- Экран «Юзернейм» (первый вход по номеру) ---
+function nameView(u){
+  NAV=null;
+  app.innerHTML=`<div class=ph><div class=pht>Юзернейм</div>
+  <div class=phs>Придумайте уникальное имя пользователя: a-z, 0-9 и _, от 3 до 20 символов.</div>
+  <div class="phf act"><small>Юзернейм</small><span class=at>@</span><input id=un autocomplete=off autocapitalize=none autocorrect=off spellcheck=false maxlength=20></div>
+  <button class=phg id=pg>${ARW}</button></div>`;
+  const go=async()=>{
+    const n=$('un').value.replace('@','').trim().toLowerCase();
+    if(!/^[a-z0-9_]{3,20}$/.test(n))return alert('Юзернейм: 3–20 символов, a-z, 0-9 и _');
+    const b=$('pg');b.disabled=true;
     try{
       await db.runTransaction(async t=>{
         const r=db.doc('usernames/'+n);
         if((await t.get(r)).exists)throw Error('taken');
         t.set(r,{uid:u.uid});
         t.set(db.doc('users/'+u.uid),{username:n,pub:JSON.stringify(K.pub)})});
-      return true}
-    catch(e){if(e.message!=='taken')return false}}
-  return false}
+    }catch(e){alert(e.message==='taken'?'Этот юзернейм занят':'Не получилось: '+e.message);b.disabled=false;return}
+    await begin(u)};
+  $('pg').onclick=go;
+  $('un').onkeydown=e=>{if(e.key==='Enter')go()};
+  $('un').focus()}
+
+auth.onAuthStateChanged(async u=>{if(busy)return;unsub();unsubList();
+  if(!u){if(!$('mgs')&&!$('kp'))authView();return}
+  await begin(u)});
 
 async function begin(u){
   K=await keys();
-  let d=await db.doc('users/'+u.uid).get();
-  if(!d.exists){
-    if(!(await mkProfile(u))){await auth.signOut();return}
-    d=await db.doc('users/'+u.uid).get()}
+  const d=await db.doc('users/'+u.uid).get();
+  if(!d.exists){nameView(u);return}
   me={uid:u.uid,...d.data()};
   if(d.data().pub!==JSON.stringify(K.pub))await db.doc('users/'+u.uid).update({pub:JSON.stringify(K.pub)});
   try{await joinChat()}catch(e){console.log('chat',e)}
